@@ -15,8 +15,8 @@ list(APPEND CMAKE_MODULE_PATH ${EAGINE_CORE_ROOT}/config)
 add_subdirectory(submodules)
 
 include(EAGineCoreCommon)
-#find_package(EAGineEGL)
+find_package(EAGineAL)
 
-#add_subdirectory(include)
-#add_subdirectory(source)
-#add_subdirectory(example)
+add_subdirectory(include)
+add_subdirectory(source)
+add_subdirectory(example)

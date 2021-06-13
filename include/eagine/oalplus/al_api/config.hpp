@@ -5,8 +5,8 @@
 /// See accompanying file LICENSE_1_0.txt or copy at
 ///  http://www.boost.org/LICENSE_1_0.txt
 ///
-#ifndef OALPLUS_AL_API_CONFIG_HPP
-#define OALPLUS_AL_API_CONFIG_HPP
+#ifndef EAGINE_OALPLUS_AL_API_CONFIG_HPP
+#define EAGINE_OALPLUS_AL_API_CONFIG_HPP
 
 #include "../config/basic.hpp"
 #include <eagine/maybe_unused.hpp>
@@ -111,4 +111,4 @@ struct al_types {
 //------------------------------------------------------------------------------
 } // namespace eagine::oalp
 
-#endif // OALPLUS_AL_API_CONFIG_HPP
+#endif // EAGINE_OALPLUS_AL_API_CONFIG_HPP

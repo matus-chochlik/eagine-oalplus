@@ -5,8 +5,8 @@
 /// See accompanying file LICENSE_1_0.txt or copy at
 ///  http://www.boost.org/LICENSE_1_0.txt
 ///
-#ifndef OALPLUS_ALUT_API_C_API_HPP
-#define OALPLUS_ALUT_API_C_API_HPP
+#ifndef EAGINE_OALPLUS_ALUT_API_C_API_HPP
+#define EAGINE_OALPLUS_ALUT_API_C_API_HPP
 
 #include "api_traits.hpp"
 #include "config.hpp"
@@ -149,4 +149,4 @@ using alut_c_api = basic_alut_c_api<alut_api_traits>;
 //------------------------------------------------------------------------------
 } // namespace eagine::oalp
 
-#endif // OALPLUS_ALUT_API_C_API_HPP
+#endif // EAGINE_OALPLUS_ALUT_API_C_API_HPP

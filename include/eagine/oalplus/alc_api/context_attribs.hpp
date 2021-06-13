@@ -5,8 +5,8 @@
 /// See accompanying file LICENSE_1_0.txt or copy at
 ///  http://www.boost.org/LICENSE_1_0.txt
 ///
-#ifndef OALPLUS_ALC_API_CONTEXT_ATTRIBS_HPP
-#define OALPLUS_ALC_API_CONTEXT_ATTRIBS_HPP
+#ifndef EAGINE_OALPLUS_ALC_API_CONTEXT_ATTRIBS_HPP
+#define EAGINE_OALPLUS_ALC_API_CONTEXT_ATTRIBS_HPP
 
 #include "config.hpp"
 #include "enum_types.hpp"
@@ -61,4 +61,4 @@ static constexpr auto operator|(context_attribute key, bool value) noexcept
 
 } // namespace eagine::oalp
 
-#endif // OALPLUS_ALC_API_CONTEXT_ATTRIBS_HPP
+#endif // EAGINE_OALPLUS_ALC_API_CONTEXT_ATTRIBS_HPP

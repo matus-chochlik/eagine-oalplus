@@ -5,8 +5,8 @@
 /// See accompanying file LICENSE_1_0.txt or copy at
 ///  http://www.boost.org/LICENSE_1_0.txt
 ///
-#ifndef OALPLUS_BASIC_ALUT_API_HPP
-#define OALPLUS_BASIC_ALUT_API_HPP
+#ifndef EAGINE_OALPLUS_BASIC_ALUT_API_HPP
+#define EAGINE_OALPLUS_BASIC_ALUT_API_HPP
 
 #include "alut_api/api.hpp"
 #include "alut_api/api_traits.hpp"
@@ -64,4 +64,4 @@ struct tuple_element<1, eagine::oalp::basic_alut_api<ApiTraits>> {
 //------------------------------------------------------------------------------
 } // namespace std
 
-#endif // OALPLUS_BASIC_ALUT_API_HPP
+#endif // EAGINE_OALPLUS_BASIC_ALUT_API_HPP

@@ -5,8 +5,8 @@
 /// See accompanying file LICENSE_1_0.txt or copy at
 ///  http://www.boost.org/LICENSE_1_0.txt
 ///
-#ifndef OALPLUS_AL_API_ENUM_TYPES_HPP
-#define OALPLUS_AL_API_ENUM_TYPES_HPP
+#ifndef EAGINE_OALPLUS_AL_API_ENUM_TYPES_HPP
+#define EAGINE_OALPLUS_AL_API_ENUM_TYPES_HPP
 
 #include "enum_class.hpp"
 
@@ -98,4 +98,4 @@ struct source_type : al_enum_class<source_type, EAGINE_ID_V(SourceType)> {
 //------------------------------------------------------------------------------
 } // namespace eagine::oalp
 
-#endif // OALPLUS_AL_API_ENUM_TYPES_HPP
+#endif // EAGINE_OALPLUS_AL_API_ENUM_TYPES_HPP

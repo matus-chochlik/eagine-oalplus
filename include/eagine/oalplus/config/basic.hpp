@@ -5,8 +5,8 @@
 /// See accompanying file LICENSE_1_0.txt or copy at
 ///  http://www.boost.org/LICENSE_1_0.txt
 ///
-#ifndef OALPLUS_CONFIG_BASIC_HPP
-#define OALPLUS_CONFIG_BASIC_HPP
+#ifndef EAGINE_OALPLUS_CONFIG_BASIC_HPP
+#define EAGINE_OALPLUS_CONFIG_BASIC_HPP
 
 #if __has_include(<eagine/oalplus/config/site.hpp>)
 #include <eagine/oalplus/config/site.hpp>
@@ -38,4 +38,4 @@
 #define OALPLUS_LIB_FUNC inline
 #endif
 
-#endif // OALPLUS_CONFIG_BASIC_HPP
+#endif // EAGINE_OALPLUS_CONFIG_BASIC_HPP

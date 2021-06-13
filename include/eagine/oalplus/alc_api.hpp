@@ -5,8 +5,8 @@
 /// See accompanying file LICENSE_1_0.txt or copy at
 ///  http://www.boost.org/LICENSE_1_0.txt
 ///
-#ifndef OALPLUS_ALC_API_HPP
-#define OALPLUS_ALC_API_HPP
+#ifndef EAGINE_OALPLUS_ALC_API_HPP
+#define EAGINE_OALPLUS_ALC_API_HPP
 
 #include "alc_api_fwd.hpp"
 #include "basic_alc_api.hpp"
@@ -15,4 +15,4 @@
 #include <eagine/oalplus/alc_api.inl>
 #endif
 
-#endif // OALPLUS_ALC_API_HPP
+#endif // EAGINE_OALPLUS_ALC_API_HPP

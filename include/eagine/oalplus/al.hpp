@@ -5,8 +5,8 @@
 /// See accompanying file LICENSE_1_0.txt or copy at
 ///  http://www.boost.org/LICENSE_1_0.txt
 ///
-#ifndef OALPLUS_AL_HPP
-#define OALPLUS_AL_HPP
+#ifndef EAGINE_OALPLUS_AL_HPP
+#define EAGINE_OALPLUS_AL_HPP
 
 #include "config/basic.hpp"
 
@@ -32,4 +32,4 @@
 #endif // OALPLUS_ALUT_H_FOUND
 #endif // EAGINE_YCM
 
-#endif // OALPLUS_AL_HPP
+#endif // EAGINE_OALPLUS_AL_HPP

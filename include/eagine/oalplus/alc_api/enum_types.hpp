@@ -5,8 +5,8 @@
 /// See accompanying file LICENSE_1_0.txt or copy at
 ///  http://www.boost.org/LICENSE_1_0.txt
 ///
-#ifndef OALPLUS_ALC_API_ENUM_TYPES_HPP
-#define OALPLUS_ALC_API_ENUM_TYPES_HPP
+#ifndef EAGINE_OALPLUS_ALC_API_ENUM_TYPES_HPP
+#define EAGINE_OALPLUS_ALC_API_ENUM_TYPES_HPP
 
 #include "enum_class.hpp"
 
@@ -43,4 +43,4 @@ struct alc_integer_query
 //------------------------------------------------------------------------------
 } // namespace eagine::oalp
 
-#endif // OALPLUS_ALC_API_ENUM_TYPES_HPP
+#endif // EAGINE_OALPLUS_ALC_API_ENUM_TYPES_HPP

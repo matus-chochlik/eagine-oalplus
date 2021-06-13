@@ -5,8 +5,8 @@
 /// See accompanying file LICENSE_1_0.txt or copy at
 ///  http://www.boost.org/LICENSE_1_0.txt
 ///
-#ifndef OALPLUS_ALC_API_RESULT_HPP
-#define OALPLUS_ALC_API_RESULT_HPP
+#ifndef EAGINE_OALPLUS_ALC_API_RESULT_HPP
+#define EAGINE_OALPLUS_ALC_API_RESULT_HPP
 
 #include "config.hpp"
 #include <eagine/anything.hpp>
@@ -121,4 +121,4 @@ using alc_opt_result = api_opt_result<Result, alc_result_info>;
 //------------------------------------------------------------------------------
 } // namespace eagine::oalp
 
-#endif // OALPLUS_ALC_API_RESULT_HPP
+#endif // EAGINE_OALPLUS_ALC_API_RESULT_HPP

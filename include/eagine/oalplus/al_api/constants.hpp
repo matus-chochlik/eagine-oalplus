@@ -5,8 +5,8 @@
 /// See accompanying file LICENSE_1_0.txt or copy at
 ///  http://www.boost.org/LICENSE_1_0.txt
 ///
-#ifndef OALPLUS_AL_API_CONSTANTS_HPP
-#define OALPLUS_AL_API_CONSTANTS_HPP
+#ifndef EAGINE_OALPLUS_AL_API_CONSTANTS_HPP
+#define EAGINE_OALPLUS_AL_API_CONSTANTS_HPP
 
 #include "c_api.hpp"
 #include "enum_types.hpp"
@@ -713,4 +713,4 @@ public:
 //------------------------------------------------------------------------------
 } // namespace eagine::oalp
 
-#endif // OALPLUS_AL_API_CONSTANTS_HPP
+#endif // EAGINE_OALPLUS_AL_API_CONSTANTS_HPP

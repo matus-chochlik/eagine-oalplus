@@ -5,8 +5,8 @@
 /// See accompanying file LICENSE_1_0.txt or copy at
 ///  http://www.boost.org/LICENSE_1_0.txt
 ///
-#ifndef OALPLUS_ALUT_API_ENUM_TYPES_HPP
-#define OALPLUS_ALUT_API_ENUM_TYPES_HPP
+#ifndef EAGINE_OALPLUS_ALUT_API_ENUM_TYPES_HPP
+#define EAGINE_OALPLUS_ALUT_API_ENUM_TYPES_HPP
 
 #include "enum_class.hpp"
 
@@ -30,4 +30,4 @@ struct waveform_function
 //------------------------------------------------------------------------------
 } // namespace eagine::oalp
 
-#endif // OALPLUS_ALUT_API_ENUM_TYPES_HPP
+#endif // EAGINE_OALPLUS_ALUT_API_ENUM_TYPES_HPP

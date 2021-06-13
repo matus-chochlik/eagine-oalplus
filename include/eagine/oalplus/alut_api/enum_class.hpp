@@ -5,8 +5,8 @@
 /// See accompanying file LICENSE_1_0.txt or copy at
 ///  http://www.boost.org/LICENSE_1_0.txt
 ///
-#ifndef OALPLUS_ALUT_API_ENUM_CLASS_HPP
-#define OALPLUS_ALUT_API_ENUM_CLASS_HPP
+#ifndef EAGINE_OALPLUS_ALUT_API_ENUM_CLASS_HPP
+#define EAGINE_OALPLUS_ALUT_API_ENUM_CLASS_HPP
 
 #include "config.hpp"
 #include <eagine/enum_bitfield.hpp>
@@ -42,4 +42,4 @@ same_enum_class(alut_any_enum_class a, alut_any_enum_class b) noexcept -> bool {
 //------------------------------------------------------------------------------
 } // namespace eagine::oalp
 
-#endif // OALPLUS_ALUT_API_ENUM_CLASS_HPP
+#endif // EAGINE_OALPLUS_ALUT_API_ENUM_CLASS_HPP

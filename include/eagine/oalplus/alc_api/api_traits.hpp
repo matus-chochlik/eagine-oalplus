@@ -5,8 +5,8 @@
 /// See accompanying file LICENSE_1_0.txt or copy at
 ///  http://www.boost.org/LICENSE_1_0.txt
 ///
-#ifndef OALPLUS_ALC_API_API_TRAITS_HPP
-#define OALPLUS_ALC_API_API_TRAITS_HPP
+#ifndef EAGINE_OALPLUS_ALC_API_API_TRAITS_HPP
+#define EAGINE_OALPLUS_ALC_API_API_TRAITS_HPP
 
 #include "result.hpp"
 #include <string>
@@ -46,4 +46,4 @@ private:
 //------------------------------------------------------------------------------
 } // namespace eagine::oalp
 
-#endif // OALPLUS_ALC_API_API_TRAITS_HPP
+#endif // EAGINE_OALPLUS_ALC_API_API_TRAITS_HPP

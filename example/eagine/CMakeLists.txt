@@ -11,24 +11,24 @@ set_target_properties(
 
 function(eagine_example_common EXAMPLE_NAME)
 	add_executable(
-		eagine-${EXAMPLE_NAME}
+		oalplus-${EXAMPLE_NAME}
 		EXCLUDE_FROM_ALL
 		"${EXAMPLE_NAME}.cpp"
 		${ARGN}
 	)
-	eagine_add_exe_analysis(eagine-${EXAMPLE_NAME})
-	add_dependencies(eagine-oalplus-examples eagine-${EXAMPLE_NAME})
+	eagine_add_exe_analysis(oalplus-${EXAMPLE_NAME})
+	add_dependencies(eagine-oalplus-examples oalplus-${EXAMPLE_NAME})
 	target_link_libraries(
-		eagine-${EXAMPLE_NAME}
+		oalplus-${EXAMPLE_NAME}
 		PUBLIC EAGine::OALplus
 		PRIVATE ${ARGN}
 	)
 
 	set_target_properties(
-		eagine-${EXAMPLE_NAME}
+		oalplus-${EXAMPLE_NAME}
 		PROPERTIES FOLDER "Example/EAGine/OALplus"
 	)
-	eagine_install_example(eagine-${EXAMPLE_NAME})
+	eagine_install_example(oalplus-${EXAMPLE_NAME})
 endfunction()
 
 add_subdirectory(oalplus)

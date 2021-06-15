@@ -6,8 +6,15 @@
 add_custom_target(eagine-oalplus-examples ALL)
 set_target_properties(
 	eagine-oalplus-examples
-	PROPERTIES FOLDER "Example/EAGine/OALplus"
+	PROPERTIES FOLDER "Example/OALplus"
 )
+
+function(eagine_install_example TARGET_NAME)
+	install(
+		TARGETS ${TARGET_NAME}
+		DESTINATION share/eagine/example/oalplus
+	)
+endfunction()
 
 function(eagine_example_common EXAMPLE_NAME)
 	add_executable(
@@ -26,7 +33,7 @@ function(eagine_example_common EXAMPLE_NAME)
 
 	set_target_properties(
 		oalplus-${EXAMPLE_NAME}
-		PROPERTIES FOLDER "Example/EAGine/OALplus"
+		PROPERTIES FOLDER "Example/OALplus"
 	)
 	eagine_install_example(oalplus-${EXAMPLE_NAME})
 endfunction()

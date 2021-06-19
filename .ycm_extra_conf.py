@@ -117,9 +117,7 @@ def FlagsForFile(filename, ** kwargs):
     path, ext = os.path.splitext(filename)
 
     if ext in [".hpp", ".inl", ".cpp", ".h"]:
-        final_opts += ['-include', 'include/oglplus/gl.hpp']
         final_opts += ['-include', 'include/oalplus/al.hpp']
-        final_opts += ['-include', 'include/eglplus/egl.hpp']
 
     return {
         'flags': makeOptionPathsAbsolute(final_opts),

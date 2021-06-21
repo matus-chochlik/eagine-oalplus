@@ -13,12 +13,12 @@
 #include <eagine/oalplus/alc_api/api.inl>
 // clang-format on
 
-namespace eagine::oalp {
+namespace eagine::oalplus {
 
 template class basic_alc_constants<alc_api_traits>;
 template class basic_alc_operations<alc_api_traits>;
 template class basic_alc_c_api<alc_api_traits>;
 template class basic_alc_api<alc_api_traits>;
 
-} // namespace eagine::oalp
+} // namespace eagine::oalplus
 

@@ -12,7 +12,7 @@
 #include "enum_types.hpp"
 #include <eagine/key_val_list.hpp>
 
-namespace eagine::oalp {
+namespace eagine::oalplus {
 
 /// @brief Traits for ALC context attribute key/value list traits.
 /// @ingroup alc_api_wrap
@@ -59,6 +59,6 @@ static constexpr auto operator|(context_attribute key, bool value) noexcept
 #endif
 }
 
-} // namespace eagine::oalp
+} // namespace eagine::oalplus
 
 #endif // EAGINE_OALPLUS_ALC_API_CONTEXT_ATTRIBS_HPP

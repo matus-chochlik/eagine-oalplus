@@ -12,7 +12,7 @@
 
 auto main() -> int {
     using namespace eagine;
-    using namespace eagine::oalp;
+    using namespace eagine::oalplus;
 
     alc_api alc;
 

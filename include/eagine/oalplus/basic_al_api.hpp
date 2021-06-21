@@ -12,7 +12,7 @@
 #include "al_api/api_traits.hpp"
 #include "al_api/constants.hpp"
 
-namespace eagine::oalp {
+namespace eagine::oalplus {
 //------------------------------------------------------------------------------
 template <typename ApiTraits>
 class basic_al_api
@@ -43,23 +43,23 @@ auto get(const basic_al_api<ApiTraits>& x) noexcept -> const
     return x;
 }
 //------------------------------------------------------------------------------
-} // namespace eagine::oalp
+} // namespace eagine::oalplus
 
 // NOLINTNEXTLINE(cert-dcl58-cpp)
 namespace std {
 //------------------------------------------------------------------------------
 template <typename ApiTraits>
-struct tuple_size<eagine::oalp::basic_al_api<ApiTraits>>
+struct tuple_size<eagine::oalplus::basic_al_api<ApiTraits>>
   : public std::integral_constant<std::size_t, 2> {};
 
 template <typename ApiTraits>
-struct tuple_element<0, eagine::oalp::basic_al_api<ApiTraits>> {
-    using type = eagine::oalp::basic_al_operations<ApiTraits>;
+struct tuple_element<0, eagine::oalplus::basic_al_api<ApiTraits>> {
+    using type = eagine::oalplus::basic_al_operations<ApiTraits>;
 };
 
 template <typename ApiTraits>
-struct tuple_element<1, eagine::oalp::basic_al_api<ApiTraits>> {
-    using type = eagine::oalp::basic_al_constants<ApiTraits>;
+struct tuple_element<1, eagine::oalplus::basic_al_api<ApiTraits>> {
+    using type = eagine::oalplus::basic_al_constants<ApiTraits>;
 };
 //------------------------------------------------------------------------------
 } // namespace std

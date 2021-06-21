@@ -21,7 +21,7 @@
 #endif
 #endif
 
-namespace eagine::oalp {
+namespace eagine::oalplus {
 //------------------------------------------------------------------------------
 /// @brief Class wrapping the C-functions from the AL API.
 /// @ingroup al_api_wrap
@@ -619,6 +619,6 @@ public:
 /// @ingroup al_api_wrap
 using al_c_api = basic_al_c_api<al_api_traits>;
 //------------------------------------------------------------------------------
-} // namespace eagine::oalp
+} // namespace eagine::oalplus
 
 #endif // EAGINE_OALPLUS_AL_API_C_API_HPP

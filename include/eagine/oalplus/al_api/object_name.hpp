@@ -12,7 +12,7 @@
 #include <eagine/handle.hpp>
 #include <eagine/message_id.hpp>
 
-namespace eagine::oalp {
+namespace eagine::oalplus {
 //------------------------------------------------------------------------------
 template <typename Tag>
 using al_object_name = basic_handle<Tag, al_types::name_type>;
@@ -39,6 +39,6 @@ using owned_filter_name = al_owned_object_name<filter_tag>;
 using owned_auxiliary_effect_slot_name =
   al_owned_object_name<auxiliary_effect_slot_tag>;
 //------------------------------------------------------------------------------
-} // namespace eagine::oalp
+} // namespace eagine::oalplus
 
 #endif // EAGINE_OALPLUS_AL_API_OBJECT_NAME_HPP

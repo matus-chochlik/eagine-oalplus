@@ -6,7 +6,7 @@
 ///  http://www.boost.org/LICENSE_1_0.txt
 ///
 
-namespace eagine::oalp {
+namespace eagine::oalplus {
 //------------------------------------------------------------------------------
 template <typename ApiTraits>
 basic_alc_c_api<ApiTraits>::basic_alc_c_api(api_traits& traits)
@@ -31,5 +31,5 @@ basic_alc_c_api<ApiTraits>::basic_alc_c_api(api_traits& traits)
   , CaptureStop("CaptureStop", traits, *this)
   , CaptureSamples("CaptureSamples", traits, *this) {}
 //------------------------------------------------------------------------------
-} // namespace eagine::oalp
+} // namespace eagine::oalplus
 

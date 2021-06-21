@@ -24,7 +24,7 @@
 #include <cstdint>
 #endif
 
-namespace eagine::oalp {
+namespace eagine::oalplus {
 //------------------------------------------------------------------------------
 /// @brief Collection of aliases for ALUT types.
 /// @ingroup al_api_wrap
@@ -83,6 +83,6 @@ struct alut_types {
     }
 };
 //------------------------------------------------------------------------------
-} // namespace eagine::oalp
+} // namespace eagine::oalplus
 
 #endif // EAGINE_OALPLUS_ALUT_API_CONFIG_HPP

@@ -6,7 +6,7 @@
 ///  http://www.boost.org/LICENSE_1_0.txt
 ///
 
-namespace eagine::oalp {
+namespace eagine::oalplus {
 //------------------------------------------------------------------------------
 template <typename Api, typename Type>
 auto alc_api_traits::load_constant(
@@ -44,5 +44,5 @@ auto alc_api_traits::link_function(
     return nullptr;
 }
 //------------------------------------------------------------------------------
-} // namespace eagine::oalp
+} // namespace eagine::oalplus
 

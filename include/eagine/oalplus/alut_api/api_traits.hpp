@@ -10,7 +10,7 @@
 
 #include "result.hpp"
 
-namespace eagine::oalp {
+namespace eagine::oalplus {
 //------------------------------------------------------------------------------
 /// @brief Policy customizing the generic C-API wrappers for the ALUT API
 /// @ingroup al_api_wrap
@@ -33,6 +33,6 @@ private:
     std::string _full_name;
 };
 //------------------------------------------------------------------------------
-} // namespace eagine::oalp
+} // namespace eagine::oalplus
 
 #endif // EAGINE_OALPLUS_ALUT_API_API_TRAITS_HPP

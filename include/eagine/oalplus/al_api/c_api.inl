@@ -6,7 +6,7 @@
 ///  http://www.boost.org/LICENSE_1_0.txt
 ///
 
-namespace eagine::oalp {
+namespace eagine::oalplus {
 //------------------------------------------------------------------------------
 template <typename ApiTraits>
 basic_al_c_api<ApiTraits>::basic_al_c_api(api_traits& traits)
@@ -103,5 +103,5 @@ basic_al_c_api<ApiTraits>::basic_al_c_api(api_traits& traits)
   , GetAuxiliaryEffectSlotf("GetEffecti", traits, *this)
   , GetAuxiliaryEffectSlotfv("GetEffecti", traits, *this) {}
 //------------------------------------------------------------------------------
-} // namespace eagine::oalp
+} // namespace eagine::oalplus
 

@@ -6,7 +6,7 @@
 ///  http://www.boost.org/LICENSE_1_0.txt
 ///
 
-namespace eagine::oalp {
+namespace eagine::oalplus {
 //------------------------------------------------------------------------------
 template <typename ApiTraits>
 basic_alc_constants<ApiTraits>::basic_alc_constants(
@@ -40,5 +40,5 @@ basic_alc_constants<ApiTraits>::basic_alc_constants(
   , hrtf_id_soft("HRTF_ID_SOFT", traits, api)
   , hrtf_specifier_soft("HRTF_SPECIFIER_SOFT", traits, api) {}
 //------------------------------------------------------------------------------
-} // namespace eagine::oalp
+} // namespace eagine::oalplus
 

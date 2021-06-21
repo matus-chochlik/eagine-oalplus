@@ -6,7 +6,7 @@
 ///  http://www.boost.org/LICENSE_1_0.txt
 ///
 
-namespace eagine::oalp {
+namespace eagine::oalplus {
 //------------------------------------------------------------------------------
 template <typename ApiTraits>
 basic_alut_c_api<ApiTraits>::basic_alut_c_api(api_traits& traits)
@@ -20,4 +20,4 @@ basic_alut_c_api<ApiTraits>::basic_alut_c_api(api_traits& traits)
   , CreateBufferWaveform("CreateBufferWaveform", traits, *this)
   , Exit("Exit", traits, *this) {}
 //------------------------------------------------------------------------------
-} // namespace eagine::oalp
+} // namespace eagine::oalplus

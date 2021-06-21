@@ -10,7 +10,7 @@
 
 #include "enum_class.hpp"
 
-namespace eagine::oalp {
+namespace eagine::oalplus {
 //------------------------------------------------------------------------------
 /// @brief Typed enumeration for ALUT error code constants.
 /// @ingroup al_api_wrap
@@ -28,6 +28,6 @@ struct waveform_function
     using enum_class::enum_class;
 };
 //------------------------------------------------------------------------------
-} // namespace eagine::oalp
+} // namespace eagine::oalplus
 
 #endif // EAGINE_OALPLUS_ALUT_API_ENUM_TYPES_HPP

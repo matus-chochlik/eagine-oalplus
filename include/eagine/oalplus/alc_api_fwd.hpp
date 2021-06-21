@@ -8,7 +8,7 @@
 #ifndef EAGINE_OALPLUS_ALC_API_FWD_HPP
 #define EAGINE_OALPLUS_ALC_API_FWD_HPP
 
-namespace eagine::oalp {
+namespace eagine::oalplus {
 //------------------------------------------------------------------------------
 class alc_api_traits;
 
@@ -19,6 +19,6 @@ class basic_alc_api;
 /// @ingroup al_api_wrap
 using alc_api = basic_alc_api<alc_api_traits>;
 //------------------------------------------------------------------------------
-} // namespace eagine::oalp
+} // namespace eagine::oalplus
 
 #endif // EAGINE_OALPLUS_ALC_API_FWD_HPP

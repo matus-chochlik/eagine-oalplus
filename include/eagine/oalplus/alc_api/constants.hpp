@@ -11,7 +11,7 @@
 #include "c_api.hpp"
 #include "enum_types.hpp"
 
-namespace eagine::oalp {
+namespace eagine::oalplus {
 //------------------------------------------------------------------------------
 /// @brief Class wrapping the constants from the ALC API.
 /// @ingroup al_api_wrap
@@ -262,6 +262,6 @@ public:
     basic_alc_constants(ApiTraits& traits, basic_alc_c_api<ApiTraits>& api);
 };
 //------------------------------------------------------------------------------
-} // namespace eagine::oalp
+} // namespace eagine::oalplus
 
 #endif // EAGINE_OALPLUS_ALC_API_CONSTANTS_HPP

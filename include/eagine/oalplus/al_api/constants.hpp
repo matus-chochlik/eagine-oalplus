@@ -11,7 +11,7 @@
 #include "c_api.hpp"
 #include "enum_types.hpp"
 
-namespace eagine::oalp {
+namespace eagine::oalplus {
 //------------------------------------------------------------------------------
 /// @brief Class wrapping the constants from the AL API.
 /// @ingroup al_api_wrap
@@ -155,13 +155,13 @@ public:
 #else
       enum_type_i,
 #endif
-      oalp::distance_model>
+      oalplus::distance_model>
       distance_model;
 
     /// @var inverse_distance
     /// @alconstwrap{INVERSE_DISTANCE}
     opt_c_api_constant<
-      mp_list<oalp::distance_model>,
+      mp_list<oalplus::distance_model>,
 #ifdef AL_INVERSE_DISTANCE
       enum_type_c<AL_INVERSE_DISTANCE>>
 #else
@@ -172,7 +172,7 @@ public:
     /// @var inverse_distance_clamped
     /// @alconstwrap{INVERSE_DISTANCE_CLAMPED}
     opt_c_api_constant<
-      mp_list<oalp::distance_model>,
+      mp_list<oalplus::distance_model>,
 #ifdef AL_INVERSE_DISTANCE_CLAMPED
       enum_type_c<AL_INVERSE_DISTANCE_CLAMPED>>
 #else
@@ -183,7 +183,7 @@ public:
     /// @var linear_distance
     /// @alconstwrap{LINEAR_DISTANCE}
     opt_c_api_constant<
-      mp_list<oalp::distance_model>,
+      mp_list<oalplus::distance_model>,
 #ifdef AL_LINEAR_DISTANCE
       enum_type_c<AL_LINEAR_DISTANCE>>
 #else
@@ -194,7 +194,7 @@ public:
     /// @var linear_distance_clamped
     /// @alconstwrap{LINEAR_DISTANCE_CLAMPED}
     opt_c_api_constant<
-      mp_list<oalp::distance_model>,
+      mp_list<oalplus::distance_model>,
 #ifdef AL_LINEAR_DISTANCE_CLAMPED
       enum_type_c<AL_LINEAR_DISTANCE_CLAMPED>>
 #else
@@ -205,7 +205,7 @@ public:
     /// @var exponent_distance
     /// @alconstwrap{EXPONENT_DISTANCE}
     opt_c_api_constant<
-      mp_list<oalp::distance_model>,
+      mp_list<oalplus::distance_model>,
 #ifdef AL_EXPONENT_DISTANCE
       enum_type_c<AL_EXPONENT_DISTANCE>>
 #else
@@ -216,7 +216,7 @@ public:
     /// @var exponent_distance_clamped
     /// @alconstwrap{EXPONENT_DISTANCE_CLAMPED}
     opt_c_api_constant<
-      mp_list<oalp::distance_model>,
+      mp_list<oalplus::distance_model>,
 #ifdef AL_EXPONENT_DISTANCE_CLAMPED
       enum_type_c<AL_EXPONENT_DISTANCE_CLAMPED>>
 #else
@@ -623,7 +623,7 @@ public:
     /// @var undetermined
     /// @alconstwrap{UNDETERMINED}
     opt_c_api_constant<
-      mp_list<oalp::source_type>,
+      mp_list<oalplus::source_type>,
 #ifdef AL_UNDETERMINED
       enum_type_c<AL_UNDETERMINED>>
 #else
@@ -634,7 +634,7 @@ public:
     /// @var static_
     /// @alconstwrap{STATIC}
     opt_c_api_constant<
-      mp_list<oalp::source_type>,
+      mp_list<oalplus::source_type>,
 #ifdef AL_STATIC
       enum_type_c<AL_STATIC>>
 #else
@@ -645,7 +645,7 @@ public:
     /// @var streaming
     /// @alconstwrap{STREAMING}
     opt_c_api_constant<
-      mp_list<oalp::source_type>,
+      mp_list<oalplus::source_type>,
 #ifdef AL_STREAMING
       enum_type_c<AL_STREAMING>>
 #else
@@ -656,7 +656,7 @@ public:
     /// @var initial
     /// @alconstwrap{INITIAL}
     opt_c_api_constant<
-      mp_list<oalp::source_state>,
+      mp_list<oalplus::source_state>,
 #ifdef AL_INITIAL
       enum_type_c<AL_INITIAL>>
 #else
@@ -667,7 +667,7 @@ public:
     /// @var playing
     /// @alconstwrap{PLAYING}
     opt_c_api_constant<
-      mp_list<oalp::source_state>,
+      mp_list<oalplus::source_state>,
 #ifdef AL_PLAYING
       enum_type_c<AL_PLAYING>>
 #else
@@ -678,7 +678,7 @@ public:
     /// @var paused
     /// @alconstwrap{PAUSED}
     opt_c_api_constant<
-      mp_list<oalp::source_state>,
+      mp_list<oalplus::source_state>,
 #ifdef AL_PAUSED
       enum_type_c<AL_PAUSED>>
 #else
@@ -689,7 +689,7 @@ public:
     /// @var stopped
     /// @alconstwrap{STOPPED}
     opt_c_api_constant<
-      mp_list<oalp::source_state>,
+      mp_list<oalplus::source_state>,
 #ifdef AL_STOPPED
       enum_type_c<AL_STOPPED>>
 #else
@@ -700,7 +700,7 @@ public:
     /// @var none
     /// @alconstwrap{NONE}
     opt_c_api_constant<
-      mp_list<oalp::distance_model>,
+      mp_list<oalplus::distance_model>,
 #ifdef AL_NONE
       enum_type_c<AL_NONE>>
 #else
@@ -711,6 +711,6 @@ public:
     basic_al_constants(ApiTraits& traits, basic_al_c_api<ApiTraits>& api);
 };
 //------------------------------------------------------------------------------
-} // namespace eagine::oalp
+} // namespace eagine::oalplus
 
 #endif // EAGINE_OALPLUS_AL_API_CONSTANTS_HPP

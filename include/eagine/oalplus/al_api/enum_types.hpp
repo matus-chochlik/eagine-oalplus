@@ -10,7 +10,7 @@
 
 #include "enum_class.hpp"
 
-namespace eagine::oalp {
+namespace eagine::oalplus {
 //------------------------------------------------------------------------------
 /// @brief Typed enumeration for AL error code constants.
 /// @ingroup al_api_wrap
@@ -96,6 +96,6 @@ struct source_type : al_enum_class<source_type, EAGINE_ID_V(SourceType)> {
     using enum_class::enum_class;
 };
 //------------------------------------------------------------------------------
-} // namespace eagine::oalp
+} // namespace eagine::oalplus
 
 #endif // EAGINE_OALPLUS_AL_API_ENUM_TYPES_HPP

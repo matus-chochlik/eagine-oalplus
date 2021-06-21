@@ -5,7 +5,7 @@
 /// See accompanying file LICENSE_1_0.txt or copy at
 ///  http://www.boost.org/LICENSE_1_0.txt
 ///
-namespace eagine::oalp {
+namespace eagine::oalplus {
 //------------------------------------------------------------------------------
 template <typename ApiTraits>
 basic_alut_constants<ApiTraits>::basic_alut_constants(
@@ -18,5 +18,5 @@ basic_alut_constants<ApiTraits>::basic_alut_constants(
   , waveform_whitenoise("WAVEFORM_WHITENOISE", traits, api)
   , waveform_impulse("WAVEFORM_IMPULSE", traits, api) {}
 //------------------------------------------------------------------------------
-} // namespace eagine::oalp
+} // namespace eagine::oalplus
 

@@ -6,7 +6,7 @@
 ///  http://www.boost.org/LICENSE_1_0.txt
 ///
 
-namespace eagine::oalp {
+namespace eagine::oalplus {
 //------------------------------------------------------------------------------
 template <typename ApiTraits>
 basic_alut_operations<ApiTraits>::basic_alut_operations(api_traits& traits)
@@ -15,4 +15,4 @@ basic_alut_operations<ApiTraits>::basic_alut_operations(api_traits& traits)
   , create_buffer_hello_world("create_buffer_hello_world", traits, *this)
   , exit("exit", traits, *this) {}
 //------------------------------------------------------------------------------
-} // namespace eagine::oalp
+} // namespace eagine::oalplus

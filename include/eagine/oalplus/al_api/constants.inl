@@ -6,7 +6,7 @@
 ///  http://www.boost.org/LICENSE_1_0.txt
 ///
 
-namespace eagine::oalp {
+namespace eagine::oalplus {
 //------------------------------------------------------------------------------
 template <typename ApiTraits>
 basic_al_constants<ApiTraits>::basic_al_constants(
@@ -86,5 +86,5 @@ basic_al_constants<ApiTraits>::basic_al_constants(
   , stopped("STOPPED", traits, api)
   , none("NONE", traits, api) {}
 //------------------------------------------------------------------------------
-} // namespace eagine::oalp
+} // namespace eagine::oalplus
 

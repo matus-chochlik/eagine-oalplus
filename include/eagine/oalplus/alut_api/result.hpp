@@ -13,7 +13,7 @@
 #include <eagine/c_api_wrap.hpp>
 #include <eagine/string_span.hpp>
 
-namespace eagine::oalp {
+namespace eagine::oalplus {
 //------------------------------------------------------------------------------
 /// @brief Class storing information about call result for unavailable ALUT functions.
 /// @ingroup gl_api_wrap
@@ -179,6 +179,6 @@ using alut_result = api_result<Result, alut_result_info>;
 template <typename Result>
 using alut_opt_result = api_opt_result<Result, alut_result_info>;
 //------------------------------------------------------------------------------
-} // namespace eagine::oalp
+} // namespace eagine::oalplus
 
 #endif // EAGINE_OALPLUS_ALUT_API_RESULT_HPP

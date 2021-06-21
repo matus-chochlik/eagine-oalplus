@@ -6,7 +6,7 @@
 ///  http://www.boost.org/LICENSE_1_0.txt
 ///
 
-namespace eagine::oalp {
+namespace eagine::oalplus {
 //------------------------------------------------------------------------------
 template <typename ApiTraits>
 basic_al_operations<ApiTraits>::basic_al_operations(api_traits& traits)
@@ -46,5 +46,5 @@ basic_al_operations<ApiTraits>::basic_al_operations(api_traits& traits)
   , source_rewind("source_rewind", traits, *this)
   , get_string("get_string", traits, *this) {}
 //------------------------------------------------------------------------------
-} // namespace eagine::oalp
+} // namespace eagine::oalplus
 

@@ -10,7 +10,7 @@
 
 #include "enum_class.hpp"
 
-namespace eagine::oalp {
+namespace eagine::oalplus {
 //------------------------------------------------------------------------------
 /// @brief Typed enumeration for ALC error code constants.
 /// @ingroup al_api_wrap
@@ -41,6 +41,6 @@ struct alc_integer_query
     using enum_class::enum_class;
 };
 //------------------------------------------------------------------------------
-} // namespace eagine::oalp
+} // namespace eagine::oalplus
 
 #endif // EAGINE_OALPLUS_ALC_API_ENUM_TYPES_HPP

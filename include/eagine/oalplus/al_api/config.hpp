@@ -23,7 +23,7 @@
 #include <cstdint>
 #endif
 
-namespace eagine::oalp {
+namespace eagine::oalplus {
 //------------------------------------------------------------------------------
 /// @brief Collection of aliases for AL types.
 /// @ingroup al_api_wrap
@@ -109,6 +109,6 @@ struct al_types {
     }
 };
 //------------------------------------------------------------------------------
-} // namespace eagine::oalp
+} // namespace eagine::oalplus
 
 #endif // EAGINE_OALPLUS_AL_API_CONFIG_HPP

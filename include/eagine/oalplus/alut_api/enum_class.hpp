@@ -13,7 +13,7 @@
 #include <eagine/enum_class.hpp>
 #include <eagine/identifier.hpp>
 
-namespace eagine::oalp {
+namespace eagine::oalplus {
 //------------------------------------------------------------------------------
 /// @brief Typed wrapper class for ALUT enum constants/values.
 /// @ingroup al_api_wrap
@@ -40,6 +40,6 @@ same_enum_class(alut_any_enum_class a, alut_any_enum_class b) noexcept -> bool {
     return ::eagine::same_enum_class(a, b);
 }
 //------------------------------------------------------------------------------
-} // namespace eagine::oalp
+} // namespace eagine::oalplus
 
 #endif // EAGINE_OALPLUS_ALUT_API_ENUM_CLASS_HPP

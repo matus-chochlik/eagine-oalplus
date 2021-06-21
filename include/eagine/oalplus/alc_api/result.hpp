@@ -13,7 +13,7 @@
 #include <eagine/c_api_wrap.hpp>
 #include <eagine/string_span.hpp>
 
-namespace eagine::oalp {
+namespace eagine::oalplus {
 //------------------------------------------------------------------------------
 /// @brief Class storing information about call result for unavailable ALC functions.
 /// @ingroup al_api_wrap
@@ -119,6 +119,6 @@ using alc_result = api_result<Result, alc_result_info>;
 template <typename Result>
 using alc_opt_result = api_opt_result<Result, alc_result_info>;
 //------------------------------------------------------------------------------
-} // namespace eagine::oalp
+} // namespace eagine::oalplus
 
 #endif // EAGINE_OALPLUS_ALC_API_RESULT_HPP

@@ -11,7 +11,7 @@
 #include "c_api.hpp"
 #include "enum_types.hpp"
 
-namespace eagine::oalp {
+namespace eagine::oalplus {
 //------------------------------------------------------------------------------
 /// @brief Class wrapping the constants from the ALUT API.
 /// @ingroup al_api_wrap
@@ -94,6 +94,6 @@ public:
     basic_alut_constants(ApiTraits& traits, basic_alut_c_api<ApiTraits>& api);
 };
 //------------------------------------------------------------------------------
-} // namespace eagine::oalp
+} // namespace eagine::oalplus
 
 #endif // EAGINE_OALPLUS_ALUT_API_CONSTANTS_HPP

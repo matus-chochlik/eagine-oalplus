@@ -11,8 +11,8 @@ namespace eagine::oalplus {
 template <typename ApiTraits>
 basic_alut_operations<ApiTraits>::basic_alut_operations(api_traits& traits)
   : c_api{traits}
-  , init("init", traits, *this)
-  , create_buffer_hello_world("create_buffer_hello_world", traits, *this)
-  , exit("exit", traits, *this) {}
+  , init{"init", traits, *this}
+  , create_buffer_hello_world{"create_buffer_hello_world", traits, *this}
+  , exit{"exit", traits, *this} {}
 //------------------------------------------------------------------------------
 } // namespace eagine::oalplus

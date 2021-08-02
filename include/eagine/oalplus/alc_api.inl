@@ -21,4 +21,3 @@ template class basic_alc_c_api<alc_api_traits>;
 template class basic_alc_api<alc_api_traits>;
 
 } // namespace eagine::oalplus
-

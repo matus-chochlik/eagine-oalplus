@@ -35,8 +35,9 @@ using alut_any_enum_class = any_enum_class<EAGINE_ID_V(ALUT)>;
 /// @ingroup al_api_wrap
 using alut_any_enum_value = any_enum_value<EAGINE_ID_V(ALUT)>;
 
-static constexpr auto
-same_enum_class(alut_any_enum_class a, alut_any_enum_class b) noexcept -> bool {
+static constexpr auto same_enum_class(
+  alut_any_enum_class a,
+  alut_any_enum_class b) noexcept -> bool {
     return ::eagine::same_enum_class(a, b);
 }
 //------------------------------------------------------------------------------

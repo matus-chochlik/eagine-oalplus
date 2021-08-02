@@ -32,4 +32,3 @@ basic_alc_c_api<ApiTraits>::basic_alc_c_api(api_traits& traits)
   , CaptureSamples{"CaptureSamples", traits, *this} {}
 //------------------------------------------------------------------------------
 } // namespace eagine::oalplus
-

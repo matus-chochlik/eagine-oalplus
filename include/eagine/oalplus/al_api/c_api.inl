@@ -104,4 +104,3 @@ basic_al_c_api<ApiTraits>::basic_al_c_api(api_traits& traits)
   , GetAuxiliaryEffectSlotfv{"GetEffecti", traits, *this} {}
 //------------------------------------------------------------------------------
 } // namespace eagine::oalplus
-

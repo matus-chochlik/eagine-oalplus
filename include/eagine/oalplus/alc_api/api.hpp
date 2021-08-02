@@ -53,8 +53,8 @@ public:
 
     protected:
         template <typename... Args>
-        constexpr auto
-        _chkcall(device_handle dev, Args&&... args) const noexcept {
+        constexpr auto _chkcall(device_handle dev, Args&&... args)
+          const noexcept {
             return this->_check(dev, this->_call(std::forward<Args>(args)...));
         }
 
@@ -114,8 +114,8 @@ public:
     struct : func<OALPAFP(DestroyContext)> {
         using func<OALPAFP(DestroyContext)>::func;
 
-        constexpr auto
-        operator()(device_handle dev, context_handle ctx) const noexcept {
+        constexpr auto operator()(device_handle dev, context_handle ctx)
+          const noexcept {
             return this->_chkcall(dev, ctx);
         }
 
@@ -128,8 +128,8 @@ public:
     struct : func<OALPAFP(MakeContextCurrent)> {
         using func<OALPAFP(MakeContextCurrent)>::func;
 
-        constexpr auto
-        operator()(device_handle dev, context_handle ctx) const noexcept {
+        constexpr auto operator()(device_handle dev, context_handle ctx)
+          const noexcept {
             return this->_chkcall(dev, ctx);
         }
 
@@ -171,8 +171,8 @@ public:
     struct : func<OALPAFP(GetIntegerv)> {
         using func<OALPAFP(GetIntegerv)>::func;
 
-        constexpr auto
-        operator()(device_handle dev, alc_integer_query query) const noexcept {
+        constexpr auto operator()(device_handle dev, alc_integer_query query)
+          const noexcept {
             int_type result{};
             return this
               ->_chkcall(dev, dev, enum_type(query), size_type(1), &result)
@@ -196,8 +196,8 @@ public:
     struct : func<OALPAFP(GetString)> {
         using func<OALPAFP(GetString)>::func;
 
-        constexpr auto
-        operator()(device_handle dev, alc_string_query query) const noexcept {
+        constexpr auto operator()(device_handle dev, alc_string_query query)
+          const noexcept {
             return this->_chkcall(dev, dev, enum_type(query))
               .cast_to(type_identity<string_view>{});
         }

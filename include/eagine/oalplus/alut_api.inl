@@ -21,4 +21,3 @@ template class basic_alut_c_api<alut_api_traits>;
 template class basic_alut_api<alut_api_traits>;
 
 } // namespace eagine::oalplus
-

@@ -42,16 +42,17 @@ using context_attribute_value = key_value_list_element<context_attrib_traits>;
 /// @ingroup alc_api_wrap
 /// @relates config_attributes
 static constexpr auto operator|(
-  context_attribute key,
-  alc_types::int_type value) noexcept -> context_attribute_value {
+  const context_attribute key,
+  const alc_types::int_type value) noexcept -> context_attribute_value {
     return {key, value};
 }
 
 /// @brief Concatenation operator for context attribute list key and value.
 /// @ingroup alc_api_wrap
 /// @relates config_attributes
-static constexpr auto operator|(context_attribute key, bool value) noexcept
-  -> context_attribute_value {
+static constexpr auto operator|(
+  const context_attribute key,
+  const bool value) noexcept -> context_attribute_value {
 #if defined(ALC_TRUE) && defined(ALC_FALSE)
     return {key, value ? ALC_TRUE : ALC_FALSE};
 #else

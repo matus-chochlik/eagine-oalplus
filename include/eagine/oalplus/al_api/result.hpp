@@ -21,7 +21,7 @@ namespace eagine::oalplus {
 /// @see al_result_info
 class al_no_result_info {
 public:
-    constexpr auto error_code(anything) noexcept -> auto& {
+    constexpr auto error_code(const anything) noexcept -> auto& {
         return *this;
     }
 
@@ -46,7 +46,7 @@ public:
         return al_types::error_code_no_error(_error_code);
     }
 
-    constexpr auto error_code(enum_type ec) noexcept -> auto& {
+    constexpr auto error_code(const enum_type ec) noexcept -> auto& {
         _error_code = ec;
         return *this;
     }

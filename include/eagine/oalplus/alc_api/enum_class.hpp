@@ -37,8 +37,8 @@ using alc_any_enum_class = any_enum_class<EAGINE_ID_V(ALC)>;
 using alc_any_enum_value = any_enum_value<EAGINE_ID_V(ALC)>;
 
 static constexpr auto same_enum_class(
-  alc_any_enum_class a,
-  alc_any_enum_class b) noexcept -> bool {
+  const alc_any_enum_class a,
+  const alc_any_enum_class b) noexcept -> bool {
     return ::eagine::same_enum_class(a, b);
 }
 //------------------------------------------------------------------------------

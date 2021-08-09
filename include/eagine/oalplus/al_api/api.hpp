@@ -125,12 +125,12 @@ public:
             return this->_chkcall(1, &n);
         }
 
-        auto raii(al_owned_object_name<ObjTag>& name) noexcept {
+        auto raii(al_owned_object_name<ObjTag>& name) const noexcept {
             return eagine::finally([this, &name]() { (*this)(name); });
         }
 
         template <typename Res>
-        auto raii_opt(Res& res) noexcept {
+        auto raii_opt(Res& res) const noexcept {
             return eagine::finally([this, &res]() {
                 if(res) {
                     (*this)(extract(res));
@@ -608,14 +608,14 @@ public:
     } get_string;
 
     // get_strings
-    auto get_strings(al_string_query query, char separator) noexcept {
+    auto get_strings(al_string_query query, char separator) const noexcept {
         return get_string(query).transformed([separator](auto src) {
             return split_into_string_list(src, separator);
         });
     }
 
     // get_extensions
-    auto get_extensions() noexcept {
+    auto get_extensions() const noexcept {
 #ifdef AL_EXTENSIONS
         return get_string(al_string_query(AL_EXTENSIONS))
 #else

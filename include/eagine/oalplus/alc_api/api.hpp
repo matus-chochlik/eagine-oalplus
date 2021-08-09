@@ -90,7 +90,7 @@ public:
             return this->_chkcall(dev, dev);
         }
 
-        auto raii(device_handle dev) noexcept {
+        auto raii(device_handle dev) const noexcept {
             return eagine::finally([=]() { (*this)(dev); });
         }
     } close_device;
@@ -119,7 +119,7 @@ public:
             return this->_chkcall(dev, ctx);
         }
 
-        auto raii(device_handle dev, context_handle ctx) noexcept {
+        auto raii(device_handle dev, context_handle ctx) const noexcept {
             return eagine::finally([=]() { (*this)(dev, ctx); });
         }
     } destroy_context;
@@ -145,11 +145,11 @@ public:
             return this->_chkcall(nullptr, nullptr);
         }
 
-        auto raii(device_handle dev) noexcept {
+        auto raii(device_handle dev) const noexcept {
             return eagine::finally([=]() { (*this)(dev); });
         }
 
-        auto raii() noexcept {
+        auto raii() const noexcept {
             return eagine::finally([=]() { (*this)(); });
         }
     } make_context_current;
@@ -213,17 +213,15 @@ public:
     } get_string;
 
     // get_strings
-    auto get_strings(
-      device_handle dev,
-      alc_string_query query,
-      char separator) noexcept {
+    auto get_strings(device_handle dev, alc_string_query query, char separator)
+      const noexcept {
         return get_string(dev, query).transformed([separator](auto src) {
             return split_into_string_list(src, separator);
         });
     }
 
     // get_extensions
-    auto get_extensions(device_handle dev) noexcept {
+    auto get_extensions(device_handle dev) const noexcept {
 #ifdef ALC_EXTENSIONS
         return get_string(dev, alc_string_query(ALC_EXTENSIONS))
 #else
@@ -234,7 +232,7 @@ public:
     }
 
     // get_default_device_specifier
-    auto get_default_device_specifier() noexcept {
+    auto get_default_device_specifier() const noexcept {
 #ifdef ALC_DEFAULT_DEVICE_SPECIFIER
         return get_string(
           nullptr, alc_string_query(ALC_DEFAULT_DEVICE_SPECIFIER));
@@ -244,7 +242,7 @@ public:
     }
 
     // get_device_specifiers
-    auto get_device_specifiers() noexcept {
+    auto get_device_specifiers() const noexcept {
 #ifdef ALC_DEVICE_SPECIFIER
         return get_string(nullptr, alc_string_query(ALC_DEVICE_SPECIFIER))
 #else
@@ -255,7 +253,7 @@ public:
     }
 
     // get_capture_default_device_specifier
-    auto get_capture_default_device_specifier() noexcept {
+    auto get_capture_default_device_specifier() const noexcept {
 #ifdef ALC_CAPTURE_DEFAULT_DEVICE_SPECIFIER
         return get_string(
           nullptr, alc_string_query(ALC_CAPTURE_DEFAULT_DEVICE_SPECIFIER));
@@ -265,7 +263,7 @@ public:
     }
 
     // get_capture_device_specifiers
-    auto get_capture_device_specifiers() noexcept {
+    auto get_capture_device_specifiers() const noexcept {
 #ifdef ALC_CAPTURE_DEVICE_SPECIFIER
         return get_string(
                  nullptr, alc_string_query(ALC_CAPTURE_DEVICE_SPECIFIER))

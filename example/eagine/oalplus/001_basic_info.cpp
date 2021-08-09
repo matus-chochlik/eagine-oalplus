@@ -14,7 +14,7 @@ auto main() -> int {
     using namespace eagine;
     using namespace eagine::oalplus;
 
-    alc_api alc;
+    const alc_api alc;
 
     std::cout << "Default playback device: "
               << extract_or(alc.get_default_device_specifier(), "N/A")

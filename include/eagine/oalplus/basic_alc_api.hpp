@@ -29,13 +29,17 @@ public:
 
     basic_alc_api()
       : basic_alc_api{ApiTraits{}} {}
-};
 
-template <std::size_t I, typename ApiTraits>
-auto get(basic_alc_api<ApiTraits>& x) noexcept ->
-  typename std::tuple_element<I, basic_alc_api<ApiTraits>>::type& {
-    return x;
-}
+    /// @brief Returns a reference to the wrapped operations.
+    auto operations() const noexcept -> const basic_alc_operations<ApiTraits>& {
+        return *this;
+    }
+
+    /// @brief Returns a reference to the wrapped constants.
+    auto constants() const noexcept -> const basic_alc_constants<ApiTraits>& {
+        return *this;
+    }
+};
 
 template <std::size_t I, typename ApiTraits>
 auto get(const basic_alc_api<ApiTraits>& x) noexcept -> const

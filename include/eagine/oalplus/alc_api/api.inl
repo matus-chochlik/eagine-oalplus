@@ -21,4 +21,3 @@ basic_alc_operations<ApiTraits>::basic_alc_operations(api_traits& traits)
   , get_string{"get_string", traits, *this} {}
 //------------------------------------------------------------------------------
 } // namespace eagine::oalplus
-

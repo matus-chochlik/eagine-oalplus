@@ -119,18 +119,18 @@ public:
             return this->_chkcall(size_type(names.size()), names.data());
         }
 
-        constexpr auto
-        operator()(al_owned_object_name<ObjTag>& name) const noexcept {
+        constexpr auto operator()(
+          al_owned_object_name<ObjTag>& name) const noexcept {
             auto n = name.release();
             return this->_chkcall(1, &n);
         }
 
-        auto raii(al_owned_object_name<ObjTag>& name) noexcept {
+        auto raii(al_owned_object_name<ObjTag>& name) const noexcept {
             return eagine::finally([this, &name]() { (*this)(name); });
         }
 
         template <typename Res>
-        auto raii_opt(Res& res) noexcept {
+        auto raii_opt(Res& res) const noexcept {
             return eagine::finally([this, &res]() {
                 if(res) {
                     (*this)(extract(res));
@@ -191,8 +191,8 @@ public:
                    bool(this->api().Listener3i) && bool(this->api().Listeneriv);
         }
 
-        constexpr auto
-        operator()(listener_attribute attr, int_type v0) const noexcept {
+        constexpr auto operator()(listener_attribute attr, int_type v0)
+          const noexcept {
             return this->_check(
               this->_call(this->api().Listeneri, enum_type(attr), v0));
         }
@@ -223,8 +223,8 @@ public:
                    bool(this->api().Listener3f) && bool(this->api().Listenerfv);
         }
 
-        constexpr auto
-        operator()(listener_attribute attr, float_type v0) const noexcept {
+        constexpr auto operator()(listener_attribute attr, float_type v0)
+          const noexcept {
             return this->_check(
               this->_call(this->api().Listenerf, enum_type(attr), v0));
         }
@@ -250,8 +250,8 @@ public:
     struct : func<OALPAFP(GetListeneriv)> {
         using func<OALPAFP(GetListeneriv)>::func;
 
-        constexpr auto
-        operator()(listener_attribute attr, span<int_type> v) const noexcept {
+        constexpr auto operator()(listener_attribute attr, span<int_type> v)
+          const noexcept {
             return this->_chkcall(enum_type(attr), v.data());
         }
     } get_listener_i;
@@ -260,8 +260,8 @@ public:
     struct : func<OALPAFP(GetListenerfv)> {
         using func<OALPAFP(GetListenerfv)>::func;
 
-        constexpr auto
-        operator()(listener_attribute attr, span<float_type> v) const noexcept {
+        constexpr auto operator()(listener_attribute attr, span<float_type> v)
+          const noexcept {
             return this->_chkcall(enum_type(attr), v.data());
         }
     } get_listener_f;
@@ -482,14 +482,14 @@ public:
     struct : func<OALPAFP(SourceQueueBuffers)> {
         using func<OALPAFP(SourceQueueBuffers)>::func;
 
-        constexpr auto
-        operator()(source_name src, buffer_name buf) const noexcept {
+        constexpr auto operator()(source_name src, buffer_name buf)
+          const noexcept {
             const auto n = name_type(buf);
             return this->_chkcall(name_type(src), 1, &n);
         }
 
-        constexpr auto
-        operator()(source_name src, span<const name_type> bufs) const noexcept {
+        constexpr auto operator()(source_name src, span<const name_type> bufs)
+          const noexcept {
             return this->_chkcall(
               name_type(src), size_type(bufs.size()), bufs.data());
         }
@@ -499,14 +499,14 @@ public:
     struct : func<OALPAFP(SourceUnqueueBuffers)> {
         using func<OALPAFP(SourceUnqueueBuffers)>::func;
 
-        constexpr auto
-        operator()(source_name src, buffer_name buf) const noexcept {
+        constexpr auto operator()(source_name src, buffer_name buf)
+          const noexcept {
             auto n = name_type(buf);
             return this->_chkcall(name_type(src), 1, &n);
         }
 
-        constexpr auto
-        operator()(source_name src, span<name_type> bufs) const noexcept {
+        constexpr auto operator()(source_name src, span<name_type> bufs)
+          const noexcept {
             return this->_chkcall(
               name_type(src), size_type(bufs.size()), bufs.data());
         }
@@ -608,14 +608,14 @@ public:
     } get_string;
 
     // get_strings
-    auto get_strings(al_string_query query, char separator) noexcept {
+    auto get_strings(al_string_query query, char separator) const noexcept {
         return get_string(query).transformed([separator](auto src) {
             return split_into_string_list(src, separator);
         });
     }
 
     // get_extensions
-    auto get_extensions() noexcept {
+    auto get_extensions() const noexcept {
 #ifdef AL_EXTENSIONS
         return get_string(al_string_query(AL_EXTENSIONS))
 #else

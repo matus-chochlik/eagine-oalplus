@@ -87,4 +87,3 @@ basic_al_constants<ApiTraits>::basic_al_constants(
   , none("NONE", traits, api) {}
 //------------------------------------------------------------------------------
 } // namespace eagine::oalplus
-

@@ -14,12 +14,12 @@ auto main() -> int {
     using namespace eagine;
     using namespace eagine::oalplus;
 
-    alc_api alc;
+    const alc_api alc;
 
     if(alc.get_string) {
         std::cout << "Playback devices:" << std::endl;
-        if(ok names = alc.get_device_specifiers()) {
-            for(auto name : names) {
+        if(const ok names{alc.get_device_specifiers()}) {
+            for(const auto name : names) {
                 std::cout << "  " << name << std::endl;
             }
         } else {
@@ -33,8 +33,8 @@ auto main() -> int {
 
     if(alc.get_string) {
         std::cout << "Capture devices:" << std::endl;
-        if(ok names = alc.get_capture_device_specifiers()) {
-            for(auto name : names) {
+        if(const ok names{alc.get_capture_device_specifiers()}) {
+            for(const auto name : names) {
                 std::cout << "  " << name << std::endl;
             }
         } else {

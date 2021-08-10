@@ -45,4 +45,3 @@ auto alc_api_traits::link_function(
 }
 //------------------------------------------------------------------------------
 } // namespace eagine::oalplus
-

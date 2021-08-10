@@ -46,4 +46,3 @@ auto al_api_traits::link_function(
 }
 //------------------------------------------------------------------------------
 } // namespace eagine::oalplus
-

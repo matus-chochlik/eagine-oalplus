@@ -41,4 +41,3 @@ basic_alc_constants<ApiTraits>::basic_alc_constants(
   , hrtf_specifier_soft("HRTF_SPECIFIER_SOFT", traits, api) {}
 //------------------------------------------------------------------------------
 } // namespace eagine::oalplus
-

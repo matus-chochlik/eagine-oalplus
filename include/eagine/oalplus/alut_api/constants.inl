@@ -19,4 +19,3 @@ basic_alut_constants<ApiTraits>::basic_alut_constants(
   , waveform_impulse("WAVEFORM_IMPULSE", traits, api) {}
 //------------------------------------------------------------------------------
 } // namespace eagine::oalplus
-

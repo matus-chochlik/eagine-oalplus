@@ -88,7 +88,7 @@ public:
         using base::base;
         using base::operator();
 
-        auto raii() noexcept {
+        auto raii() const noexcept {
             return eagine::finally([=]() { (*this)(); });
         }
     } exit;

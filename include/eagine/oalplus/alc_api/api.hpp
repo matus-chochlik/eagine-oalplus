@@ -67,6 +67,12 @@ public:
             return this->_chkcall(_conv(params)...)
               .cast_to(type_identity<RVC>{});
         }
+
+        auto bind(Params... params) const noexcept {
+            return [this, params...] {
+                return (*this)(params...);
+            };
+        }
     };
 
     // open_device
@@ -90,8 +96,14 @@ public:
             return this->_chkcall(dev, dev);
         }
 
+        auto bind(device_handle dev) const noexcept {
+            return [this, dev] {
+                return (*this)(dev);
+            };
+        }
+
         auto raii(device_handle dev) const noexcept {
-            return eagine::finally([=, this]() { (*this)(dev); });
+            return eagine::finally(this->bind(dev));
         }
     } close_device;
 
@@ -119,8 +131,14 @@ public:
             return this->_chkcall(dev, ctx);
         }
 
+        auto bind(device_handle dev, context_handle ctxt) const noexcept {
+            return [this, dev, ctxt] {
+                return (*this)(dev, ctxt);
+            };
+        }
+
         auto raii(device_handle dev, context_handle ctx) const noexcept {
-            return eagine::finally([=, this]() { (*this)(dev, ctx); });
+            return eagine::finally(this->bind(dev, ctx));
         }
     } destroy_context;
 
@@ -133,24 +151,32 @@ public:
             return this->_chkcall(dev, ctx);
         }
 
-        constexpr auto operator()(device_handle dev) const noexcept {
-            return this->_chkcall(dev, nullptr);
-        }
-
         constexpr auto operator()(context_handle ctx) const noexcept {
             return this->_chkcall(nullptr, ctx);
+        }
+
+        auto bind(device_handle dev, context_handle ctx) const noexcept {
+            return [this, dev, ctx] {
+                return (*this)(dev, ctx);
+            };
         }
 
         constexpr auto operator()() const noexcept {
             return this->_chkcall(nullptr, nullptr);
         }
 
-        auto raii(device_handle dev) const noexcept {
-            return eagine::finally([=, this]() { (*this)(dev); });
+        auto bind() const noexcept {
+            return [this] {
+                return (*this)();
+            };
+        }
+
+        auto raii(device_handle dev, context_handle ctx) const noexcept {
+            return eagine::finally(this->bind(dev, ctx));
         }
 
         auto raii() const noexcept {
-            return eagine::finally([=, this]() { (*this)(); });
+            return eagine::finally(this->bind());
         }
     } make_context_current;
 

@@ -89,7 +89,7 @@ public:
         using base::operator();
 
         auto raii() const noexcept {
-            return eagine::finally([=]() { (*this)(); });
+            return eagine::finally([this]() { (*this)(); });
         }
     } exit;
 

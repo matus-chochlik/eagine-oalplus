@@ -91,7 +91,7 @@ public:
         }
 
         auto raii(device_handle dev) const noexcept {
-            return eagine::finally([=]() { (*this)(dev); });
+            return eagine::finally([=, this]() { (*this)(dev); });
         }
     } close_device;
 
@@ -120,7 +120,7 @@ public:
         }
 
         auto raii(device_handle dev, context_handle ctx) const noexcept {
-            return eagine::finally([=]() { (*this)(dev, ctx); });
+            return eagine::finally([=, this]() { (*this)(dev, ctx); });
         }
     } destroy_context;
 
@@ -146,11 +146,11 @@ public:
         }
 
         auto raii(device_handle dev) const noexcept {
-            return eagine::finally([=]() { (*this)(dev); });
+            return eagine::finally([=, this]() { (*this)(dev); });
         }
 
         auto raii() const noexcept {
-            return eagine::finally([=]() { (*this)(); });
+            return eagine::finally([=, this]() { (*this)(); });
         }
     } make_context_current;
 

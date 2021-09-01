@@ -73,6 +73,12 @@ public:
             return this->_chkcall(_conv(params)...)
               .cast_to(type_identity<RVC>{});
         }
+
+        auto bind(Params... params) const noexcept {
+            return [this, params...] {
+                return (*this)(params...);
+            };
+        }
     };
 
     // init
@@ -89,7 +95,7 @@ public:
         using base::operator();
 
         auto raii() const noexcept {
-            return eagine::finally([=]() { (*this)(); });
+            return eagine::finally(this->bind());
         }
     } exit;
 

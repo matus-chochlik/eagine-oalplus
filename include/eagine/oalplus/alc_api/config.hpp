@@ -8,7 +8,7 @@
 #ifndef EAGINE_OALPLUS_ALC_API_CONFIG_HPP
 #define EAGINE_OALPLUS_ALC_API_CONFIG_HPP
 
-#include "../config/basic.hpp"
+#include <eagine/config/basic.hpp>
 #include <eagine/maybe_unused.hpp>
 
 #ifndef OALPLUS_HAS_ALC

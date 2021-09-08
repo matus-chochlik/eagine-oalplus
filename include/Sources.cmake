@@ -40,7 +40,6 @@ set(HEADERS
     eagine/oalplus/basic_al_api.hpp
     eagine/oalplus/basic_alc_api.hpp
     eagine/oalplus/basic_alut_api.hpp
-    eagine/oalplus/config/basic.hpp
 )
 
 set(PUB_INLS

@@ -233,7 +233,7 @@ public:
         }
 
         constexpr auto operator()(device_handle) const noexcept {
-            return this->_fake_empty_c_str().cast_to(
+            return this->fake_empty_c_str().cast_to(
               type_identity<string_view>{});
         }
     } get_string;

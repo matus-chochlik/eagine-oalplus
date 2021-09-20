@@ -28,6 +28,11 @@ struct context_attrib_traits {
     }
 };
 
+/// @brief Alias for ALC context attribute key/value list head.
+/// @ingroup alc_api_wrap
+/// @see context_attributes
+using context_attribute_base = key_value_list<context_attrib_traits, 0U>;
+
 /// @brief Alias for ALC context attribute key/value list.
 /// @ingroup alc_api_wrap
 template <std::size_t N>

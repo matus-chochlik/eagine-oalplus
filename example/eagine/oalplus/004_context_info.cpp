@@ -23,7 +23,7 @@ auto main() -> int {
         if(const ok context{alc.create_context(device)}) {
             const auto cleanup_ctx = alc.destroy_context.raii(device, context);
 
-            alc.MakeContextCurrent(context);
+            alc.make_context_current(device, context);
 
             const al_api al;
 

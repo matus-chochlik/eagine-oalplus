@@ -10,6 +10,7 @@
 
 #include "c_api.hpp"
 #include "enum_types.hpp"
+#include "objects.hpp"
 #include <eagine/scope_exit.hpp>
 #include <eagine/span.hpp>
 #include <eagine/string_list.hpp>
@@ -29,8 +30,6 @@ public:
     using api_traits = ApiTraits;
     using c_api = basic_alc_c_api<ApiTraits>;
 
-    using device_handle = typename alc_types::device_type*;
-    using context_handle = typename alc_types::context_type*;
     using enum_type = typename alc_types::enum_type;
     using size_type = typename alc_types::size_type;
     using char_type = typename alc_types::char_type;
@@ -47,7 +46,8 @@ public:
     private:
         template <typename Res>
         constexpr auto _check(device_handle dev, Res&& res) const noexcept {
-            res.error_code(this->api().GetError(dev));
+            res.error_code(
+              this->api().GetError(static_cast<alc_types::device_type*>(dev)));
             return std::forward<Res>(res);
         }
 
@@ -56,6 +56,13 @@ public:
         constexpr auto _chkcall(device_handle dev, Args&&... args)
           const noexcept {
             return this->_check(dev, this->_call(std::forward<Args>(args)...));
+        }
+
+        template <typename... Args>
+        constexpr auto _cnvchkcall(device_handle dev, Args&&... args)
+          const noexcept {
+            return this->_chkcall(dev, _conv(std::forward<Args>(args))...)
+              .cast_to(type_identity<RVC>{});
         }
 
         using base::_conv;
@@ -80,11 +87,13 @@ public:
         using func<OALPAFP(OpenDevice)>::func;
 
         constexpr auto operator()() const noexcept {
-            return this->_chkcall(nullptr, nullptr);
+            return this->_chkcall(device_handle{}, nullptr)
+              .cast_to(type_identity<device_handle>());
         }
 
-        auto operator()(string_view name) const noexcept {
-            return this->_chkcall(nullptr, c_str(name));
+        auto operator()(const string_view name) const noexcept {
+            return this->_cnvchkcall(device_handle{}, name)
+              .cast_to(type_identity<device_handle>());
         }
     } open_device;
 
@@ -93,7 +102,7 @@ public:
         using func<OALPAFP(CloseDevice)>::func;
 
         constexpr auto operator()(device_handle dev) const noexcept {
-            return this->_chkcall(dev, dev);
+            return this->_cnvchkcall(dev, dev);
         }
 
         auto bind(device_handle dev) const noexcept {
@@ -112,13 +121,15 @@ public:
         using func<OALPAFP(CreateContext)>::func;
 
         constexpr auto operator()(device_handle dev) const noexcept {
-            return this->_chkcall(dev, dev, nullptr);
+            return this->_cnvchkcall(dev, dev, nullptr)
+              .cast_to(type_identity<context_handle>());
         }
 
         constexpr auto operator()(
           device_handle dev,
           span<const int_type> attributes) const noexcept {
-            return this->_chkcall(dev, dev, attributes.data());
+            return this->_cnvchkcall(dev, dev, attributes.data())
+              .cast_to(type_identity<context_handle>());
         }
     } create_context;
 
@@ -128,7 +139,7 @@ public:
 
         constexpr auto operator()(device_handle dev, context_handle ctx)
           const noexcept {
-            return this->_chkcall(dev, ctx);
+            return this->_cnvchkcall(dev, ctx);
         }
 
         auto bind(device_handle dev, context_handle ctxt) const noexcept {
@@ -148,11 +159,11 @@ public:
 
         constexpr auto operator()(device_handle dev, context_handle ctx)
           const noexcept {
-            return this->_chkcall(dev, ctx);
+            return this->_cnvchkcall(dev, ctx);
         }
 
         constexpr auto operator()(context_handle ctx) const noexcept {
-            return this->_chkcall(nullptr, ctx);
+            return (*this)(device_handle{}, ctx);
         }
 
         auto bind(device_handle dev, context_handle ctx) const noexcept {
@@ -162,7 +173,7 @@ public:
         }
 
         constexpr auto operator()() const noexcept {
-            return this->_chkcall(nullptr, nullptr);
+            return (*this)(device_handle{}, context_handle{});
         }
 
         auto bind() const noexcept {
@@ -178,6 +189,10 @@ public:
         auto raii() const noexcept {
             return eagine::finally(this->bind());
         }
+
+        constexpr auto none(device_handle dev) const noexcept {
+            return (*this)(dev, context_handle{});
+        }
     } make_context_current;
 
     // get_current_context
@@ -185,11 +200,11 @@ public:
         using func<OALPAFP(GetCurrentContext)>::func;
 
         constexpr auto operator()(device_handle dev) const noexcept {
-            return this->_chkcall(dev);
+            return this->_cnvchkcall(dev);
         }
 
         constexpr auto operator()() const noexcept {
-            return this->_chkcall(nullptr);
+            return this->_cnvchkcall(device_handle{});
         }
     } get_current_context;
 
@@ -201,19 +216,19 @@ public:
           const noexcept {
             int_type result{};
             return this
-              ->_chkcall(dev, dev, enum_type(query), size_type(1), &result)
+              ->_cnvchkcall(dev, dev, enum_type(query), size_type(1), &result)
               .replaced_with(result);
         }
 
         constexpr auto operator()(alc_integer_query query) const noexcept {
-            return (*this)(nullptr, query);
+            return (*this)(device_handle{}, query);
         }
 
         constexpr auto operator()(
           device_handle dev,
           alc_integer_query query,
           span<int_type> dst) const noexcept {
-            return this->_chkcall(
+            return this->_cnvchkcall(
               dev, dev, enum_type(query), size_type(dst.size()), dst.data());
         }
     } get_integer;
@@ -224,16 +239,16 @@ public:
 
         constexpr auto operator()(device_handle dev, alc_string_query query)
           const noexcept {
-            return this->_chkcall(dev, dev, enum_type(query))
+            return this->_cnvchkcall(dev, dev, query)
               .cast_to(type_identity<string_view>{});
         }
 
         constexpr auto operator()(alc_string_query query) const noexcept {
-            return (*this)(nullptr, query);
+            return (*this)(device_handle{}, query);
         }
 
         constexpr auto operator()(device_handle) const noexcept {
-            return this->_fake_empty_c_str().cast_to(
+            return this->fake_empty_c_str().cast_to(
               type_identity<string_view>{});
         }
     } get_string;
@@ -261,18 +276,19 @@ public:
     auto get_default_device_specifier() const noexcept {
 #ifdef ALC_DEFAULT_DEVICE_SPECIFIER
         return get_string(
-          nullptr, alc_string_query(ALC_DEFAULT_DEVICE_SPECIFIER));
+          device_handle{}, alc_string_query(ALC_DEFAULT_DEVICE_SPECIFIER));
 #else
-        return get_string(nullptr);
+        return get_string(device_handle{});
 #endif
     }
 
     // get_device_specifiers
     auto get_device_specifiers() const noexcept {
 #ifdef ALC_DEVICE_SPECIFIER
-        return get_string(nullptr, alc_string_query(ALC_DEVICE_SPECIFIER))
+        return get_string(
+                 device_handle{}, alc_string_query(ALC_DEVICE_SPECIFIER))
 #else
-        return get_string(nullptr)
+        return get_string(device_handle{})
 #endif
           .transformed(
             [](auto src) { return split_into_string_list(src, '\0'); });
@@ -282,9 +298,10 @@ public:
     auto get_capture_default_device_specifier() const noexcept {
 #ifdef ALC_CAPTURE_DEFAULT_DEVICE_SPECIFIER
         return get_string(
-          nullptr, alc_string_query(ALC_CAPTURE_DEFAULT_DEVICE_SPECIFIER));
+          device_handle{},
+          alc_string_query(ALC_CAPTURE_DEFAULT_DEVICE_SPECIFIER));
 #else
-        return get_string(nullptr);
+        return get_string(device_handle{});
 #endif
     }
 
@@ -292,9 +309,10 @@ public:
     auto get_capture_device_specifiers() const noexcept {
 #ifdef ALC_CAPTURE_DEVICE_SPECIFIER
         return get_string(
-                 nullptr, alc_string_query(ALC_CAPTURE_DEVICE_SPECIFIER))
+                 device_handle{},
+                 alc_string_query(ALC_CAPTURE_DEVICE_SPECIFIER))
 #else
-        return get_string(nullptr)
+        return get_string(device_handle{})
 #endif
           .transformed(
             [](auto src) { return split_into_string_list(src, '\0'); });

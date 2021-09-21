@@ -11,6 +11,7 @@ if(NOT EAGINE_CORE_ROOT)
 endif()
 list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/config)
 list(APPEND CMAKE_MODULE_PATH ${EAGINE_CORE_ROOT}/config)
+file(STRINGS "${EAGINE_CORE_ROOT}/VERSION" EAGINE_VERSION)
 
 add_subdirectory(submodules)
 
@@ -20,3 +21,4 @@ find_package(EAGineAL)
 add_subdirectory(include)
 add_subdirectory(source)
 add_subdirectory(example)
+add_subdirectory(deploy)

@@ -72,7 +72,7 @@ Package: eagine-oalplus-dev
 Version: @PKG_VERSION@
 Architecture: @PKG_ARCH@
 Installed-Size: $(du -k -s ${pkg_dir} | cut -f1)
-Depends: libopenal-dev,libalut-dev,eagine-core-dev
+Depends: libopenal-dev,libalut-dev,eagine-core-dev (>= @PKG_VERSION@)
 Maintainer: Matus Chochlik <chochlik@gmail.com>
 Description: C++ wrapper for the OpenAL C API.
 EOD

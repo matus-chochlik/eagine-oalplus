@@ -9,7 +9,6 @@
 #define EAGINE_OALPLUS_ALUT_API_CONFIG_HPP
 
 #include "../al_api/config.hpp"
-#include <eagine/config/basic.hpp>
 #include <eagine/maybe_unused.hpp>
 
 #ifndef OALPLUS_HAS_ALUT

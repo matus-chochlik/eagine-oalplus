@@ -14,8 +14,7 @@ namespace eagine::oalplus {
 //------------------------------------------------------------------------------
 /// @brief Policy customizing the generic C-API wrappers for the AL API
 /// @ingroup al_api_wrap
-/// @see default_c_api_traits
-class al_api_traits : public default_c_api_traits {
+class al_api_traits : public c_api::default_traits {
 public:
     /// @brief Alias for result type of currently unavailable functions.
     template <typename R>

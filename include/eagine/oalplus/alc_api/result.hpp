@@ -103,21 +103,21 @@ private:
 /// @see al_result
 /// @see al_opt_result
 template <typename Result>
-using alc_no_result = api_no_result<Result, alc_no_result_info>;
+using alc_no_result = c_api::no_result<Result, alc_no_result_info>;
 //------------------------------------------------------------------------------
 /// @brief Class wrapping the result of a ALC API function call.
 /// @ingroup al_api_wrap
 /// @see al_no_result
 /// @see al_opt_result
 template <typename Result>
-using alc_result = api_result<Result, alc_result_info>;
+using alc_result = c_api::result<Result, alc_result_info>;
 //------------------------------------------------------------------------------
 /// @brief Class wrapping the result of a ALC API function call.
 /// @ingroup al_api_wrap
 /// @see al_no_result
 /// @see al_opt_result
 template <typename Result>
-using alc_opt_result = api_opt_result<Result, alc_result_info>;
+using alc_opt_result = c_api::opt_result<Result, alc_result_info>;
 //------------------------------------------------------------------------------
 } // namespace eagine::oalplus
 

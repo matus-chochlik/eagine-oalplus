@@ -256,7 +256,7 @@ public:
     // get_strings
     auto get_strings(device_handle dev, alc_string_query query, char separator)
       const noexcept {
-        return get_string(dev, query).transformed([separator](auto src) {
+        return get_string(dev, query).transformed([separator](auto src, bool) {
             return split_into_string_list(src, separator);
         });
     }
@@ -269,7 +269,7 @@ public:
         return get_string(dev)
 #endif
           .transformed(
-            [](auto src) { return split_into_string_list(src, ' '); });
+            [](auto src, bool) { return split_into_string_list(src, ' '); });
     }
 
     // get_default_device_specifier
@@ -291,7 +291,7 @@ public:
         return get_string(device_handle{})
 #endif
           .transformed(
-            [](auto src) { return split_into_string_list(src, '\0'); });
+            [](auto src, bool) { return split_into_string_list(src, '\0'); });
     }
 
     // get_capture_default_device_specifier
@@ -315,7 +315,7 @@ public:
         return get_string(device_handle{})
 #endif
           .transformed(
-            [](auto src) { return split_into_string_list(src, '\0'); });
+            [](auto src, bool) { return split_into_string_list(src, '\0'); });
     }
 
     basic_alc_operations(api_traits& traits);

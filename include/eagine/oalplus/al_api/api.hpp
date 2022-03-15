@@ -90,8 +90,9 @@ public:
 
         constexpr auto operator()() const noexcept {
             name_type n{};
-            return this->_chkcall(1, &n).transformed(
-              [&n]() { return al_owned_object_name<ObjTag>(n); });
+            return this->_chkcall(1, &n).transformed([&n](bool valid) {
+                return al_owned_object_name<ObjTag>(valid ? n : 0);
+            });
         }
     };
 
@@ -609,7 +610,7 @@ public:
 
     // get_strings
     auto get_strings(al_string_query query, char separator) const noexcept {
-        return get_string(query).transformed([separator](auto src) {
+        return get_string(query).transformed([separator](auto src, bool) {
             return split_into_string_list(src, separator);
         });
     }
@@ -622,7 +623,7 @@ public:
         return get_string()
 #endif
           .transformed(
-            [](auto src) { return split_into_string_list(src, ' '); });
+            [](auto src, bool) { return split_into_string_list(src, ' '); });
     }
 
     basic_al_operations(api_traits& traits);

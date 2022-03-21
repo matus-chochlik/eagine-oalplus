@@ -9,7 +9,6 @@
 #define EAGINE_OALPLUS_ALC_API_CONFIG_HPP
 
 #include "../config/basic.hpp"
-#include <eagine/maybe_unused.hpp>
 
 #ifndef OALPLUS_HAS_ALC
 #if defined(ALC_NO_ERROR)
@@ -77,11 +76,11 @@ struct alc_types {
 #endif
     }
 
-    static constexpr auto error_code_no_error(enum_type ec) noexcept -> bool {
+    static constexpr auto error_code_no_error(
+      [[maybe_unused]] enum_type ec) noexcept -> bool {
 #if OALPLUS_HAS_ALC
         return ec == ALC_NO_ERROR;
 #else
-        EAGINE_MAYBE_UNUSED(ec);
         return false;
 #endif
     }

@@ -10,14 +10,15 @@ namespace eagine::oalplus {
 //------------------------------------------------------------------------------
 template <typename ApiTraits>
 basic_alut_c_api<ApiTraits>::basic_alut_c_api(api_traits& traits)
-  : GetError{"GetError", traits, *this}
-  , GetErrorString{"GetErrorString", traits, *this}
-  , Init{"Init", traits, *this}
-  , InitWithoutContext{"InitWithoutContext", traits, *this}
-  , CreateBufferFromFile{"CreateBufferFromFile", traits, *this}
-  , CreateBufferFromFileImage{"CreateBufferFromFileImage", traits, *this}
-  , CreateBufferHelloWorld{"CreateBufferHelloWorld", traits, *this}
-  , CreateBufferWaveform{"CreateBufferWaveform", traits, *this}
-  , Exit{"Exit", traits, *this} {}
+  : _traits{traits}
+  , GetError{"GetError", *this}
+  , GetErrorString{"GetErrorString", *this}
+  , Init{"Init", *this}
+  , InitWithoutContext{"InitWithoutContext", *this}
+  , CreateBufferFromFile{"CreateBufferFromFile", *this}
+  , CreateBufferFromFileImage{"CreateBufferFromFileImage", *this}
+  , CreateBufferHelloWorld{"CreateBufferHelloWorld", *this}
+  , CreateBufferWaveform{"CreateBufferWaveform", *this}
+  , Exit{"Exit", *this} {}
 //------------------------------------------------------------------------------
 } // namespace eagine::oalplus

@@ -29,6 +29,8 @@ namespace eagine::oalplus {
 /// @see basic_al_operations
 template <typename ApiTraits>
 class basic_al_c_api {
+    ApiTraits& _traits;
+
 public:
     using this_api = basic_al_c_api;
 
@@ -613,6 +615,10 @@ public:
       GetAuxiliaryEffectSlotfv;
 
     basic_al_c_api(api_traits& traits);
+
+    auto traits() noexcept -> api_traits& {
+        return _traits;
+    }
 };
 //------------------------------------------------------------------------------
 /// @brief Alias for the default AL operations wrapper instantiation.

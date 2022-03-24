@@ -29,6 +29,8 @@ namespace eagine::oalplus {
 /// @see basic_alut_operations
 template <typename ApiTraits>
 class basic_alut_c_api {
+    ApiTraits& _traits;
+
 public:
     using this_api = basic_alut_c_api;
 
@@ -141,6 +143,10 @@ public:
     alut_api_function<bool_type(), OALPLUS_ALUT_STATIC_FUNC(Exit)> Exit;
 
     basic_alut_c_api(api_traits& traits);
+
+    auto traits() noexcept -> api_traits& {
+        return _traits;
+    }
 };
 //------------------------------------------------------------------------------
 /// @brief Alias for the default ALUT operations wrapper instantiation.

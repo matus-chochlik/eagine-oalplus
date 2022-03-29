@@ -29,6 +29,8 @@ namespace eagine::oalplus {
 /// @see basic_alc_operations
 template <typename ApiTraits>
 class basic_alc_c_api {
+    ApiTraits& _traits;
+
 public:
     using this_api = basic_alc_c_api;
 
@@ -72,8 +74,8 @@ public:
     /// @brief Alias for ALC C-API function wrapper template.
     template <
       typename Signature,
-      c_api_function_ptr<api_traits, nothing_t, Signature> Function>
-    using alc_api_function = eagine::opt_c_api_function<
+      c_api::function_ptr<api_traits, nothing_t, Signature> Function>
+    using alc_api_function = c_api::opt_function<
       api_traits,
       nothing_t,
       Signature,
@@ -215,6 +217,10 @@ public:
       CaptureSamples;
 
     basic_alc_c_api(api_traits& traits);
+
+    auto traits() noexcept -> api_traits& {
+        return _traits;
+    }
 };
 //------------------------------------------------------------------------------
 /// @brief Alias for the default ALC operations wrapper instantiation.

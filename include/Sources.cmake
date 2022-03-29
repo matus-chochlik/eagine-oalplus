@@ -4,6 +4,7 @@
 #  http://www.boost.org/LICENSE_1_0.txt
 #
 set(HEADERS
+    eagine/oalplus/config/basic.hpp
     eagine/oalplus/al_api/api.hpp
     eagine/oalplus/al_api/api_traits.hpp
     eagine/oalplus/al_api/c_api.hpp

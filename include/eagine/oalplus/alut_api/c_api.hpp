@@ -29,6 +29,8 @@ namespace eagine::oalplus {
 /// @see basic_alut_operations
 template <typename ApiTraits>
 class basic_alut_c_api {
+    ApiTraits& _traits;
+
 public:
     using this_api = basic_alut_c_api;
 
@@ -75,8 +77,8 @@ public:
     /// @brief Alias for ALUT C-API function wrapper template.
     template <
       typename Signature,
-      c_api_function_ptr<api_traits, nothing_t, Signature> Function>
-    using alut_api_function = eagine::opt_c_api_function<
+      c_api::function_ptr<api_traits, nothing_t, Signature> Function>
+    using alut_api_function = c_api::opt_function<
       api_traits,
       nothing_t,
       Signature,
@@ -141,6 +143,10 @@ public:
     alut_api_function<bool_type(), OALPLUS_ALUT_STATIC_FUNC(Exit)> Exit;
 
     basic_alut_c_api(api_traits& traits);
+
+    auto traits() noexcept -> api_traits& {
+        return _traits;
+    }
 };
 //------------------------------------------------------------------------------
 /// @brief Alias for the default ALUT operations wrapper instantiation.

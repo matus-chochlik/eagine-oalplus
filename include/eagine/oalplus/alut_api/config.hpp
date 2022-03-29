@@ -9,8 +9,6 @@
 #define EAGINE_OALPLUS_ALUT_API_CONFIG_HPP
 
 #include "../al_api/config.hpp"
-#include <eagine/config/basic.hpp>
-#include <eagine/maybe_unused.hpp>
 
 #ifndef OALPLUS_HAS_ALUT
 #if defined(ALUT_ERROR_NO_ERROR)
@@ -73,11 +71,11 @@ struct alut_types {
 #endif
     }
 
-    static constexpr auto error_code_no_error(enum_type ec) noexcept -> bool {
+    static constexpr auto error_code_no_error(
+      [[maybe_unused]] enum_type ec) noexcept -> bool {
 #if OALPLUS_HAS_ALUT
         return ec == ALUT_ERROR_NO_ERROR;
 #else
-        EAGINE_MAYBE_UNUSED(ec);
         return false;
 #endif
     }

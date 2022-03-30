@@ -9,6 +9,7 @@
 #define EAGINE_OALPLUS_AL_API_API_TRAITS_HPP
 
 #include "result.hpp"
+#include <eagine/c_api/api_traits.hpp>
 
 namespace eagine::oalplus {
 //------------------------------------------------------------------------------

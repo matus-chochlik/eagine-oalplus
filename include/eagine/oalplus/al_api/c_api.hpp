@@ -10,6 +10,7 @@
 
 #include "api_traits.hpp"
 #include "config.hpp"
+#include <eagine/c_api/function.hpp>
 #include <eagine/nothing.hpp>
 #include <eagine/preprocessor.hpp>
 
@@ -71,6 +72,12 @@ public:
 
     /// @brief Untyped const pointer type.
     using const_void_ptr_type = typename al_types::const_void_ptr_type;
+
+    template <typename Result>
+    constexpr auto check_result(Result res) const noexcept {
+        res.error_code(this->GetError());
+        return res;
+    }
 
 #ifdef __GNUC__
     EAGINE_DIAG_PUSH()

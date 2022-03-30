@@ -10,6 +10,7 @@
 
 #include "c_api.hpp"
 #include "enum_types.hpp"
+#include <eagine/c_api/function.hpp>
 
 namespace eagine::oalplus {
 //------------------------------------------------------------------------------

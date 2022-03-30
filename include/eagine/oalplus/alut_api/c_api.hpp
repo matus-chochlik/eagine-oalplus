@@ -10,6 +10,7 @@
 
 #include "api_traits.hpp"
 #include "config.hpp"
+#include <eagine/c_api/function.hpp>
 #include <eagine/nothing.hpp>
 #include <eagine/preprocessor.hpp>
 

@@ -11,6 +11,8 @@
 #include "../al_api/object_name.hpp"
 #include "c_api.hpp"
 #include "enum_types.hpp"
+#include <eagine/c_api/adapted_function.hpp>
+#include <eagine/c_api_wrap.hpp>
 #include <eagine/scope_exit.hpp>
 #include <eagine/string_list.hpp>
 

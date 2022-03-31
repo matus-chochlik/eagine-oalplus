@@ -10,11 +10,8 @@ namespace eagine::oalplus {
 //------------------------------------------------------------------------------
 template <typename ApiTraits>
 basic_alc_operations<ApiTraits>::basic_alc_operations(api_traits& traits)
-  : c_api{traits}
+  : alc_api{traits}
   , open_device{"open_device", *this}
-  , close_device{"close_device", *this}
-  , create_context{"create_context", *this}
-  , destroy_context{"destroy_context", *this}
   , make_context_current{"make_context_current", *this}
   , get_current_context{"get_current_context", *this}
   , get_integer{"get_integer", *this}

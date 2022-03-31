@@ -70,8 +70,8 @@ public:
     /// @brief Untyped const pointer type.
     using const_void_ptr_type = typename alut_types::const_void_ptr_type;
 
-    template <typename Result>
-    constexpr auto check_result(Result res) const noexcept {
+    template <typename Result, typename... U>
+    constexpr auto check_result(Result res, U&&...) const noexcept {
         res.error_code(this->GetError());
         return res;
     }

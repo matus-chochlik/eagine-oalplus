@@ -21,7 +21,7 @@ auto main(int argc, char** argv) -> int {
     alc_api alc;
 
     if(const ok device{alc.open_device()}) {
-        const auto cleanup_dev = alc.close_device.raii(device);
+        const auto cleanup_dev{alc.close_device.raii(device)};
 
         const auto context_attribs = (alc.mono_sources | 1) +
                                      (alc.stereo_sources | 1) +
@@ -29,7 +29,7 @@ auto main(int argc, char** argv) -> int {
 
         if(const ok context{
              alc.create_context(device, context_attribs.get())}) {
-            const auto cleanup_ctx = alc.destroy_context.raii(device, context);
+            const auto cleanup_ctx{alc.destroy_context.raii(device, context)};
 
             alc.make_context_current(context);
             const auto reset_ctx = alc.make_context_current.raii();
@@ -38,11 +38,11 @@ auto main(int argc, char** argv) -> int {
             const alut_api alut;
 
             if(alut.init(&argc, argv)) {
-                const auto do_exit = alut.exit.raii();
+                const auto do_exit{alut.exit.raii()};
                 auto opt_src = al.gen_sources();
-                const auto del_src = al.delete_sources.raii_opt(opt_src);
+                const auto del_src{al.delete_sources.raii_opt(opt_src)};
                 auto opt_buf = alut.create_buffer_hello_world();
-                const auto del_buf = al.delete_buffers.raii_opt(opt_buf);
+                const auto del_buf{al.delete_buffers.raii_opt(opt_buf)};
 
                 if(opt_src && opt_buf) {
                     source_name src = extract(opt_src);

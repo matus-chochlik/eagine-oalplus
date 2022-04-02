@@ -9,7 +9,7 @@
 #define EAGINE_OALPLUS_ALC_API_OBJECTS_HPP
 
 #include "config.hpp"
-#include <eagine/handle.hpp>
+#include <eagine/c_api/handle.hpp>
 #include <eagine/message_id.hpp>
 
 namespace eagine::oalplus {
@@ -26,14 +26,14 @@ using context_tag = EAGINE_MSG_TYPE(alc, Context);
 //------------------------------------------------------------------------------
 /// @brief Alias for ALC device handle wrapper.
 /// @ingroup egl_api_wrap
-using device_handle = basic_handle<
+using device_handle = c_api::basic_handle<
   device_tag,
   alc_types::device_type*,
   static_cast<alc_types::device_type*>(nullptr)>;
 //------------------------------------------------------------------------------
 /// @brief Alias for ALC context handle wrapper.
 /// @ingroup egl_api_wrap
-using context_handle = basic_handle<
+using context_handle = c_api::basic_handle<
   context_tag,
   alc_types::context_type*,
   static_cast<alc_types::context_type*>(nullptr)>;

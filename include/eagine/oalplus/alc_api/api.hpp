@@ -140,10 +140,9 @@ public:
         using base::base;
         using base::operator();
 
-        template <std::size_t N>
         constexpr auto operator()(
           device_handle dev,
-          const context_attributes<N> attribs) const noexcept {
+          const context_attributes attribs) const noexcept {
             return base::operator()(dev, attribs.get());
         }
 

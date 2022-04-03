@@ -131,25 +131,10 @@ public:
       collapse_bool_map>
       close_device{*this};
 
-    using _create_context_t = adapted_function<
+    adapted_function<
       &alc_api::CreateContext,
-      context_handle(device_handle, span<const int_type>)>;
-
-    struct : _create_context_t {
-        using base = _create_context_t;
-        using base::base;
-        using base::operator();
-
-        constexpr auto operator()(
-          device_handle dev,
-          const context_attributes attribs) const noexcept {
-            return base::operator()(dev, attribs.get());
-        }
-
-        constexpr auto operator()(device_handle dev) const noexcept {
-            return base::operator()(dev, {});
-        }
-    } create_context{*this};
+      context_handle(device_handle, context_attributes)>
+      create_context{*this};
 
     adapted_function<
       &alc_api::DestroyContext,

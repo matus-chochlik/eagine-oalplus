@@ -27,8 +27,7 @@ auto main(int argc, char** argv) -> int {
                                      (alc.stereo_sources | 1) +
                                      (alc.sync | false);
 
-        if(const ok context{
-             alc.create_context(device, context_attribs.get())}) {
+        if(const ok context{alc.create_context(device, context_attribs)}) {
             const auto cleanup_ctx{alc.destroy_context.raii(device, context)};
 
             alc.make_context_current(context);

@@ -118,20 +118,21 @@ public:
         using base::operator();
 
         constexpr auto operator()(
-          al_owned_object_name<ObjTag>& name) const noexcept {
+          al_owned_object_name<ObjTag> name) const noexcept {
             auto n = name.release();
             return base::operator()(cover_one(n));
         }
 
         auto raii(al_owned_object_name<ObjTag>& name) const noexcept {
-            return eagine::finally([this, &name]() { (*this)(name); });
+            return eagine::finally(
+              [this, &name]() { (*this)(std::move(name)); });
         }
 
         template <typename Res>
         auto raii_opt(Res& res) const noexcept {
             return eagine::finally([this, &res]() {
                 if(res) {
-                    (*this)(extract(res));
+                    (*this)(std::move(extract(res)));
                 }
             });
         }

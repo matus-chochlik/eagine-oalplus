@@ -27,8 +27,8 @@ auto main() -> int {
                       << (!names).message() << std::endl;
         }
     } else {
-        std::cout << "missing required API function: " << alc.get_string.name()
-                  << std::endl;
+        std::cout << "missing required API function: "
+                  << alc.get_string.underlying().name() << std::endl;
     }
 
     if(alc.get_string) {
@@ -41,8 +41,8 @@ auto main() -> int {
             std::cerr << "failed to list capture devices: "
                       << (!names).message() << std::endl;
         }
-        std::cout << "missing required API function: " << alc.get_string.name()
-                  << std::endl;
+        std::cout << "missing required API function: "
+                  << alc.get_string.underlying().name() << std::endl;
     }
 
     return 0;

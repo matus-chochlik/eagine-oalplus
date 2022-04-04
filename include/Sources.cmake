@@ -50,7 +50,6 @@ set(PUB_INLS
     eagine/oalplus/al_api/c_api.inl
     eagine/oalplus/al_api/constants.inl
     eagine/oalplus/al_api.inl
-    eagine/oalplus/alc_api/api.inl
     eagine/oalplus/alc_api/api_traits.inl
     eagine/oalplus/alc_api/c_api.inl
     eagine/oalplus/alc_api/constants.inl

@@ -13,16 +13,10 @@ basic_al_operations<ApiTraits>::basic_al_operations(api_traits& traits)
   : al_api{traits}
   , listener_i{"listener_i", *this}
   , listener_f{"listener_f", *this}
-  , get_listener_i{"get_listener_i", *this}
-  , get_listener_f{"get_listener_f", *this}
   , buffer_i{"buffer_i", *this}
   , buffer_f{"buffer_f", *this}
-  , get_buffer_i{"get_buffer_i", *this}
-  , get_buffer_f{"get_buffer_f", *this}
   , source_i{"source_i", *this}
   , source_f{"source_f", *this}
-  , get_source_i{"get_source_i", *this}
-  , get_source_f{"get_source_f", *this}
   , source_queue_buffers{"source_queue_buffers", *this}
   , source_unqueue_buffers{"source_unqueue_buffers", *this}
   , source_play{"source_play", *this}

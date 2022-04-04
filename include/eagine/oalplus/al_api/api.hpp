@@ -238,25 +238,15 @@ public:
         }
     } listener_f;
 
-    // get_listener_i
-    struct : func<OALPAFP(GetListeneriv)> {
-        using func<OALPAFP(GetListeneriv)>::func;
+    adapted_function<
+      &al_api::GetListeneriv,
+      void(listener_attribute, span<int_type>)>
+      get_listener_i{*this};
 
-        constexpr auto operator()(listener_attribute attr, span<int_type> v)
-          const noexcept {
-            return this->_chkcall(enum_type(attr), v.data());
-        }
-    } get_listener_i;
-
-    // get_listener_f
-    struct : func<OALPAFP(GetListenerfv)> {
-        using func<OALPAFP(GetListenerfv)>::func;
-
-        constexpr auto operator()(listener_attribute attr, span<float_type> v)
-          const noexcept {
-            return this->_chkcall(enum_type(attr), v.data());
-        }
-    } get_listener_f;
+    adapted_function<
+      &al_api::GetListenerfv,
+      void(listener_attribute, span<float_type>)>
+      get_listener_f{*this};
 
     // buffer_i
     struct : derived_func {
@@ -340,29 +330,15 @@ public:
         }
     } buffer_f;
 
-    // get_buffer_i
-    struct : func<OALPAFP(GetBufferiv)> {
-        using func<OALPAFP(GetBufferiv)>::func;
+    adapted_function<
+      &al_api::GetBufferiv,
+      void(buffer_name, buffer_attribute, span<int_type>)>
+      get_buffer_i{*this};
 
-        constexpr auto operator()(
-          buffer_name src,
-          buffer_attribute attr,
-          span<int_type> v) const noexcept {
-            return this->_chkcall(name_type(src), enum_type(attr), v.data());
-        }
-    } get_buffer_i;
-
-    // get_buffer_f
-    struct : func<OALPAFP(GetBufferfv)> {
-        using func<OALPAFP(GetBufferfv)>::func;
-
-        constexpr auto operator()(
-          buffer_name src,
-          buffer_attribute attr,
-          span<float_type> v) const noexcept {
-            return this->_chkcall(name_type(src), enum_type(attr), v.data());
-        }
-    } get_buffer_f;
+    adapted_function<
+      &al_api::GetBufferfv,
+      void(buffer_name, buffer_attribute, span<float_type>)>
+      get_buffer_f{*this};
 
     // source_i
     struct : derived_func {
@@ -446,29 +422,15 @@ public:
         }
     } source_f;
 
-    // get_source_i
-    struct : func<OALPAFP(GetSourceiv)> {
-        using func<OALPAFP(GetSourceiv)>::func;
+    adapted_function<
+      &al_api::GetSourceiv,
+      void(source_name, source_attribute, span<int_type>)>
+      get_source_i{*this};
 
-        constexpr auto operator()(
-          source_name src,
-          source_attribute attr,
-          span<int_type> v) const noexcept {
-            return this->_chkcall(name_type(src), enum_type(attr), v.data());
-        }
-    } get_source_i;
-
-    // get_source_f
-    struct : func<OALPAFP(GetSourcefv)> {
-        using func<OALPAFP(GetSourcefv)>::func;
-
-        constexpr auto operator()(
-          source_name src,
-          source_attribute attr,
-          span<float_type> v) const noexcept {
-            return this->_chkcall(name_type(src), enum_type(attr), v.data());
-        }
-    } get_source_f;
+    adapted_function<
+      &al_api::GetSourcefv,
+      void(source_name, source_attribute, span<float_type>)>
+      get_source_f{*this};
 
     // source_queue_buffers
     struct : func<OALPAFP(SourceQueueBuffers)> {

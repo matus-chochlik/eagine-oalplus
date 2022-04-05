@@ -10,8 +10,12 @@
 
 #include "config.hpp"
 #include <eagine/anything.hpp>
-#include <eagine/c_api_wrap.hpp>
+#include <eagine/c_api/result.hpp>
 #include <eagine/string_span.hpp>
+
+#ifndef ALC_NO_ERROR
+#define ALC_NO_ERROR 0
+#endif
 
 namespace eagine::oalplus {
 //------------------------------------------------------------------------------
@@ -28,6 +32,10 @@ public:
     /// @brief Returns a message associated with the result.
     constexpr auto message() const noexcept -> string_view {
         return {"ALC function not available"};
+    }
+
+    constexpr auto set_unknown_error() const noexcept -> auto& {
+        return *this;
     }
 
 private:
@@ -90,12 +98,15 @@ public:
         return {"unknown error"};
     }
 
+    constexpr auto set_unknown_error() noexcept -> auto& {
+        if(_error_code != ALC_NO_ERROR) {
+            _error_code = ~alc_types::enum_type(0);
+        }
+        return *this;
+    }
+
 private:
-    enum_type _error_code{
-#ifdef ALC_NO_ERROR
-      ALC_NO_ERROR
-#endif
-    };
+    enum_type _error_code{ALC_NO_ERROR};
 };
 //------------------------------------------------------------------------------
 /// @brief Alias for always-invalid result of a missing ALC API function call.
@@ -118,6 +129,14 @@ using alc_result = c_api::result<Result, alc_result_info>;
 /// @see al_opt_result
 template <typename Result>
 using alc_opt_result = c_api::opt_result<Result, alc_result_info>;
+//------------------------------------------------------------------------------
+template <typename Result, c_api::result_validity Validity>
+inline auto collapse_bool(
+  c_api::result<Result, alc_result_info, Validity>&& r) noexcept {
+    return r.collapsed(
+      [](alc_types::bool_type value) { return bool(value); },
+      [](auto& info) { info.set_unknown_error(); });
+}
 //------------------------------------------------------------------------------
 } // namespace eagine::oalplus
 

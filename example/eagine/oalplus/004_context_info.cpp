@@ -20,7 +20,7 @@ auto main() -> int {
     if(const ok device{alc.open_device()}) {
         const auto cleanup_dev = alc.close_device.raii(device);
 
-        if(const ok context{alc.create_context(device)}) {
+        if(const ok context{alc.create_context(device, {})}) {
             const auto cleanup_ctx = alc.destroy_context.raii(device, context);
 
             alc.make_context_current(device, context);

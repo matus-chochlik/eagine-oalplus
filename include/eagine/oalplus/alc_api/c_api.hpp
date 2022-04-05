@@ -10,6 +10,8 @@
 
 #include "api_traits.hpp"
 #include "config.hpp"
+#include "objects.hpp"
+#include <eagine/c_api/function.hpp>
 #include <eagine/nothing.hpp>
 #include <eagine/preprocessor.hpp>
 
@@ -65,6 +67,13 @@ public:
 
     /// @brief Untyped non-const pointer type.
     using void_ptr_type = typename alc_types::void_ptr_type;
+
+    template <typename Result, typename... U>
+    constexpr auto check_result(Result res, device_handle dev, U&&...)
+      const noexcept {
+        res.error_code(this->GetError(static_cast<device_type*>(dev)));
+        return res;
+    }
 
 #ifdef __GNUC__
     EAGINE_DIAG_PUSH()

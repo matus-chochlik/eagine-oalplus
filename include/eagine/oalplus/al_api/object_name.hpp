@@ -9,16 +9,17 @@
 #define EAGINE_OALPLUS_AL_API_OBJECT_NAME_HPP
 
 #include "config.hpp"
-#include <eagine/handle.hpp>
+#include <eagine/c_api/handle.hpp>
 #include <eagine/message_id.hpp>
 
 namespace eagine::oalplus {
 //------------------------------------------------------------------------------
 template <typename Tag>
-using al_object_name = basic_handle<Tag, al_types::name_type>;
+using al_object_name = c_api::basic_handle<Tag, al_types::name_type>;
 
 template <typename Tag>
-using al_owned_object_name = basic_owned_handle<Tag, al_types::name_type>;
+using al_owned_object_name =
+  c_api::basic_owned_handle<Tag, al_types::name_type>;
 //------------------------------------------------------------------------------
 using source_tag = EAGINE_MSG_TYPE(al, Source);
 using buffer_tag = EAGINE_MSG_TYPE(al, Buffer);

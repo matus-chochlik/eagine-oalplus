@@ -11,12 +11,15 @@
 #include "c_api.hpp"
 #include "enum_types.hpp"
 #include "object_name.hpp"
+#include <eagine/c_api/adapted_function.hpp>
+#include <eagine/c_api_wrap.hpp>
 #include <eagine/scope_exit.hpp>
 #include <eagine/string_list.hpp>
 
 namespace eagine::oalplus {
+using c_api::adapted_function;
 //------------------------------------------------------------------------------
-#define OALPAFP(FUNC) decltype(c_api::FUNC), &c_api::FUNC
+#define OALPAFP(FUNC) decltype(al_api::FUNC), &al_api::FUNC
 //------------------------------------------------------------------------------
 /// @brief Class wrapping the functions from the AL API.
 /// @ingroup al_api_wrap
@@ -27,7 +30,7 @@ class basic_al_operations : public basic_al_c_api<ApiTraits> {
 
 public:
     using api_traits = ApiTraits;
-    using c_api = basic_al_c_api<ApiTraits>;
+    using al_api = basic_al_c_api<ApiTraits>;
 
     using int_type = typename al_types::int_type;
     using bool_type = typename al_types::char_type;
@@ -37,8 +40,9 @@ public:
     using size_type = typename al_types::size_type;
     using float_type = typename al_types::float_type;
 
-    struct derived_func : derived_c_api_function<c_api, api_traits, nothing_t> {
-        using base = derived_c_api_function<c_api, api_traits, nothing_t>;
+    struct derived_func
+      : derived_c_api_function<al_api, api_traits, nothing_t> {
+        using base = derived_c_api_function<al_api, api_traits, nothing_t>;
         using base::base;
 
         template <typename Res>
@@ -48,13 +52,14 @@ public:
         }
     };
 
-    template <typename W, W c_api::*F, typename Signature = typename W::signature>
+    template <typename W, W al_api::*F, typename Signature = typename W::signature>
     class func;
 
-    template <typename W, W c_api::*F, typename RVC, typename... Params>
+    template <typename W, W al_api::*F, typename RVC, typename... Params>
     class func<W, F, RVC(Params...)>
-      : public wrapped_c_api_function<c_api, api_traits, nothing_t, W, F> {
-        using base = wrapped_c_api_function<c_api, api_traits, nothing_t, W, F>;
+      : public wrapped_c_api_function<al_api, api_traits, nothing_t, W, F> {
+        using base =
+          wrapped_c_api_function<al_api, api_traits, nothing_t, W, F>;
 
     private:
         template <typename Res>
@@ -80,85 +85,71 @@ public:
         }
     };
 
-    template <typename ObjTag, typename W, W c_api::*GenObjects>
-    struct gen_object_func : func<W, GenObjects> {
-        using func<W, GenObjects>::func;
-
-        constexpr auto operator()(span<name_type> names) const noexcept {
-            return this->_chkcall(size_type(names.size()), names.data());
-        }
+    template <auto Wrapper, typename ObjTag>
+    struct gen_object_func : adapted_function<Wrapper, void(span<name_type>)> {
+        using base = adapted_function<Wrapper, void(span<name_type>)>;
+        using base::base;
+        using base::operator();
 
         constexpr auto operator()() const noexcept {
             name_type n{};
-            return this->_chkcall(1, &n).transformed([&n](bool valid) {
+            return base::operator()(cover_one(n)).transformed([&n](bool valid) {
                 return al_owned_object_name<ObjTag>(valid ? n : 0);
             });
         }
     };
 
-    // gen_sources
-    gen_object_func<source_tag, OALPAFP(GenSources)> gen_sources;
+    gen_object_func<&al_api::GenSources, source_tag> gen_sources{*this};
 
-    // gen_buffers
-    gen_object_func<buffer_tag, OALPAFP(GenBuffers)> gen_buffers;
+    gen_object_func<&al_api::GenBuffers, buffer_tag> gen_buffers{*this};
 
-    // gen_effects
-    gen_object_func<effect_tag, OALPAFP(GenEffects)> gen_effects;
+    gen_object_func<&al_api::GenEffects, effect_tag> gen_effects{*this};
 
-    // gen_filters
-    gen_object_func<filter_tag, OALPAFP(GenFilters)> gen_filters;
+    gen_object_func<&al_api::GenFilters, filter_tag> gen_filters{*this};
 
-    // gen_auxiliary_effect_slots
-    gen_object_func<auxiliary_effect_slot_tag, OALPAFP(GenAuxiliaryEffectSlots)>
-      gen_auxiliary_effect_slots;
+    gen_object_func<&al_api::GenAuxiliaryEffectSlots, auxiliary_effect_slot_tag>
+      gen_auxiliary_effect_slots{*this};
 
-    template <typename ObjTag, typename W, W c_api::*DeleteObjects>
-    struct delete_object_func : func<W, DeleteObjects> {
-        using func<W, DeleteObjects>::func;
-
-        constexpr auto operator()(span<const name_type> names) const noexcept {
-            return this->_chkcall(size_type(names.size()), names.data());
-        }
+    template <auto Wrapper, typename ObjTag>
+    struct del_object_func : adapted_function<Wrapper, void(span<name_type>)> {
+        using base = adapted_function<Wrapper, void(span<name_type>)>;
+        using base::base;
+        using base::raii;
+        using base::operator();
 
         constexpr auto operator()(
-          al_owned_object_name<ObjTag>& name) const noexcept {
+          al_owned_object_name<ObjTag> name) const noexcept {
             auto n = name.release();
-            return this->_chkcall(1, &n);
+            return base::operator()(cover_one(n));
         }
 
         auto raii(al_owned_object_name<ObjTag>& name) const noexcept {
-            return eagine::finally([this, &name]() { (*this)(name); });
+            return eagine::finally(
+              [this, &name]() { (*this)(std::move(name)); });
         }
 
         template <typename Res>
         auto raii_opt(Res& res) const noexcept {
             return eagine::finally([this, &res]() {
                 if(res) {
-                    (*this)(extract(res));
+                    (*this)(std::move(extract(res)));
                 }
             });
         }
     };
 
-    // delete_sources
-    delete_object_func<source_tag, OALPAFP(DeleteSources)> delete_sources;
+    del_object_func<&al_api::DeleteSources, source_tag> delete_sources{*this};
 
-    // delete_buffers
-    delete_object_func<buffer_tag, OALPAFP(DeleteBuffers)> delete_buffers;
+    del_object_func<&al_api::DeleteBuffers, buffer_tag> delete_buffers{*this};
 
-    // delete_effects
-    delete_object_func<effect_tag, OALPAFP(DeleteEffects)> delete_effects;
+    del_object_func<&al_api::DeleteEffects, effect_tag> delete_effects{*this};
 
-    // delete_filters
-    delete_object_func<filter_tag, OALPAFP(DeleteFilters)> delete_filters;
+    del_object_func<&al_api::DeleteFilters, filter_tag> delete_filters{*this};
 
-    // delete_auxiliary_effect_slots
-    delete_object_func<
-      auxiliary_effect_slot_tag,
-      OALPAFP(DeleteAuxiliaryEffectSlots)>
-      delete_auxiliary_effect_slots;
+    del_object_func<&al_api::DeleteAuxiliaryEffectSlots, auxiliary_effect_slot_tag>
+      delete_auxiliary_effect_slots{*this};
 
-    template <typename ObjTag, typename W, W c_api::*IsObject>
+    template <typename ObjTag, typename W, W al_api::*IsObject>
     struct is_object_func : func<W, IsObject> {
         using func<W, IsObject>::func;
 
@@ -167,21 +158,22 @@ public:
         }
     };
 
-    // is_source
-    is_object_func<source_tag, OALPAFP(IsSource)> is_source;
+    adapted_function<&al_api::IsSource, bool_type(source_name)> is_source{
+      *this};
 
-    // is_buffer
-    is_object_func<buffer_tag, OALPAFP(IsBuffer)> is_buffer;
+    adapted_function<&al_api::IsBuffer, bool_type(buffer_name)> is_buffer{
+      *this};
 
-    // is_effect
-    is_object_func<effect_tag, OALPAFP(IsEffect)> is_effect;
+    adapted_function<&al_api::IsEffect, bool_type(effect_name)> is_effect{
+      *this};
 
-    // is_filter
-    is_object_func<filter_tag, OALPAFP(IsFilter)> is_filter;
+    adapted_function<&al_api::IsFilter, bool_type(filter_name)> is_filter{
+      *this};
 
-    // is_auxiliary_effect_slot
-    is_object_func<auxiliary_effect_slot_tag, OALPAFP(IsAuxiliaryEffectSlot)>
-      is_auxiliary_effect_slot;
+    adapted_function<
+      &al_api::IsAuxiliaryEffectSlot,
+      bool_type(auxiliary_effect_slot_name)>
+      is_auxiliary_effect_slot{*this};
 
     // listener_i
     struct : derived_func {
@@ -247,25 +239,15 @@ public:
         }
     } listener_f;
 
-    // get_listener_i
-    struct : func<OALPAFP(GetListeneriv)> {
-        using func<OALPAFP(GetListeneriv)>::func;
+    adapted_function<
+      &al_api::GetListeneriv,
+      void(listener_attribute, span<int_type>)>
+      get_listener_i{*this};
 
-        constexpr auto operator()(listener_attribute attr, span<int_type> v)
-          const noexcept {
-            return this->_chkcall(enum_type(attr), v.data());
-        }
-    } get_listener_i;
-
-    // get_listener_f
-    struct : func<OALPAFP(GetListenerfv)> {
-        using func<OALPAFP(GetListenerfv)>::func;
-
-        constexpr auto operator()(listener_attribute attr, span<float_type> v)
-          const noexcept {
-            return this->_chkcall(enum_type(attr), v.data());
-        }
-    } get_listener_f;
+    adapted_function<
+      &al_api::GetListenerfv,
+      void(listener_attribute, span<float_type>)>
+      get_listener_f{*this};
 
     // buffer_i
     struct : derived_func {
@@ -349,29 +331,15 @@ public:
         }
     } buffer_f;
 
-    // get_buffer_i
-    struct : func<OALPAFP(GetBufferiv)> {
-        using func<OALPAFP(GetBufferiv)>::func;
+    adapted_function<
+      &al_api::GetBufferiv,
+      void(buffer_name, buffer_attribute, span<int_type>)>
+      get_buffer_i{*this};
 
-        constexpr auto operator()(
-          buffer_name src,
-          buffer_attribute attr,
-          span<int_type> v) const noexcept {
-            return this->_chkcall(name_type(src), enum_type(attr), v.data());
-        }
-    } get_buffer_i;
-
-    // get_buffer_f
-    struct : func<OALPAFP(GetBufferfv)> {
-        using func<OALPAFP(GetBufferfv)>::func;
-
-        constexpr auto operator()(
-          buffer_name src,
-          buffer_attribute attr,
-          span<float_type> v) const noexcept {
-            return this->_chkcall(name_type(src), enum_type(attr), v.data());
-        }
-    } get_buffer_f;
+    adapted_function<
+      &al_api::GetBufferfv,
+      void(buffer_name, buffer_attribute, span<float_type>)>
+      get_buffer_f{*this};
 
     // source_i
     struct : derived_func {
@@ -455,29 +423,15 @@ public:
         }
     } source_f;
 
-    // get_source_i
-    struct : func<OALPAFP(GetSourceiv)> {
-        using func<OALPAFP(GetSourceiv)>::func;
+    adapted_function<
+      &al_api::GetSourceiv,
+      void(source_name, source_attribute, span<int_type>)>
+      get_source_i{*this};
 
-        constexpr auto operator()(
-          source_name src,
-          source_attribute attr,
-          span<int_type> v) const noexcept {
-            return this->_chkcall(name_type(src), enum_type(attr), v.data());
-        }
-    } get_source_i;
-
-    // get_source_f
-    struct : func<OALPAFP(GetSourcefv)> {
-        using func<OALPAFP(GetSourcefv)>::func;
-
-        constexpr auto operator()(
-          source_name src,
-          source_attribute attr,
-          span<float_type> v) const noexcept {
-            return this->_chkcall(name_type(src), enum_type(attr), v.data());
-        }
-    } get_source_f;
+    adapted_function<
+      &al_api::GetSourcefv,
+      void(source_name, source_attribute, span<float_type>)>
+      get_source_f{*this};
 
     // source_queue_buffers
     struct : func<OALPAFP(SourceQueueBuffers)> {
@@ -593,20 +547,8 @@ public:
         }
     } source_rewind;
 
-    // get_string
-    struct : func<OALPAFP(GetString)> {
-        using func<OALPAFP(GetString)>::func;
-
-        constexpr auto operator()(al_string_query query) const noexcept {
-            return this->_chkcall(enum_type(query))
-              .cast_to(type_identity<string_view>{});
-        }
-
-        constexpr auto operator()() const noexcept {
-            return this->fake_empty_c_str().cast_to(
-              type_identity<string_view>{});
-        }
-    } get_string;
+    adapted_function<&al_api::GetString, string_view(al_string_query)>
+      get_string{*this};
 
     // get_strings
     auto get_strings(al_string_query query, char separator) const noexcept {
@@ -620,7 +562,8 @@ public:
 #ifdef AL_EXTENSIONS
         return get_string(al_string_query(AL_EXTENSIONS))
 #else
-        return get_string()
+        return get_string
+          .fail()
 #endif
           .transformed(
             [](auto src, bool) { return split_into_string_list(src, ' '); });

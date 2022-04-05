@@ -9,15 +9,35 @@
 #define EAGINE_OALPLUS_ALC_API_API_HPP
 
 #include "c_api.hpp"
+#include "context_attribs.hpp"
 #include "enum_types.hpp"
 #include "objects.hpp"
+#include <eagine/c_api/adapted_function.hpp>
 #include <eagine/scope_exit.hpp>
 #include <eagine/span.hpp>
 #include <eagine/string_list.hpp>
 
+namespace eagine::c_api {
+
+template <typename CH, typename... CT, typename... CppT>
+requires(!std::is_same_v<CH, oalplus::alc_types::device_type*>) struct make_args_map<
+  1,
+  1,
+  mp_list<CH, CT...>,
+  mp_list<oalplus::device_handle, CppT...>>
+  : make_args_map<1, 2, mp_list<CH, CT...>, mp_list<CppT...>> {};
+
+template <>
+struct make_args_map<
+  1,
+  1,
+  mp_list<const char*>,
+  mp_list<oalplus::device_handle, string_view>> : get_data_map<1, 2> {};
+
+} // namespace eagine::c_api
+
 namespace eagine::oalplus {
-//------------------------------------------------------------------------------
-#define OALPAFP(FUNC) decltype(c_api::FUNC), &c_api::FUNC
+using c_api::adapted_function;
 //------------------------------------------------------------------------------
 /// @brief Class wrapping the functions from the ALC API.
 /// @ingroup al_api_wrap
@@ -28,148 +48,67 @@ class basic_alc_operations : public basic_alc_c_api<ApiTraits> {
 
 public:
     using api_traits = ApiTraits;
-    using c_api = basic_alc_c_api<ApiTraits>;
+    using alc_api = basic_alc_c_api<ApiTraits>;
 
+    using bool_type = typename alc_types::bool_type;
     using enum_type = typename alc_types::enum_type;
     using size_type = typename alc_types::size_type;
     using char_type = typename alc_types::char_type;
     using int_type = typename alc_types::int_type;
+    using device_type = typename alc_types::device_type;
+    using context_type = typename alc_types::context_type;
 
-    template <typename W, W c_api::*F, typename Signature = typename W::signature>
-    class func;
-
-    template <typename W, W c_api::*F, typename RVC, typename... Params>
-    class func<W, F, RVC(Params...)>
-      : public wrapped_c_api_function<c_api, api_traits, nothing_t, W, F> {
-        using base = wrapped_c_api_function<c_api, api_traits, nothing_t, W, F>;
-
-    private:
-        template <typename Res>
-        constexpr auto _check(device_handle dev, Res&& res) const noexcept {
-            res.error_code(
-              this->api().GetError(static_cast<alc_types::device_type*>(dev)));
-            return std::forward<Res>(res);
-        }
-
-    protected:
-        template <typename... Args>
-        constexpr auto _chkcall(device_handle dev, Args&&... args)
-          const noexcept {
-            return this->_check(dev, this->_call(std::forward<Args>(args)...));
-        }
-
-        template <typename... Args>
-        constexpr auto _cnvchkcall(device_handle dev, Args&&... args)
-          const noexcept {
-            return this->_chkcall(dev, _conv(std::forward<Args>(args))...)
-              .cast_to(type_identity<RVC>{});
-        }
-
-        using base::_conv;
-
-    public:
-        using base::base;
-
-        constexpr auto operator()(Params... params) const noexcept {
-            return this->_chkcall(_conv(params)...)
-              .cast_to(type_identity<RVC>{});
-        }
-
-        auto bind(Params... params) const noexcept {
-            return [this, params...] {
-                return (*this)(params...);
-            };
+    struct collapse_bool_map {
+        template <typename... P>
+        constexpr auto operator()(size_constant<0> i, P&&... p) const noexcept {
+            return collapse_bool(
+              c_api::trivial_map{}(i, std::forward<P>(p)...));
         }
     };
 
-    // open_device
-    struct : func<OALPAFP(OpenDevice)> {
-        using func<OALPAFP(OpenDevice)>::func;
+    using _open_device_t = adapted_function<
+      &alc_api::OpenDevice,
+      device_handle(device_handle, string_view)>;
+
+    struct : _open_device_t {
+        using base = _open_device_t;
+        using base::base;
+        constexpr auto operator()(const string_view s) const noexcept {
+            return base::operator()(device_handle{}, s);
+        }
 
         constexpr auto operator()() const noexcept {
-            return this->_chkcall(device_handle{}, nullptr)
-              .cast_to(type_identity<device_handle>());
+            return base::operator()(device_handle{}, {});
         }
+    } open_device{*this};
 
-        auto operator()(const string_view name) const noexcept {
-            return this->_cnvchkcall(device_handle{}, name)
-              .cast_to(type_identity<device_handle>());
-        }
-    } open_device;
+    adapted_function<
+      &alc_api::CloseDevice,
+      bool_type(device_handle),
+      collapse_bool_map>
+      close_device{*this};
 
-    // close_device
-    struct : func<OALPAFP(CloseDevice)> {
-        using func<OALPAFP(CloseDevice)>::func;
+    adapted_function<
+      &alc_api::CreateContext,
+      context_handle(device_handle, context_attributes)>
+      create_context{*this};
 
-        constexpr auto operator()(device_handle dev) const noexcept {
-            return this->_cnvchkcall(dev, dev);
-        }
+    adapted_function<
+      &alc_api::DestroyContext,
+      void(device_handle, context_handle)>
+      destroy_context{*this};
 
-        auto bind(device_handle dev) const noexcept {
-            return [this, dev] {
-                return (*this)(dev);
-            };
-        }
+    using _make_context_current_t = adapted_function<
+      &alc_api::MakeContextCurrent,
+      bool_type(device_handle, context_handle),
+      collapse_bool_map>;
 
-        auto raii(device_handle dev) const noexcept {
-            return eagine::finally(this->bind(dev));
-        }
-    } close_device;
-
-    // create_context
-    struct : func<OALPAFP(CreateContext)> {
-        using func<OALPAFP(CreateContext)>::func;
-
-        constexpr auto operator()(device_handle dev) const noexcept {
-            return this->_cnvchkcall(dev, dev, nullptr)
-              .cast_to(type_identity<context_handle>());
-        }
-
-        constexpr auto operator()(
-          device_handle dev,
-          span<const int_type> attributes) const noexcept {
-            return this->_cnvchkcall(dev, dev, attributes.data())
-              .cast_to(type_identity<context_handle>());
-        }
-    } create_context;
-
-    // destroy_context
-    struct : func<OALPAFP(DestroyContext)> {
-        using func<OALPAFP(DestroyContext)>::func;
-
-        constexpr auto operator()(device_handle dev, context_handle ctx)
-          const noexcept {
-            return this->_cnvchkcall(dev, ctx);
-        }
-
-        auto bind(device_handle dev, context_handle ctxt) const noexcept {
-            return [this, dev, ctxt] {
-                return (*this)(dev, ctxt);
-            };
-        }
-
-        auto raii(device_handle dev, context_handle ctx) const noexcept {
-            return eagine::finally(this->bind(dev, ctx));
-        }
-    } destroy_context;
-
-    // make_context_current
-    struct : func<OALPAFP(MakeContextCurrent)> {
-        using func<OALPAFP(MakeContextCurrent)>::func;
-
-        constexpr auto operator()(device_handle dev, context_handle ctx)
-          const noexcept {
-            return this->_cnvchkcall(dev, ctx);
-        }
-
+    struct : _make_context_current_t {
+        using base = _make_context_current_t;
+        using base::base;
+        using base::operator();
         constexpr auto operator()(context_handle ctx) const noexcept {
             return (*this)(device_handle{}, ctx);
-        }
-
-        auto bind(device_handle dev, context_handle ctx) const noexcept {
-            return [this, dev, ctx] {
-                return (*this)(dev, ctx);
-            };
         }
 
         constexpr auto operator()() const noexcept {
@@ -182,10 +121,6 @@ public:
             };
         }
 
-        auto raii(device_handle dev, context_handle ctx) const noexcept {
-            return eagine::finally(this->bind(dev, ctx));
-        }
-
         auto raii() const noexcept {
             return eagine::finally(this->bind());
         }
@@ -193,65 +128,59 @@ public:
         constexpr auto none(device_handle dev) const noexcept {
             return (*this)(dev, context_handle{});
         }
-    } make_context_current;
+    } make_context_current{*this};
 
-    // get_current_context
-    struct : func<OALPAFP(GetCurrentContext)> {
-        using func<OALPAFP(GetCurrentContext)>::func;
+    using _get_current_context_t = adapted_function<
+      &alc_api::GetCurrentContext,
+      context_handle(device_handle)>;
 
-        constexpr auto operator()(device_handle dev) const noexcept {
-            return this->_cnvchkcall(dev);
-        }
+    struct : _get_current_context_t {
+        using base = _get_current_context_t;
+        using base::base;
+        using base::operator();
 
         constexpr auto operator()() const noexcept {
-            return this->_cnvchkcall(device_handle{});
+            return base::operator()(device_handle{});
         }
-    } get_current_context;
+    } get_current_context{*this};
 
-    // get_integer
-    struct : func<OALPAFP(GetIntegerv)> {
-        using func<OALPAFP(GetIntegerv)>::func;
+    using _get_integer_t = adapted_function<
+      &alc_api::GetIntegerv,
+      bool_type(device_handle, alc_integer_query, span<int_type>)>;
+
+    struct : _get_integer_t {
+        using base = _get_integer_t;
+        using base::base;
+        using base::operator();
 
         constexpr auto operator()(device_handle dev, alc_integer_query query)
           const noexcept {
             int_type result{};
-            return this
-              ->_cnvchkcall(dev, dev, enum_type(query), size_type(1), &result)
+            return base::operator()(dev, query, cover_one(result))
               .replaced_with(result);
         }
-
         constexpr auto operator()(alc_integer_query query) const noexcept {
             return (*this)(device_handle{}, query);
         }
+    } get_integer{*this};
 
-        constexpr auto operator()(
-          device_handle dev,
-          alc_integer_query query,
-          span<int_type> dst) const noexcept {
-            return this->_cnvchkcall(
-              dev, dev, enum_type(query), size_type(dst.size()), dst.data());
-        }
-    } get_integer;
+    using _get_string_t = adapted_function<
+      &alc_api::GetString,
+      string_view(device_handle, alc_string_query)>;
 
-    // get_string
-    struct : func<OALPAFP(GetString)> {
-        using func<OALPAFP(GetString)>::func;
-
-        constexpr auto operator()(device_handle dev, alc_string_query query)
-          const noexcept {
-            return this->_cnvchkcall(dev, dev, query)
-              .cast_to(type_identity<string_view>{});
-        }
+    struct : _get_string_t {
+        using base = _get_string_t;
+        using base::base;
+        using base::operator();
 
         constexpr auto operator()(alc_string_query query) const noexcept {
-            return (*this)(device_handle{}, query);
+            return base::operator()(device_handle{}, query);
         }
 
         constexpr auto operator()(device_handle) const noexcept {
-            return this->fake_empty_c_str().cast_to(
-              type_identity<string_view>{});
+            return base::fail();
         }
-    } get_string;
+    } get_string{*this};
 
     // get_strings
     auto get_strings(device_handle dev, alc_string_query query, char separator)
@@ -318,10 +247,9 @@ public:
             [](auto src, bool) { return split_into_string_list(src, '\0'); });
     }
 
-    basic_alc_operations(api_traits& traits);
+    basic_alc_operations(api_traits& traits)
+      : alc_api{traits} {}
 };
-//------------------------------------------------------------------------------
-#undef OALPAFP
 //------------------------------------------------------------------------------
 } // namespace eagine::oalplus
 

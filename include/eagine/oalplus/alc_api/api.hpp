@@ -17,25 +17,6 @@
 #include <eagine/span.hpp>
 #include <eagine/string_list.hpp>
 
-namespace eagine::c_api {
-
-template <typename CH, typename... CT, typename... CppT>
-requires(!std::is_same_v<CH, oalplus::alc_types::device_type*>) struct make_args_map<
-  1,
-  1,
-  mp_list<CH, CT...>,
-  mp_list<oalplus::device_handle, CppT...>>
-  : make_args_map<1, 2, mp_list<CH, CT...>, mp_list<CppT...>> {};
-
-template <>
-struct make_args_map<
-  1,
-  1,
-  mp_list<const char*>,
-  mp_list<oalplus::device_handle, string_view>> : get_data_map<1, 2> {};
-
-} // namespace eagine::c_api
-
 namespace eagine::oalplus {
 using c_api::adapted_function;
 //------------------------------------------------------------------------------

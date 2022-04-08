@@ -19,8 +19,6 @@
 namespace eagine::oalplus {
 using c_api::adapted_function;
 //------------------------------------------------------------------------------
-#define OALPAFP(FUNC) decltype(al_api::FUNC), &al_api::FUNC
-//------------------------------------------------------------------------------
 /// @brief Class wrapping the functions from the AL API.
 /// @ingroup al_api_wrap
 /// @see basic_al_constants
@@ -253,85 +251,25 @@ public:
         void(source_name, buffer_name)>>
       source_unqueue_buffers{*this};
 
-    // source_play
-    struct : derived_func {
-        using derived_func::derived_func;
+    c_api::combined<
+      adapted_function<&al_api::SourcePlay, void(source_name)>,
+      adapted_function<&al_api::SourcePlayv, void(span<const name_type>)>>
+      source_play{*this};
 
-        explicit constexpr operator bool() const noexcept {
-            return bool(this->api().SourcePlay) &&
-                   bool(this->api().SourcePlayv);
-        }
+    c_api::combined<
+      adapted_function<&al_api::SourcePause, void(source_name)>,
+      adapted_function<&al_api::SourcePausev, void(span<const name_type>)>>
+      source_pause{*this};
 
-        constexpr auto operator()(source_name src) const noexcept {
-            return this->_check(
-              this->_call(this->api().SourcePlay, name_type(src)));
-        }
+    c_api::combined<
+      adapted_function<&al_api::SourceStop, void(source_name)>,
+      adapted_function<&al_api::SourceStopv, void(span<const name_type>)>>
+      source_stop{*this};
 
-        constexpr auto operator()(span<const name_type> srcs) const noexcept {
-            return this->_check(this->_call(
-              this->api().SourcePlayv, size_type(srcs.size()), srcs.data()));
-        }
-    } source_play;
-
-    // source_pause
-    struct : derived_func {
-        using derived_func::derived_func;
-
-        explicit constexpr operator bool() const noexcept {
-            return bool(this->api().SourcePause) &&
-                   bool(this->api().SourcePausev);
-        }
-
-        constexpr auto operator()(source_name src) const noexcept {
-            return this->_check(
-              this->_call(this->api().SourcePause, name_type(src)));
-        }
-
-        constexpr auto operator()(span<const name_type> srcs) const noexcept {
-            return this->_check(this->_call(
-              this->api().SourcePausev, size_type(srcs.size()), srcs.data()));
-        }
-    } source_pause;
-
-    // source_stop
-    struct : derived_func {
-        using derived_func::derived_func;
-
-        explicit constexpr operator bool() const noexcept {
-            return bool(this->api().SourceStop) &&
-                   bool(this->api().SourceStopv);
-        }
-
-        constexpr auto operator()(source_name src) const noexcept {
-            return this->_check(
-              this->_call(this->api().SourceStop, name_type(src)));
-        }
-
-        constexpr auto operator()(span<const name_type> srcs) const noexcept {
-            return this->_check(this->_call(
-              this->api().SourceStopv, size_type(srcs.size()), srcs.data()));
-        }
-    } source_stop;
-
-    // source_rewind
-    struct : derived_func {
-        using derived_func::derived_func;
-
-        explicit constexpr operator bool() const noexcept {
-            return bool(this->api().SourceRewind) &&
-                   bool(this->api().SourceRewindv);
-        }
-
-        constexpr auto operator()(source_name src) const noexcept {
-            return this->_check(
-              this->_call(this->api().SourceRewind, name_type(src)));
-        }
-
-        constexpr auto operator()(span<const name_type> srcs) const noexcept {
-            return this->_check(this->_call(
-              this->api().SourceRewindv, size_type(srcs.size()), srcs.data()));
-        }
-    } source_rewind;
+    c_api::combined<
+      adapted_function<&al_api::SourceRewind, void(source_name)>,
+      adapted_function<&al_api::SourceRewindv, void(span<const name_type>)>>
+      source_rewind{*this};
 
     adapted_function<&al_api::GetString, string_view(al_string_query)>
       get_string{*this};
@@ -355,10 +293,9 @@ public:
             [](auto src, bool) { return split_into_string_list(src, ' '); });
     }
 
-    basic_al_operations(api_traits& traits);
+    basic_al_operations(api_traits& traits)
+      : al_api{traits} {}
 };
-//------------------------------------------------------------------------------
-#undef OALPAFP
 //------------------------------------------------------------------------------
 } // namespace eagine::oalplus
 

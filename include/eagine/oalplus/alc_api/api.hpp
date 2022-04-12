@@ -17,25 +17,6 @@
 #include <eagine/span.hpp>
 #include <eagine/string_list.hpp>
 
-namespace eagine::c_api {
-
-template <typename CH, typename... CT, typename... CppT>
-requires(!std::is_same_v<CH, oalplus::alc_types::device_type*>) struct make_args_map<
-  1,
-  1,
-  mp_list<CH, CT...>,
-  mp_list<oalplus::device_handle, CppT...>>
-  : make_args_map<1, 2, mp_list<CH, CT...>, mp_list<CppT...>> {};
-
-template <>
-struct make_args_map<
-  1,
-  1,
-  mp_list<const char*>,
-  mp_list<oalplus::device_handle, string_view>> : get_data_map<1, 2> {};
-
-} // namespace eagine::c_api
-
 namespace eagine::oalplus {
 using c_api::adapted_function;
 //------------------------------------------------------------------------------
@@ -144,23 +125,25 @@ public:
         }
     } get_current_context{*this};
 
-    using _get_integer_t = adapted_function<
-      &alc_api::GetIntegerv,
-      bool_type(device_handle, alc_integer_query, span<int_type>)>;
+    using _get_integer_t = c_api::combined<
+      adapted_function<
+        &alc_api::GetIntegerv,
+        bool_type(device_handle, alc_integer_query, span<int_type>)>,
+      adapted_function<
+        &alc_api::GetIntegerv,
+        c_api::returned<int_type>(
+          device_handle,
+          alc_integer_query,
+          c_api::substituted<1>,
+          c_api::returned<int_type>)>>;
 
     struct : _get_integer_t {
         using base = _get_integer_t;
         using base::base;
         using base::operator();
 
-        constexpr auto operator()(device_handle dev, alc_integer_query query)
-          const noexcept {
-            int_type result{};
-            return base::operator()(dev, query, cover_one(result))
-              .replaced_with(result);
-        }
         constexpr auto operator()(alc_integer_query query) const noexcept {
-            return (*this)(device_handle{}, query);
+            return base::operator()(device_handle{}, query);
         }
     } get_integer{*this};
 

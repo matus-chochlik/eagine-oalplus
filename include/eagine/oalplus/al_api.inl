@@ -10,7 +10,6 @@
 #include <eagine/oalplus/al_api/api_traits.inl>
 #include <eagine/oalplus/al_api/constants.inl>
 #include <eagine/oalplus/al_api/c_api.inl>
-#include <eagine/oalplus/al_api/api.inl>
 // clang-format on
 
 namespace eagine::oalplus {

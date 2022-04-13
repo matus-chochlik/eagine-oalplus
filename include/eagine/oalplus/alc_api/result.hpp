@@ -130,14 +130,6 @@ using alc_result = c_api::result<Result, alc_result_info>;
 template <typename Result>
 using alc_opt_result = c_api::opt_result<Result, alc_result_info>;
 //------------------------------------------------------------------------------
-template <typename Result, c_api::result_validity Validity>
-inline auto collapse_bool(
-  c_api::result<Result, alc_result_info, Validity>&& r) noexcept {
-    return r.collapsed(
-      [](alc_types::bool_type value) { return bool(value); },
-      [](auto& info) { info.set_unknown_error(); });
-}
-//------------------------------------------------------------------------------
 } // namespace eagine::oalplus
 
 #endif // EAGINE_OALPLUS_ALC_API_RESULT_HPP

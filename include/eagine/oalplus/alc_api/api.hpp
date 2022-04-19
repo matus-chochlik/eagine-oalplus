@@ -39,14 +39,6 @@ public:
     using device_type = typename alc_types::device_type;
     using context_type = typename alc_types::context_type;
 
-    struct collapse_bool_map {
-        template <typename... P>
-        constexpr auto operator()(size_constant<0> i, P&&... p) const noexcept {
-            return collapse_bool(
-              c_api::trivial_map{}(i, std::forward<P>(p)...));
-        }
-    };
-
     using _open_device_t = adapted_function<
       &alc_api::OpenDevice,
       device_handle(device_handle, string_view)>;
@@ -65,8 +57,7 @@ public:
 
     adapted_function<
       &alc_api::CloseDevice,
-      bool_type(device_handle),
-      collapse_bool_map>
+      c_api::collapsed<bool_type>(device_handle)>
       close_device{*this};
 
     adapted_function<
@@ -81,8 +72,7 @@ public:
 
     using _make_context_current_t = adapted_function<
       &alc_api::MakeContextCurrent,
-      bool_type(device_handle, context_handle),
-      collapse_bool_map>;
+      c_api::collapsed<bool_type>(device_handle, context_handle)>;
 
     struct : _make_context_current_t {
         using base = _make_context_current_t;

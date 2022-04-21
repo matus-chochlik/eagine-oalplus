@@ -9,8 +9,7 @@
 #define EAGINE_OALPLUS_AL_API_ENUM_CLASS_HPP
 
 #include "config.hpp"
-#include <eagine/enum_bitfield.hpp>
-#include <eagine/enum_class.hpp>
+#include <eagine/c_api/enum_class.hpp>
 #include <eagine/identifier.hpp>
 
 namespace eagine::oalplus {
@@ -26,20 +25,20 @@ namespace eagine::oalplus {
 /// of listener attribute constants. Such mismatches result in compilation errors.
 template <typename Self, identifier_t Id>
 using al_enum_class =
-  enum_class<Self, al_types::enum_type, EAGINE_ID_V(AL), Id>;
+  c_api::enum_class<Self, al_types::enum_type, EAGINE_ID_V(AL), Id>;
 
 /// @brief Type erasure alias for AL enum classes.
 /// @ingroup al_api_wrap
-using al_any_enum_class = any_enum_class<EAGINE_ID_V(AL)>;
+using al_any_enum_class = c_api::any_enum_class<EAGINE_ID_V(AL)>;
 
 /// @brief Type erasure alias for AL enum values.
 /// @ingroup al_api_wrap
-using al_any_enum_value = any_enum_value<EAGINE_ID_V(AL)>;
+using al_any_enum_value = c_api::any_enum_value<EAGINE_ID_V(AL)>;
 
 static constexpr auto same_enum_class(
   const al_any_enum_class a,
   const al_any_enum_class b) noexcept -> bool {
-    return ::eagine::same_enum_class(a, b);
+    return ::eagine::c_api::same_enum_class(a, b);
 }
 //------------------------------------------------------------------------------
 } // namespace eagine::oalplus

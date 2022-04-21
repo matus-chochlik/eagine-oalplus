@@ -9,8 +9,7 @@
 #define EAGINE_OALPLUS_ALC_API_ENUM_CLASS_HPP
 
 #include "config.hpp"
-#include <eagine/enum_bitfield.hpp>
-#include <eagine/enum_class.hpp>
+#include <eagine/c_api/enum_class.hpp>
 #include <eagine/identifier.hpp>
 
 namespace eagine::oalplus {
@@ -26,20 +25,20 @@ namespace eagine::oalplus {
 /// of string query constants. Such mismatches result in compilation errors.
 template <typename Self, identifier_t Id>
 using alc_enum_class =
-  enum_class<Self, alc_types::enum_type, EAGINE_ID_V(ALC), Id>;
+  c_api::enum_class<Self, alc_types::enum_type, EAGINE_ID_V(ALC), Id>;
 
 /// @brief Type erasure alias for ALC enum classes.
 /// @ingroup al_api_wrap
-using alc_any_enum_class = any_enum_class<EAGINE_ID_V(ALC)>;
+using alc_any_enum_class = c_api::any_enum_class<EAGINE_ID_V(ALC)>;
 
 /// @brief Type erasure alias for ALC enum values.
 /// @ingroup al_api_wrap
-using alc_any_enum_value = any_enum_value<EAGINE_ID_V(ALC)>;
+using alc_any_enum_value = c_api::any_enum_value<EAGINE_ID_V(ALC)>;
 
 static constexpr auto same_enum_class(
   const alc_any_enum_class a,
   const alc_any_enum_class b) noexcept -> bool {
-    return ::eagine::same_enum_class(a, b);
+    return ::eagine::c_api::same_enum_class(a, b);
 }
 //------------------------------------------------------------------------------
 } // namespace eagine::oalplus

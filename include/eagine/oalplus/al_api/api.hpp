@@ -91,9 +91,10 @@ public:
 
         constexpr auto operator()() const noexcept {
             name_type n{};
-            return base::operator()(cover_one(n)).transformed([&n](bool valid) {
-                return al_owned_object_name<ObjTag>(valid ? n : 0);
-            });
+            return base::operator()(cover_one(n))
+              .transformed([&n](auto, bool valid) {
+                  return al_owned_object_name<ObjTag>(valid ? n : 0);
+              });
         }
     };
 

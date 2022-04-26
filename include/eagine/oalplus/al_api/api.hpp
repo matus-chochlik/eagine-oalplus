@@ -12,7 +12,6 @@
 #include "enum_types.hpp"
 #include "object_name.hpp"
 #include <eagine/c_api/adapted_function.hpp>
-#include <eagine/c_api_wrap.hpp>
 #include <eagine/scope_exit.hpp>
 #include <eagine/string_list.hpp>
 
@@ -38,51 +37,6 @@ public:
     using size_type = typename al_types::size_type;
     using float_type = typename al_types::float_type;
 
-    struct derived_func
-      : derived_c_api_function<al_api, api_traits, nothing_t> {
-        using base = derived_c_api_function<al_api, api_traits, nothing_t>;
-        using base::base;
-
-        template <typename Res>
-        constexpr auto _check(Res&& res) const noexcept {
-            res.error_code(this->api().GetError());
-            return std::forward<Res>(res);
-        }
-    };
-
-    template <typename W, W al_api::*F, typename Signature = typename W::signature>
-    class func;
-
-    template <typename W, W al_api::*F, typename RVC, typename... Params>
-    class func<W, F, RVC(Params...)>
-      : public wrapped_c_api_function<al_api, api_traits, nothing_t, W, F> {
-        using base =
-          wrapped_c_api_function<al_api, api_traits, nothing_t, W, F>;
-
-    private:
-        template <typename Res>
-        constexpr auto _check(Res&& res) const noexcept {
-            res.error_code(this->api().GetError());
-            return std::forward<Res>(res);
-        }
-
-    protected:
-        template <typename... Args>
-        constexpr auto _chkcall(Args&&... args) const noexcept {
-            return this->_check(this->_call(std::forward<Args>(args)...));
-        }
-
-        using base::_conv;
-
-    public:
-        using base::base;
-
-        constexpr auto operator()(Params... params) const noexcept {
-            return this->_chkcall(_conv(params)...)
-              .cast_to(type_identity<RVC>{});
-        }
-    };
-
     template <auto Wrapper, typename ObjTag>
     struct gen_object_func : adapted_function<Wrapper, void(span<name_type>)> {
         using base = adapted_function<Wrapper, void(span<name_type>)>;
@@ -91,9 +45,10 @@ public:
 
         constexpr auto operator()() const noexcept {
             name_type n{};
-            return base::operator()(cover_one(n)).transformed([&n](bool valid) {
-                return al_owned_object_name<ObjTag>(valid ? n : 0);
-            });
+            return base::operator()(cover_one(n))
+              .transformed([&n](auto, bool valid) {
+                  return al_owned_object_name<ObjTag>(valid ? n : 0);
+              });
         }
     };
 

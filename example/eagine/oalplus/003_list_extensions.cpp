@@ -6,19 +6,24 @@
 ///  http://www.boost.org/LICENSE_1_0.txt
 ///
 
+#include <eagine/console/console.hpp>
+#include <eagine/main.hpp>
 #include <eagine/oalplus/al.hpp>
 #include <eagine/oalplus/alc_api.hpp>
-#include <iostream>
 
-auto main() -> int {
+namespace eagine {
+
+auto main(main_ctx& ctx) -> int {
     using namespace eagine;
     using namespace eagine::oalplus;
 
     const alc_api alc;
+    const auto& cio = ctx.cio();
 
     if(alc.get_string) {
         if(const ok name{alc.get_default_device_specifier()}) {
-            std::cout << "Default device: " << name.get() << std::endl;
+            cio.print(EAGINE_ID(AL), "Default device: ${name}")
+              .arg(EAGINE_ID(name), name);
         }
     }
 
@@ -27,17 +32,28 @@ auto main() -> int {
             // closes the device when going out of scope
             const auto cleanup_dev = alc.close_device.raii(device);
 
+            const auto ext_cio{
+              cio.print(EAGINE_ID(AL), "Extensions:").to_be_continued()};
+
             if(const ok extensions{alc.get_extensions(device)}) {
                 for(const auto name : extensions) {
-                    std::cout << "  " << name << std::endl;
+                    ext_cio.print(name);
                 }
             } else {
-                std::cerr << "failed to get extension list: "
-                          << (!extensions).message() << std::endl;
+                ext_cio
+                  .print(
+                    console_entry_kind::error,
+                    "failed to get extension list: ${message}")
+                  .arg(EAGINE_ID(message), (!extensions).message());
             }
         } else {
-            std::cout << "missing required API function." << std::endl;
+            cio.print(
+              EAGINE_ID(AL),
+              console_entry_kind::error,
+              "missing required API function");
         }
     }
     return 0;
 }
+
+} // namespace eagine

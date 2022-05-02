@@ -6,27 +6,34 @@
 ///  http://www.boost.org/LICENSE_1_0.txt
 ///
 
+#include <eagine/main.hpp>
+#include <eagine/main_ctx_object.hpp>
 #include <eagine/oalplus/al.hpp>
 #include <eagine/oalplus/alc_api.hpp>
-#include <iostream>
 
-auto main() -> int {
-    using namespace eagine;
+namespace eagine {
+
+auto main(main_ctx& ctx) -> int {
     using namespace eagine::oalplus;
 
     const alc_api alc;
+    const main_ctx_object out{EAGINE_ID(OALplus), ctx};
 
-    std::cout << "Default playback device: "
-              << extract_or(alc.get_default_device_specifier(), "N/A")
-              << std::endl;
+    out.cio_print("Default playback device: ${device}")
+      .arg(
+        EAGINE_ID(device),
+        extract_or(alc.get_default_device_specifier(), "N/A"));
 
-    std::cout << "Default capture device: "
-              << extract_or(alc.get_capture_default_device_specifier(), "N/A")
-              << std::endl;
+    out.cio_print("Default capture device: ${device}")
+      .arg(
+        EAGINE_ID(device),
+        extract_or(alc.get_capture_default_device_specifier(), "N/A"));
 
-    std::cout << "ALC version: "
-              << extract_or(alc.get_integer(alc.major_version), 0) << "."
-              << extract_or(alc.get_integer(alc.minor_version), 0) << std::endl;
+    out.cio_print("ALC version: ${major}.${minor}")
+      .arg(EAGINE_ID(major), extract_or(alc.get_integer(alc.major_version), 0))
+      .arg(EAGINE_ID(minor), extract_or(alc.get_integer(alc.minor_version), 0));
 
     return 0;
 }
+
+} // namespace eagine

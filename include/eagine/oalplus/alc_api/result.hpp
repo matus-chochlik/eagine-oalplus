@@ -100,7 +100,7 @@ public:
 
     constexpr auto set_unknown_error() noexcept -> auto& {
         if(_error_code != ALC_NO_ERROR) {
-            _error_code = ~alc_types::enum_type(0);
+            _error_code = alc_types::enum_type(~0UL);
         }
         return *this;
     }

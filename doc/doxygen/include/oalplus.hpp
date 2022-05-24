@@ -10,7 +10,9 @@ namespace eagine {
 
 /// @brief OpenAL API wrapper code is placed in this namespace.
 namespace oalplus {
-/// @defgroup oalplus OpenAL API wrappers
+/// @defgroup al_api_wrap OpenAL API wrappers
+/// @defgroup alc_api_wrap OpenAL-ALC API wrappers
+/// @defgroup alut_api_wrap OpenAL-ALUT API wrappers
 }
 
 } // namespace eagine

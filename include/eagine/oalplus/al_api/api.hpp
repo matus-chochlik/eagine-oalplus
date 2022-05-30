@@ -10,7 +10,7 @@
 
 #include "c_api.hpp"
 #include "enum_types.hpp"
-#include "object_name.hpp"
+#include "objects.hpp"
 #include <eagine/c_api/adapted_function.hpp>
 #include <eagine/scope_exit.hpp>
 #include <eagine/string_list.hpp>
@@ -49,6 +49,15 @@ public:
               .transformed([&n](auto, bool valid) {
                   return al_owned_object_name<ObjTag>(valid ? n : 0);
               });
+        }
+
+        constexpr auto object() const noexcept
+          -> al_object<basic_al_operations, ObjTag> {
+            al_owned_object_name<ObjTag> name;
+            (*this)() >> name;
+            return {
+              static_cast<const basic_al_operations&>(base::api()),
+              std::move(name)};
         }
     };
 

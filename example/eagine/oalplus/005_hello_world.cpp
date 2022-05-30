@@ -20,15 +20,16 @@ auto main(int argc, char** argv) -> int {
 
     alc_api alc;
 
-    if(const ok device{alc.open_device()}) {
-        const auto cleanup_dev{alc.close_device.raii(device)};
+    if(ok device{alc.open_device()}) {
+        const auto cleanup_dev{alc.close_device.raii(extract(device))};
 
         const auto context_attribs = (alc.mono_sources | 1) +
                                      (alc.stereo_sources | 1) +
                                      (alc.sync | false);
 
-        if(const ok context{alc.create_context(device, context_attribs)}) {
-            const auto cleanup_ctx{alc.destroy_context.raii(device, context)};
+        if(ok context{alc.create_context(device, context_attribs)}) {
+            const auto cleanup_ctx{
+              alc.destroy_context.raii(device, extract(context))};
 
             alc.make_context_current(context);
             const auto reset_ctx = alc.make_context_current.raii();

@@ -5,55 +5,63 @@
 /// See accompanying file LICENSE_1_0.txt or copy at
 ///  http://www.boost.org/LICENSE_1_0.txt
 ///
-#ifndef EAGINE_OALPLUS_AL_API_OBJECT_NAME_HPP
-#define EAGINE_OALPLUS_AL_API_OBJECT_NAME_HPP
+#ifndef EAGINE_OALPLUS_AL_API_OBJECTS_HPP
+#define EAGINE_OALPLUS_AL_API_OBJECTS_HPP
 
 #include "config.hpp"
-#include <eagine/c_api/handle.hpp>
+#include <eagine/c_api/object.hpp>
 #include <eagine/message_id.hpp>
 
 namespace eagine::oalplus {
 //------------------------------------------------------------------------------
-/// @brief Alias for template wrapping GL object handles.
-/// @ingroup gl_api_wrap
-/// @see gl_owned_object_name
+/// @brief Alias for template wrapping AL object handles.
+/// @ingroup al_api_wrap
+/// @see al_owned_object_name
 /// @see al_object_name_view
 /// @see al_object_name_span
 /// @see al_object_name_array
 template <typename Tag>
 using al_object_name = c_api::basic_handle<Tag, al_types::name_type>;
 
-/// @brief Alias for template wrapping owned GL object handles.
-/// @ingroup gl_api_wrap
+/// @brief Alias for template wrapping owned AL object handles.
+/// @ingroup al_api_wrap
 /// @see al_object_name
 template <typename Tag>
 using al_owned_object_name =
   c_api::basic_owned_handle<Tag, al_types::name_type>;
 
-/// @brief Alias for template wrapping a mutable span of GL object handles.
-/// @ingroup gl_api_wrap
+/// @brief Alias for template wrapping a mutable span of AL object handles.
+/// @ingroup al_api_wrap
 /// @see al_object_name_view
 /// @see al_object_name_array
 template <typename Tag>
 using al_object_name_span = c_api::basic_handle_span<al_object_name<Tag>>;
 
-/// @brief Alias for template wrapping a const span of GL object handles.
-/// @ingroup gl_api_wrap
+/// @brief Alias for AL object template.
+/// @ingroup al_api_wrap
+/// @see al_object_name
+/// @see al_owned_object_name
+template <typename Api, typename Tag, typename... P>
+using al_object =
+  c_api::basic_object_from_handle_t<Api, al_object_name<Tag>, P...>;
+
+/// @brief Alias for template wrapping a const span of AL object handles.
+/// @ingroup al_api_wrap
 /// @see al_object_name_span
 /// @see al_object_name_array
 template <typename Tag>
 using al_object_name_view = c_api::basic_handle_view<al_object_name<Tag>>;
 
-/// @brief Alias for template wrapping an array of GL object handles.
-/// @ingroup gl_api_wrap
+/// @brief Alias for template wrapping an array of AL object handles.
+/// @ingroup al_api_wrap
 /// @see al_object_name_vector
 /// @see al_object_name_span
 /// @see al_object_name_view
 template <typename Tag, std::size_t N>
 using al_object_name_array = c_api::basic_handle_array<al_object_name<Tag>, N>;
 
-/// @brief Alias for template wrapping a vector of GL object handles.
-/// @ingroup gl_api_wrap
+/// @brief Alias for template wrapping a vector of AL object handles.
+/// @ingroup al_api_wrap
 /// @see al_object_name_array
 /// @see al_object_name_span
 /// @see al_object_name_view
@@ -81,4 +89,4 @@ using owned_auxiliary_effect_slot_name =
 //------------------------------------------------------------------------------
 } // namespace eagine::oalplus
 
-#endif // EAGINE_OALPLUS_AL_API_OBJECT_NAME_HPP
+#endif

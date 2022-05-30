@@ -17,12 +17,8 @@ auto main() -> int {
 
     const alc_api alc;
 
-    if(const ok device{alc.open_device()}) {
-        const auto cleanup_dev = alc.close_device.raii(device);
-
-        if(const ok context{alc.create_context(device, {})}) {
-            const auto cleanup_ctx = alc.destroy_context.raii(device, context);
-
+    if(const auto device{alc.open_device.object()}) {
+        if(const auto context{alc.create_context.object(device, {})}) {
             alc.make_context_current(device, context);
 
             const al_api al;

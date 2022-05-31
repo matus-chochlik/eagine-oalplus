@@ -14,7 +14,7 @@ set(HEADERS
     eagine/oalplus/al_api/enum_types.hpp
     eagine/oalplus/al_api_fwd.hpp
     eagine/oalplus/al_api.hpp
-    eagine/oalplus/al_api/object_name.hpp
+    eagine/oalplus/al_api/objects.hpp
     eagine/oalplus/al_api/result.hpp
     eagine/oalplus/alc_api/api.hpp
     eagine/oalplus/alc_api/api_traits.hpp

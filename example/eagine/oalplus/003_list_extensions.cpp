@@ -1,4 +1,4 @@
-/// @example oalplus/002_list_extensions.cpp
+/// @example oalplus/003_list_extensions.cpp
 ///
 /// Copyright Matus Chochlik.
 /// Distributed under the Boost Software License, Version 1.0.
@@ -26,9 +26,7 @@ auto main(main_ctx& ctx) -> int {
     }
 
     if(alc.open_device && alc.close_device) {
-        if(const ok device{alc.open_device()}) {
-            // closes the device when going out of scope
-            const auto cleanup_dev = alc.close_device.raii(device);
+        if(const auto device{alc.open_device.object()}) {
 
             const auto ext_cio{out.cio_print("Extensions:").to_be_continued()};
 
@@ -43,9 +41,9 @@ auto main(main_ctx& ctx) -> int {
                     "failed to get extension list: ${message}")
                   .arg(EAGINE_ID(message), (!extensions).message());
             }
-        } else {
-            out.cio_error("missing required API function");
         }
+    } else {
+        out.cio_error("missing required API function");
     }
     return 0;
 }

@@ -10,7 +10,7 @@
 
 #include "c_api.hpp"
 #include "enum_types.hpp"
-#include "object_name.hpp"
+#include "objects.hpp"
 #include <eagine/c_api/adapted_function.hpp>
 #include <eagine/scope_exit.hpp>
 #include <eagine/string_list.hpp>
@@ -50,6 +50,15 @@ public:
                   return al_owned_object_name<ObjTag>(valid ? n : 0);
               });
         }
+
+        constexpr auto object() const noexcept
+          -> al_object<basic_al_operations, ObjTag> {
+            al_owned_object_name<ObjTag> name;
+            (*this)() >> name;
+            return {
+              static_cast<const basic_al_operations&>(base::api()),
+              std::move(name)};
+        }
     };
 
     gen_object_func<&al_api::GenSources, source_tag> gen_sources{*this};
@@ -70,14 +79,55 @@ public:
 
     del_object_func<&al_api::DeleteSources, source_tag> delete_sources{*this};
 
+    auto clean_up(owned_source_name obj) const noexcept {
+        return delete_sources(std::move(obj));
+    }
+
+    auto clean_up(al_object_name_span<source_tag> objs) const noexcept {
+        return delete_sources(objs.raw_handles());
+    }
+
     del_object_func<&al_api::DeleteBuffers, buffer_tag> delete_buffers{*this};
+
+    auto clean_up(owned_buffer_name obj) const noexcept {
+        return delete_buffers(std::move(obj));
+    }
+
+    auto clean_up(al_object_name_span<buffer_tag> objs) const noexcept {
+        return delete_buffers(objs.raw_handles());
+    }
 
     del_object_func<&al_api::DeleteEffects, effect_tag> delete_effects{*this};
 
+    auto clean_up(owned_effect_name obj) const noexcept {
+        return delete_effects(std::move(obj));
+    }
+
+    auto clean_up(al_object_name_span<effect_tag> objs) const noexcept {
+        return delete_effects(objs.raw_handles());
+    }
+
     del_object_func<&al_api::DeleteFilters, filter_tag> delete_filters{*this};
+
+    auto clean_up(owned_filter_name obj) const noexcept {
+        return delete_filters(std::move(obj));
+    }
+
+    auto clean_up(al_object_name_span<filter_tag> objs) const noexcept {
+        return delete_filters(objs.raw_handles());
+    }
 
     del_object_func<&al_api::DeleteAuxiliaryEffectSlots, auxiliary_effect_slot_tag>
       delete_auxiliary_effect_slots{*this};
+
+    auto clean_up(owned_auxiliary_effect_slot_name obj) const noexcept {
+        return delete_auxiliary_effect_slots(std::move(obj));
+    }
+
+    auto clean_up(
+      al_object_name_span<auxiliary_effect_slot_tag> objs) const noexcept {
+        return delete_auxiliary_effect_slots(objs.raw_handles());
+    }
 
     adapted_function<&al_api::IsSource, bool_type(source_name)> is_source{
       *this};

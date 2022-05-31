@@ -41,7 +41,7 @@ public:
 
     using _open_device_t = adapted_function<
       &alc_api::OpenDevice,
-      device_handle(device_handle, string_view)>;
+      owned_device_handle(device_handle, string_view)>;
 
     struct : _open_device_t {
         using base = _open_device_t;
@@ -53,22 +53,56 @@ public:
         constexpr auto operator()() const noexcept {
             return base::operator()(device_handle{}, {});
         }
+
+        constexpr auto object() const noexcept -> c_api::
+          basic_object_from_handle_t<basic_alc_operations, device_handle> {
+            owned_device_handle hndl;
+            (*this)() >> hndl;
+            return {
+              static_cast<const basic_alc_operations&>(base::api()),
+              std::move(hndl)};
+        }
     } open_device{*this};
 
     adapted_function<
       &alc_api::CloseDevice,
-      c_api::collapsed<bool_type>(device_handle)>
+      c_api::collapsed<bool_type>(owned_device_handle)>
       close_device{*this};
 
-    adapted_function<
+    auto clean_up(owned_device_handle obj) const noexcept {
+        return close_device(std::move(obj));
+    }
+
+    using _create_context_t = adapted_function<
       &alc_api::CreateContext,
-      context_handle(device_handle, context_attributes)>
-      create_context{*this};
+      owned_context_handle(device_handle, context_attributes)>;
+
+    struct : _create_context_t {
+        using base = _create_context_t;
+        using base::base;
+
+        constexpr auto object(device_handle dev, const context_attributes& attr)
+          const noexcept -> c_api::basic_object_from_handle_t<
+            basic_alc_operations,
+            context_handle,
+            device_handle> {
+            owned_context_handle hndl;
+            (*this)(dev, attr) >> hndl;
+            return {
+              static_cast<const basic_alc_operations&>(base::api()),
+              std::move(hndl),
+              dev};
+        }
+    } create_context{*this};
 
     adapted_function<
       &alc_api::DestroyContext,
-      void(device_handle, context_handle)>
+      void(device_handle, owned_context_handle)>
       destroy_context{*this};
+
+    auto clean_up(owned_context_handle ctx, device_handle dev) const noexcept {
+        return destroy_context(dev, std::move(ctx));
+    }
 
     using _make_context_current_t = adapted_function<
       &alc_api::MakeContextCurrent,

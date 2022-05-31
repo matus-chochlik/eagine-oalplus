@@ -8,7 +8,7 @@
 #ifndef EAGINE_OALPLUS_ALUT_API_API_HPP
 #define EAGINE_OALPLUS_ALUT_API_API_HPP
 
-#include "../al_api/object_name.hpp"
+#include "../al_api/objects.hpp"
 #include "c_api.hpp"
 #include "enum_types.hpp"
 #include <eagine/c_api/adapted_function.hpp>

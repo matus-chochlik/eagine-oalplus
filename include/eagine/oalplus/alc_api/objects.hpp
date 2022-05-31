@@ -9,7 +9,7 @@
 #define EAGINE_OALPLUS_ALC_API_OBJECTS_HPP
 
 #include "config.hpp"
-#include <eagine/c_api/handle.hpp>
+#include <eagine/c_api/object.hpp>
 #include <eagine/c_api/parameter_map.hpp>
 #include <eagine/message_id.hpp>
 
@@ -24,17 +24,34 @@ using device_tag = EAGINE_MSG_TYPE(alc, Device);
 /// @ingroup al_api_wrap
 /// @see context_handle
 using context_tag = EAGINE_MSG_TYPE(alc, Context);
+
 //------------------------------------------------------------------------------
 /// @brief Alias for ALC device handle wrapper.
-/// @ingroup egl_api_wrap
+/// @ingroup al_api_wrap
 using device_handle = c_api::basic_handle<
   device_tag,
   alc_types::device_type*,
   static_cast<alc_types::device_type*>(nullptr)>;
-//------------------------------------------------------------------------------
+
 /// @brief Alias for ALC context handle wrapper.
-/// @ingroup egl_api_wrap
+/// @ingroup al_api_wrap
 using context_handle = c_api::basic_handle<
+  context_tag,
+  alc_types::context_type*,
+  static_cast<alc_types::context_type*>(nullptr)>;
+//------------------------------------------------------------------------------
+/// @brief Alias for owned ALC device handle wrapper.
+/// @ingroup al_api_wrap
+/// @see device_handle
+using owned_device_handle = c_api::basic_owned_handle<
+  device_tag,
+  alc_types::device_type*,
+  static_cast<alc_types::device_type*>(nullptr)>;
+
+/// @brief Alias for owned ALC context handle wrapper.
+/// @ingroup al_api_wrap
+/// @see context_handle
+using owned_context_handle = c_api::basic_owned_handle<
   context_tag,
   alc_types::context_type*,
   static_cast<alc_types::context_type*>(nullptr)>;
@@ -44,7 +61,8 @@ using context_handle = c_api::basic_handle<
 namespace eagine::c_api {
 
 template <typename CH, typename... CT, typename... CppT>
-requires(!std::is_same_v<CH, oalplus::alc_types::device_type*>) struct make_args_map<
+    requires(!std::is_same_v<CH, oalplus::alc_types::device_type*>)
+struct make_args_map<
   1,
   1,
   mp_list<CH, CT...>,

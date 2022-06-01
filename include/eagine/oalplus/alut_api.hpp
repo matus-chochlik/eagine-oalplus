@@ -11,8 +11,4 @@
 #include "alut_api_fwd.hpp"
 #include "basic_alut_api.hpp"
 
-#if !EAGINE_OALPLUS_LIBRARY || defined(EAGINE_IMPLEMENTING_OALPLUS_LIBRARY)
-#include <eagine/oalplus/alut_api.inl>
-#endif
-
 #endif // EAGINE_OALPLUS_ALUT_API_HPP

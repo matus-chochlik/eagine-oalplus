@@ -240,10 +240,8 @@ public:
     }
 };
 //------------------------------------------------------------------------------
-/// @brief Alias for the default ALC operations wrapper instantiation.
-/// @ingroup al_api_wrap
-using alc_c_api = basic_alc_c_api<alc_api_traits>;
-//------------------------------------------------------------------------------
 } // namespace eagine::oalplus
+
+#include <eagine/oalplus/alc_api/c_api.inl>
 
 #endif // EAGINE_OALPLUS_ALC_API_C_API_HPP

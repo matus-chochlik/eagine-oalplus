@@ -265,4 +265,6 @@ public:
 //------------------------------------------------------------------------------
 } // namespace eagine::oalplus
 
+#include <eagine/oalplus/alc_api/constants.inl>
+
 #endif // EAGINE_OALPLUS_ALC_API_CONSTANTS_HPP

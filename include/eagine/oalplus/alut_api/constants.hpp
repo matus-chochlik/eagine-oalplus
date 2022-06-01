@@ -97,4 +97,6 @@ public:
 //------------------------------------------------------------------------------
 } // namespace eagine::oalplus
 
+#include <eagine/oalplus/alut_api/constants.inl>
+
 #endif // EAGINE_OALPLUS_ALUT_API_CONSTANTS_HPP

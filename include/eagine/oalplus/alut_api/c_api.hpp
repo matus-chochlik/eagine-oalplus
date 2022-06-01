@@ -156,10 +156,8 @@ public:
     }
 };
 //------------------------------------------------------------------------------
-/// @brief Alias for the default ALUT operations wrapper instantiation.
-/// @ingroup al_api_wrap
-using alut_c_api = basic_alut_c_api<alut_api_traits>;
-//------------------------------------------------------------------------------
 } // namespace eagine::oalplus
+
+#include <eagine/oalplus/alut_api/c_api.inl>
 
 #endif // EAGINE_OALPLUS_ALUT_API_C_API_HPP

@@ -714,4 +714,6 @@ public:
 //------------------------------------------------------------------------------
 } // namespace eagine::oalplus
 
+#include <eagine/oalplus/al_api/constants.inl>
+
 #endif // EAGINE_OALPLUS_AL_API_CONSTANTS_HPP

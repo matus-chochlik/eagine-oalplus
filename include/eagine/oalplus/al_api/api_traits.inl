@@ -12,7 +12,7 @@ template <typename Api, typename Type>
 auto al_api_traits::load_constant(
   Api& api,
   string_view name,
-  type_identity<Type>) -> std::tuple<Type, bool> {
+  std::type_identity<Type>) -> std::tuple<Type, bool> {
     if(api.GetEnumValue && api.GetError) {
         _full_name.clear();
         _full_name.reserve(3 + name.size() + 1);
@@ -31,7 +31,7 @@ auto al_api_traits::link_function(
   Api& api,
   Tag,
   string_view name,
-  type_identity<Signature>) -> std::add_pointer_t<Signature> {
+  std::type_identity<Signature>) -> std::add_pointer_t<Signature> {
     if(api.GetProcAddress && api.GetError) {
         _full_name.clear();
         _full_name.reserve(2 + name.size() + 1);

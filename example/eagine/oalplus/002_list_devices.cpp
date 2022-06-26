@@ -6,7 +6,7 @@
 ///  http://www.boost.org/LICENSE_1_0.txt
 ///
 
-#include <eagine/main.hpp>
+#include <eagine/main_ctx.hpp>
 #include <eagine/main_ctx_object.hpp>
 #include <eagine/oalplus/al.hpp>
 #include <eagine/oalplus/alc_api.hpp>
@@ -54,3 +54,8 @@ auto main(main_ctx& ctx) -> int {
 }
 
 } // namespace eagine
+
+auto main(int argc, const char** argv) -> int {
+    return eagine::default_main(argc, argv, eagine::main);
+}
+

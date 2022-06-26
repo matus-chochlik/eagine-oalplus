@@ -11,8 +11,4 @@
 #include "alc_api_fwd.hpp"
 #include "basic_alc_api.hpp"
 
-#if !EAGINE_OALPLUS_LIBRARY || defined(EAGINE_IMPLEMENTING_OALPLUS_LIBRARY)
-#include <eagine/oalplus/alc_api.inl>
-#endif
-
 #endif // EAGINE_OALPLUS_ALC_API_HPP

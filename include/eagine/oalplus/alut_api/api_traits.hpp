@@ -35,4 +35,6 @@ private:
 //------------------------------------------------------------------------------
 } // namespace eagine::oalplus
 
+#include <eagine/oalplus/alut_api/api_traits.inl>
+
 #endif // EAGINE_OALPLUS_ALUT_API_API_TRAITS_HPP

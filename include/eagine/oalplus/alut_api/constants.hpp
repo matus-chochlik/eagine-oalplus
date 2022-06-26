@@ -22,7 +22,7 @@ template <typename ApiTraits>
 class basic_alut_constants {
 public:
     using enum_type = typename alut_types::enum_type;
-    using enum_type_i = type_identity<enum_type>;
+    using enum_type_i = std::type_identity<enum_type>;
     template <enum_type value>
     using enum_type_c = std::integral_constant<enum_type, value>;
 
@@ -96,5 +96,7 @@ public:
 };
 //------------------------------------------------------------------------------
 } // namespace eagine::oalplus
+
+#include <eagine/oalplus/alut_api/constants.inl>
 
 #endif // EAGINE_OALPLUS_ALUT_API_CONSTANTS_HPP

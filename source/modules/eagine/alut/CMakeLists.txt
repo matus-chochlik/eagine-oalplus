@@ -10,10 +10,20 @@ eagine_add_module(
 )
 
 eagine_add_module(
+	eagine.oalplus.alut PARTITION enum_types
+	IMPORTS
+		config
+		eagine.core.types
+		eagine.core.identifier
+		eagine.core.c_api
+)
+
+eagine_add_module(
 	eagine.oalplus.alut
 	INTERFACES alut
 	PARTITIONS
 		config
+		enum_types
 	SOURCES
 )
 

@@ -54,6 +54,15 @@ eagine_add_module(
 )
 
 eagine_add_module(
+	eagine.oalplus.alc PARTITION api_traits
+	IMPORTS
+		config result
+		eagine.core.types
+		eagine.core.memory
+		eagine.core.c_api
+)
+
+eagine_add_module(
 	eagine.oalplus.alc
 	INTERFACES alc
 	PARTITIONS
@@ -63,6 +72,7 @@ eagine_add_module(
 		result
 		objects
 		c_api
+		api_traits
 	SOURCES
 )
 

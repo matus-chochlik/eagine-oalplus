@@ -12,3 +12,4 @@ export import :enum_types;
 export import :result;
 export import :objects;
 export import :c_api;
+export import :api_traits;

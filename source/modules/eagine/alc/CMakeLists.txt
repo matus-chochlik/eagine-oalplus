@@ -25,12 +25,22 @@ eagine_add_module(
 )
 
 eagine_add_module(
+	eagine.oalplus.alc PARTITION result
+	IMPORTS
+		config
+		eagine.core.types
+		eagine.core.memory
+		eagine.core.c_api
+)
+
+eagine_add_module(
 	eagine.oalplus.alc
 	INTERFACES alc
 	PARTITIONS
 		config
 		enum_types
 		attributes
+		result
 	SOURCES
 )
 

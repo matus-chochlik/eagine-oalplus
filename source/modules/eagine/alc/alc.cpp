@@ -10,3 +10,4 @@ export module eagine.oalplus.alc;
 export import :config;
 export import :enum_types;
 export import :attributes;
+export import :result;

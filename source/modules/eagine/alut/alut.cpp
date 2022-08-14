@@ -8,3 +8,4 @@
 export module eagine.oalplus.alut;
 
 export import :config;
+export import :enum_types;

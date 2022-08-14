@@ -34,6 +34,26 @@ eagine_add_module(
 )
 
 eagine_add_module(
+	eagine.oalplus.alc PARTITION objects
+	IMPORTS
+		config
+		eagine.core.types
+		eagine.core.memory
+		eagine.core.identifier
+		eagine.core.c_api
+)
+
+eagine_add_module(
+	eagine.oalplus.alc PARTITION c_api
+	IMPORTS
+		config enum_types
+		objects result
+		eagine.core.types
+		eagine.core.memory
+		eagine.core.c_api
+)
+
+eagine_add_module(
 	eagine.oalplus.alc
 	INTERFACES alc
 	PARTITIONS
@@ -41,6 +61,8 @@ eagine_add_module(
 		enum_types
 		attributes
 		result
+		objects
+		c_api
 	SOURCES
 )
 

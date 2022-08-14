@@ -28,12 +28,22 @@ eagine_add_module(
 )
 
 eagine_add_module(
+	eagine.oalplus.alut PARTITION c_api
+	IMPORTS
+		config result
+		eagine.core.types
+		eagine.core.memory
+		eagine.core.c_api
+)
+
+eagine_add_module(
 	eagine.oalplus.alut
 	INTERFACES alut
 	PARTITIONS
 		config
 		enum_types
 		result
+		c_api
 	SOURCES
 )
 

@@ -10,3 +10,5 @@ export module eagine.oalplus.al;
 export import :config;
 export import :enum_types;
 export import :result;
+export import :objects;
+export import :c_api;

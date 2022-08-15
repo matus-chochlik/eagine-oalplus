@@ -26,6 +26,7 @@ import :result;
 import :c_api;
 import :objects;
 import :constants;
+import :api_traits;
 
 namespace eagine::oalplus {
 using c_api::simple_adapted_function;
@@ -268,5 +269,60 @@ public:
       : alc_api{traits} {}
 };
 //------------------------------------------------------------------------------
+export template <typename ApiTraits>
+class basic_alc_api
+  : protected ApiTraits
+  , public basic_alc_operations<ApiTraits>
+  , public basic_alc_constants<ApiTraits> {
+public:
+    basic_alc_api(ApiTraits traits)
+      : ApiTraits{std::move(traits)}
+      , basic_alc_operations<ApiTraits>{*static_cast<ApiTraits*>(this)}
+      , basic_alc_constants<ApiTraits>{
+          *static_cast<ApiTraits*>(this),
+          *static_cast<basic_alc_operations<ApiTraits>*>(this)} {}
+
+    basic_alc_api()
+      : basic_alc_api{ApiTraits{}} {}
+
+    /// @brief Returns a reference to the wrapped operations.
+    auto operations() const noexcept -> const basic_alc_operations<ApiTraits>& {
+        return *this;
+    }
+
+    /// @brief Returns a reference to the wrapped constants.
+    auto constants() const noexcept -> const basic_alc_constants<ApiTraits>& {
+        return *this;
+    }
+};
+
+template <std::size_t I, typename ApiTraits>
+auto get(const basic_alc_api<ApiTraits>& x) noexcept -> const
+  typename std::tuple_element<I, basic_alc_api<ApiTraits>>::type& {
+    return x;
+}
+//------------------------------------------------------------------------------
+/// @brief Alias for the default instantation of basic_alc_api.
+/// @ingroup al_api_wrap
+export using alc_api = basic_alc_api<alc_api_traits>;
+//------------------------------------------------------------------------------
 } // namespace eagine::oalplus
+// NOLINTNEXTLINE(cert-dcl58-cpp)
+namespace std {
+
+template <typename ApiTraits>
+struct tuple_size<eagine::oalplus::basic_alc_api<ApiTraits>>
+  : public std::integral_constant<std::size_t, 2> {};
+
+template <typename ApiTraits>
+struct tuple_element<0, eagine::oalplus::basic_alc_api<ApiTraits>> {
+    using type = eagine::oalplus::basic_alc_operations<ApiTraits>;
+};
+
+template <typename ApiTraits>
+struct tuple_element<1, eagine::oalplus::basic_alc_api<ApiTraits>> {
+    using type = eagine::oalplus::basic_alc_constants<ApiTraits>;
+};
+
+} // namespace std
 

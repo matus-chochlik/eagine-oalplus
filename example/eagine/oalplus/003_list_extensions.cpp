@@ -17,11 +17,11 @@ auto main(main_ctx& ctx) -> int {
     using namespace eagine::oalplus;
 
     const alc_api alc;
-    const main_ctx_object out{EAGINE_ID(OALplus), ctx};
+    const main_ctx_object out{"OALplus", ctx};
 
     if(alc.get_string) {
         if(const ok name{alc.get_default_device_specifier()}) {
-            out.cio_print("Default device: ${name}").arg(EAGINE_ID(name), name);
+            out.cio_print("Default device: ${name}").arg("name", name);
         }
     }
 
@@ -39,7 +39,7 @@ auto main(main_ctx& ctx) -> int {
                   .print(
                     console_entry_kind::error,
                     "failed to get extension list: ${message}")
-                  .arg(EAGINE_ID(message), (!extensions).message());
+                  .arg("message", (!extensions).message());
             }
         }
     } else {

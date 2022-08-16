@@ -17,21 +17,19 @@ auto main(main_ctx& ctx) -> int {
     using namespace eagine::oalplus;
 
     const alc_api alc;
-    const main_ctx_object out{EAGINE_ID(OALplus), ctx};
+    const main_ctx_object out{"OALplus", ctx};
 
     out.cio_print("Default playback device: ${device}")
-      .arg(
-        EAGINE_ID(device),
-        extract_or(alc.get_default_device_specifier(), "N/A"));
+      .arg("device", extract_or(alc.get_default_device_specifier(), "N/A"));
 
     out.cio_print("Default capture device: ${device}")
       .arg(
-        EAGINE_ID(device),
+        "device",
         extract_or(alc.get_capture_default_device_specifier(), "N/A"));
 
     out.cio_print("ALC version: ${major}.${minor}")
-      .arg(EAGINE_ID(major), extract_or(alc.get_integer(alc.major_version), 0))
-      .arg(EAGINE_ID(minor), extract_or(alc.get_integer(alc.minor_version), 0));
+      .arg("major", extract_or(alc.get_integer(alc.major_version), 0))
+      .arg("minor", extract_or(alc.get_integer(alc.minor_version), 0));
 
     return 0;
 }

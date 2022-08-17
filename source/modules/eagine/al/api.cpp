@@ -17,6 +17,7 @@ module;
 export module eagine.oalplus.al:api;
 import eagine.core.types;
 import eagine.core.memory;
+import eagine.core.string;
 import eagine.core.c_api;
 import :config;
 import :enum_types;

@@ -69,6 +69,7 @@ eagine_add_module(
 		api_traits c_api
 		eagine.core.types
 		eagine.core.memory
+		eagine.core.string
 		eagine.core.c_api
 )
 
@@ -86,4 +87,8 @@ eagine_add_module(
 		api
 	SOURCES
 )
-
+target_link_libraries(
+	eagine.oalplus.al
+	PUBLIC
+	OpenAL::OpenAL
+)

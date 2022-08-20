@@ -297,7 +297,7 @@ public:
     }
 };
 
-template <std::size_t I, typename ApiTraits>
+export template <std::size_t I, typename ApiTraits>
 auto get(const basic_alc_api<ApiTraits>& x) noexcept -> const
   typename std::tuple_element<I, basic_alc_api<ApiTraits>>::type& {
     return x;

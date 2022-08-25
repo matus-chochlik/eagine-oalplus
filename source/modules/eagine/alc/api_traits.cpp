@@ -86,7 +86,7 @@ auto alc_api_traits::link_function(
         _full_name.append("alc");
         _full_name.append(name.data(), std::size_t(name.size()));
         auto func = api.GetProcAddress(nullptr, _full_name.c_str());
-        if(alc_types::error_code_no_error(api.GetError())) {
+        if(alc_types::error_code_no_error(api.GetError(nullptr))) {
             return reinterpret_cast<std::remove_pointer_t<Signature>*>(func);
         }
     }

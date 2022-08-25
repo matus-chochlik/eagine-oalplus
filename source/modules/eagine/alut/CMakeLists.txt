@@ -78,4 +78,8 @@ eagine_add_module(
 		api
 	SOURCES
 )
-
+target_link_libraries(
+	eagine.oalplus.alut
+	PUBLIC
+	OpenAL::OpenAL
+)

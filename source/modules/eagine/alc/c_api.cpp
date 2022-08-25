@@ -24,7 +24,7 @@ import :objects;
 import :result;
 
 #ifndef OALPLUS_ALC_STATIC_FUNC
-#if OALPLUS_HAS_ALC
+#if EAGINE_HAS_ALC
 #define OALPLUS_ALC_STATIC_FUNC(NAME) &::alc##NAME
 #else
 #define OALPLUS_ALC_STATIC_FUNC(NAME) nullptr

@@ -8,25 +8,19 @@ else()
 	add_subdirectory(lib)
 endif()
 
+set(EAGINE_OALPLUS_EXPORT_TARGETS)
+
 if(TARGET eagine-oalplus)
 	add_library(EAGine::OALplus INTERFACE IMPORTED GLOBAL)
-	target_link_libraries(EAGine::OALplus INTERFACE eagine-oalplus-headers)
-
 	target_link_libraries(
 		EAGine::OALplus
 		INTERFACE
+			eagine-oalplus-headers
 			eagine-oalplus
 	)
-
-	install(
-		TARGETS
+	list(
+		APPEND EAGINE_OALPLUS_EXPORT_TARGETS
 			eagine-oalplus-headers
-			EXPORT OALplus
-		LIBRARY DESTINATION lib
-		ARCHIVE DESTINATION lib
-		RUNTIME DESTINATION bin
-		INCLUDES DESTINATION include
-		PUBLIC_HEADER DESTINATION include
 	)
 
 	install(
@@ -36,3 +30,14 @@ if(TARGET eagine-oalplus)
 		DESTINATION lib/cmake/EAGine
 	)
 endif()
+
+install(
+	TARGETS ${EAGINE_OALPLUS_EXPORT_TARGETS}
+	EXPORT OALplus
+	LIBRARY DESTINATION lib
+	ARCHIVE DESTINATION lib
+	RUNTIME DESTINATION bin
+	INCLUDES DESTINATION include
+	PUBLIC_HEADER DESTINATION include
+)
+

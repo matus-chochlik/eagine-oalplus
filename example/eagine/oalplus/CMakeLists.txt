@@ -24,20 +24,12 @@ function(eagine_example_common EXAMPLE_NAME)
 		"${EXAMPLE_NAME}.cpp"
 		${ARGN}
 	)
-	if(${WITH_MODULES})
-		eagine_target_modules(
-			oalplus-${EXAMPLE_NAME}
-			eagine.core
-			eagine.oalplus
-		)
-	else()
-		eagine_add_exe_analysis(oalplus-${EXAMPLE_NAME})
-		target_link_libraries(
-			oalplus-${EXAMPLE_NAME}
-			PUBLIC EAGine::OALplus
-			PRIVATE ${ARGN}
-		)
-	endif()
+	eagine_add_exe_analysis(oalplus-${EXAMPLE_NAME})
+	eagine_target_modules(
+		oalplus-${EXAMPLE_NAME}
+		eagine.core
+		eagine.oalplus
+	)
 	add_dependencies(eagine-oalplus-examples oalplus-${EXAMPLE_NAME})
 
 	set_target_properties(

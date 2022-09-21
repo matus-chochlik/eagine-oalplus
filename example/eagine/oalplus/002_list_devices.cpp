@@ -6,15 +6,8 @@
 ///  http://www.boost.org/LICENSE_1_0.txt
 ///
 
-#if EAGINE_OALPLUS_MODULE
 import eagine.core;
 import eagine.oalplus;
-#else
-#include <eagine/main_ctx.hpp>
-#include <eagine/main_ctx_object.hpp>
-#include <eagine/oalplus/al.hpp>
-#include <eagine/oalplus/alc_api.hpp>
-#endif
 
 namespace eagine {
 

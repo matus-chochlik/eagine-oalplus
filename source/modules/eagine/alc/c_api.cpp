@@ -83,9 +83,9 @@ public:
         return res;
     }
 
-    template <typename Result, c_api::result_validity Validity>
+    template <typename Result, typename Info, c_api::result_validity Validity>
     static constexpr auto collapse(
-      c_api::result<Result, alc_result_info, Validity>&& r) noexcept {
+      c_api::result<Result, Info, Validity>&& r) noexcept {
         return r.collapsed(
           [](alc_types::bool_type value) { return bool(value); },
           [](auto& info) { info.set_unknown_error(); });

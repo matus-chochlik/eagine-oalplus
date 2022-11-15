@@ -6,18 +6,9 @@
 ///  http://www.boost.org/LICENSE_1_0.txt
 ///
 
-#if EAGINE_OALPLUS_MODULE
 import eagine.core;
 import eagine.oalplus;
 import <thread>;
-#else
-#include <eagine/oalplus/al.hpp>
-#include <eagine/oalplus/al_api.hpp>
-#include <eagine/oalplus/alc_api.hpp>
-#include <eagine/oalplus/alc_api/context_attribs.hpp>
-#include <eagine/oalplus/alut_api.hpp>
-#include <thread>
-#endif
 
 auto main(int argc, char** argv) -> int {
     using namespace eagine;

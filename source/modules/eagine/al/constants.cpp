@@ -16,13 +16,24 @@ module;
 
 export module eagine.oalplus.al:constants;
 import eagine.core.types;
+import eagine.core.memory;
 import eagine.core.identifier;
 import eagine.core.c_api;
 import :config;
 import :enum_types;
 import :c_api;
+import <optional>;
 
-namespace eagine::oalplus {
+namespace eagine {
+//------------------------------------------------------------------------------
+export template <>
+struct within_limits<oalplus::distance_model, oalplus::al_types::enum_type> {
+    auto check(oalplus::al_types::enum_type) const noexcept -> bool;
+};
+//------------------------------------------------------------------------------
+namespace oalplus {
+export auto al_enum_by_name(const string_view name) noexcept
+  -> std::optional<al_types::enum_type>;
 //------------------------------------------------------------------------------
 /// @brief Class wrapping the constants from the AL API.
 /// @ingroup al_api_wrap
@@ -800,5 +811,6 @@ basic_al_constants<ApiTraits>::basic_al_constants(
   , stopped("STOPPED", traits, api)
   , none("NONE", traits, api) {}
 //------------------------------------------------------------------------------
-} // namespace eagine::oalplus
+} // namespace oalplus
+} // namespace eagine
 

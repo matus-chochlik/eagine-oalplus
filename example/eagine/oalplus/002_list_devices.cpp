@@ -26,7 +26,7 @@ auto main(main_ctx& ctx) -> int {
             }
         } else {
             dev_cio.error("failed to list playback devices: ${message}")
-              .arg("message", (!names).message());
+              .arg("message", (not names).message());
         }
     } else {
         out.cio_error("missing required API function: ${name}")
@@ -41,7 +41,7 @@ auto main(main_ctx& ctx) -> int {
             }
         } else {
             dev_cio.error("failed to list capture devices: ${message}")
-              .arg("message", (!names).message());
+              .arg("message", (not names).message());
         }
     } else {
         out.cio_error("missing required API function: ${name}")

@@ -63,7 +63,7 @@ export using owned_context_handle = c_api::basic_owned_handle<
 namespace eagine::c_api {
 
 export template <typename CH, typename... CT, typename... CppT>
-    requires(!std::is_same_v<CH, oalplus::alc_types::device_type*>)
+    requires(not std::is_same_v<CH, oalplus::alc_types::device_type*>)
 struct make_args_map<
   1,
   1,

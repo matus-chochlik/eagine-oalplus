@@ -55,7 +55,7 @@ auto map_al_enum_by_name() noexcept {
 //------------------------------------------------------------------------------
 auto al_enum_by_name(const string_view name) noexcept
   -> std::optional<al_types::enum_type> {
-    if(!name.empty()) [[likely]] {
+    if(not name.empty()) [[likely]] {
         static const auto enums{map_al_enum_by_name()};
         if(auto found{enums.find(name)}) [[likely]] {
             return {extract(found)};

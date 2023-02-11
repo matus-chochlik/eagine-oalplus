@@ -97,7 +97,7 @@ eagine_add_module(
 		from_string
 		api
 	SOURCES
-		constants_impl
+		constants
 )
 target_link_libraries(
 	eagine.oalplus.al

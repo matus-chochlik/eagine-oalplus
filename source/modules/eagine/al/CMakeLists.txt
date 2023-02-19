@@ -104,3 +104,11 @@ target_link_libraries(
 	PUBLIC
 	OpenAL::OpenAL
 )
+
+eagine_add_module_tests(
+	eagine.oalplus.al
+	UNITS
+		constants
+	IMPORTS
+		eagine.core
+)

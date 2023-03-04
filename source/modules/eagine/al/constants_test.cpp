@@ -9,7 +9,7 @@
 #include <eagine/testing/unit_begin.hpp>
 import eagine.core;
 import eagine.oalplus.al;
-import <set>;
+import std;
 //------------------------------------------------------------------------------
 void constants_enum_by_name(auto& s) {
     eagitest::case_ test{s, 1, "AL enum by name"};

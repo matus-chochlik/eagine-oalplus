@@ -8,6 +8,7 @@
 
 import eagine.core;
 import eagine.oalplus;
+import std;
 
 namespace eagine {
 

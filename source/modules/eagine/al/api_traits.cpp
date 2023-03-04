@@ -20,7 +20,7 @@ import eagine.core.memory;
 import eagine.core.c_api;
 import :config;
 import :result;
-import <string>;
+import std;
 
 namespace eagine::oalplus {
 //------------------------------------------------------------------------------

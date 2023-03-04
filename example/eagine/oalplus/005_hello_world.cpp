@@ -8,7 +8,7 @@
 
 import eagine.core;
 import eagine.oalplus;
-import <thread>;
+import std;
 
 auto main(int argc, char** argv) -> int {
     using namespace eagine;

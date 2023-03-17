@@ -8,6 +8,7 @@
 
 import eagine.core;
 import eagine.oalplus;
+import std;
 
 namespace eagine {
 
@@ -23,7 +24,7 @@ auto main(main_ctx& ctx) -> int {
         }
     }
 
-    if(alc.open_device && alc.close_device) {
+    if(alc.open_device and alc.close_device) {
         if(const auto device{alc.open_device.object()}) {
 
             const auto ext_cio{out.cio_print("Extensions:").to_be_continued()};
@@ -37,7 +38,7 @@ auto main(main_ctx& ctx) -> int {
                   .print(
                     console_entry_kind::error,
                     "failed to get extension list: ${message}")
-                  .arg("message", (!extensions).message());
+                  .arg("message", (not extensions).message());
             }
         }
     } else {

@@ -16,7 +16,7 @@ module;
 
 export module eagine.oalplus.al:config;
 import eagine.core.types;
-import <cstdint>;
+import std;
 
 namespace eagine::oalplus {
 //------------------------------------------------------------------------------

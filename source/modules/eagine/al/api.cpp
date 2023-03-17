@@ -26,6 +26,7 @@ import :c_api;
 import :objects;
 import :constants;
 import :api_traits;
+import std;
 
 namespace eagine::oalplus {
 using c_api::adapted_function;

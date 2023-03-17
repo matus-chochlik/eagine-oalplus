@@ -20,7 +20,7 @@ import eagine.core.memory;
 import eagine.core.c_api;
 import :config;
 import :result;
-import <string>;
+import std;
 
 namespace eagine::oalplus {
 //------------------------------------------------------------------------------
@@ -80,7 +80,7 @@ auto alc_api_traits::link_function(
   Tag,
   string_view name,
   std::type_identity<Signature>) -> std::add_pointer_t<Signature> {
-    if(api.GetProcAddress && api.GetError) {
+    if(api.GetProcAddress and api.GetError) {
         _full_name.clear();
         _full_name.reserve(3 + name.size() + 1);
         _full_name.append("alc");

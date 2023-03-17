@@ -11,6 +11,7 @@ import eagine.core.memory;
 import eagine.core.identifier;
 import eagine.core.c_api;
 import :config;
+import std;
 
 namespace eagine::oalplus {
 //------------------------------------------------------------------------------

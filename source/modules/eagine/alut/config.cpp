@@ -15,9 +15,9 @@ module;
 #endif
 
 export module eagine.oalplus.alut:config;
+import std;
 import eagine.core.types;
 import eagine.oalplus.al;
-import std;
 
 namespace eagine::oalplus {
 //------------------------------------------------------------------------------

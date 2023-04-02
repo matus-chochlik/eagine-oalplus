@@ -15,6 +15,7 @@ module;
 #endif
 
 export module eagine.oalplus.al:api;
+import std;
 import eagine.core.types;
 import eagine.core.memory;
 import eagine.core.string;
@@ -26,7 +27,6 @@ import :c_api;
 import :objects;
 import :constants;
 import :api_traits;
-import std;
 
 namespace eagine::oalplus {
 using c_api::adapted_function;

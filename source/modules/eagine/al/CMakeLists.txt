@@ -98,6 +98,10 @@ eagine_add_module(
 		api
 	SOURCES
 		constants
+	IMPORTS
+		eagine.core.types
+		eagine.core.memory
+		eagine.core.container
 )
 target_link_libraries(
 	eagine.oalplus.al

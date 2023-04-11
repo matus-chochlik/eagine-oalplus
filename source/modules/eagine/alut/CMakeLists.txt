@@ -77,6 +77,8 @@ eagine_add_module(
 		constants
 		api
 	SOURCES
+	IMPORTS
+		eagine.core.types
 )
 target_link_libraries(
 	eagine.oalplus.alut

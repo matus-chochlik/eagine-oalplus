@@ -8,7 +8,6 @@ add_subdirectory(alut)
 
 eagine_add_module(
 	eagine.oalplus
-	PP_NAME OALPLUS
 	INTERFACES oalplus
 	IMPORTS
 		eagine.oalplus.al

@@ -61,7 +61,7 @@ public:
         constexpr auto operator()() const noexcept {
             name_type n{};
             return base::operator()(cover_one(n))
-              .transformed([&n](auto, bool valid) {
+              .transform([&n](auto, bool valid) {
                   return al_owned_object_name<ObjTag>(valid ? n : 0);
               });
         }
@@ -302,7 +302,7 @@ public:
 
     // get_strings
     auto get_strings(al_string_query query, char separator) const noexcept {
-        return get_string(query).transformed([separator](auto src, bool) {
+        return get_string(query).transform([separator](auto src, bool) {
             return split_into_string_list(src, separator);
         });
     }
@@ -315,7 +315,7 @@ public:
         return get_string
           .fail()
 #endif
-          .transformed(
+          .transform(
             [](auto src, bool) { return split_into_string_list(src, ' '); });
     }
 

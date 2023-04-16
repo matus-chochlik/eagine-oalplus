@@ -19,16 +19,15 @@ auto main(main_ctx& ctx) -> int {
     const main_ctx_object out{"OALplus", ctx};
 
     out.cio_print("Default playback device: ${device}")
-      .arg("device", extract_or(alc.get_default_device_specifier(), "N/A"));
+      .arg("device", alc.get_default_device_specifier().value_or("N/A"));
 
     out.cio_print("Default capture device: ${device}")
       .arg(
-        "device",
-        extract_or(alc.get_capture_default_device_specifier(), "N/A"));
+        "device", alc.get_capture_default_device_specifier().value_or("N/A"));
 
     out.cio_print("ALC version: ${major}.${minor}")
-      .arg("major", extract_or(alc.get_integer(alc.major_version), 0))
-      .arg("minor", extract_or(alc.get_integer(alc.minor_version), 0));
+      .arg("major", alc.get_integer(alc.major_version).value_or(0))
+      .arg("minor", alc.get_integer(alc.minor_version).value_or(0));
 
     return 0;
 }

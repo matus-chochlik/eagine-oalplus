@@ -15,6 +15,7 @@ module;
 #endif
 
 export module eagine.oalplus.alc:api;
+import std;
 import eagine.core.types;
 import eagine.core.memory;
 import eagine.core.string;
@@ -28,7 +29,6 @@ import :c_api;
 import :objects;
 import :constants;
 import :api_traits;
-import std;
 
 namespace eagine::oalplus {
 using c_api::simple_adapted_function;
@@ -205,7 +205,7 @@ public:
     // get_strings
     auto get_strings(device_handle dev, alc_string_query query, char separator)
       const noexcept {
-        return get_string(dev, query).transformed([separator](auto src, bool) {
+        return get_string(dev, query).transform([separator](auto src, bool) {
             return split_into_string_list(src, separator);
         });
     }
@@ -217,7 +217,7 @@ public:
 #else
         return get_string(dev)
 #endif
-          .transformed(
+          .transform(
             [](auto src, bool) { return split_into_string_list(src, ' '); });
     }
 
@@ -239,7 +239,7 @@ public:
 #else
         return get_string(device_handle{})
 #endif
-          .transformed(
+          .transform(
             [](auto src, bool) { return split_into_string_list(src, '\0'); });
     }
 
@@ -263,7 +263,7 @@ public:
 #else
         return get_string(device_handle{})
 #endif
-          .transformed(
+          .transform(
             [](auto src, bool) { return split_into_string_list(src, '\0'); });
     }
 

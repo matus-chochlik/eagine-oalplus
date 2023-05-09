@@ -15,6 +15,7 @@ module;
 #endif
 
 export module eagine.oalplus.al:api;
+import std;
 import eagine.core.types;
 import eagine.core.memory;
 import eagine.core.string;
@@ -26,7 +27,6 @@ import :c_api;
 import :objects;
 import :constants;
 import :api_traits;
-import std;
 
 namespace eagine::oalplus {
 using c_api::adapted_function;
@@ -61,7 +61,7 @@ public:
         constexpr auto operator()() const noexcept {
             name_type n{};
             return base::operator()(cover_one(n))
-              .transformed([&n](auto, bool valid) {
+              .transform([&n](auto, bool valid) {
                   return al_owned_object_name<ObjTag>(valid ? n : 0);
               });
         }
@@ -302,7 +302,7 @@ public:
 
     // get_strings
     auto get_strings(al_string_query query, char separator) const noexcept {
-        return get_string(query).transformed([separator](auto src, bool) {
+        return get_string(query).transform([separator](auto src, bool) {
             return split_into_string_list(src, separator);
         });
     }
@@ -315,7 +315,7 @@ public:
         return get_string
           .fail()
 #endif
-          .transformed(
+          .transform(
             [](auto src, bool) { return split_into_string_list(src, ' '); });
     }
 

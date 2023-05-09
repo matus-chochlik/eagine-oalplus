@@ -15,8 +15,8 @@ module;
 #endif
 
 export module eagine.oalplus.al:config;
-import eagine.core.types;
 import std;
+import eagine.core.types;
 
 namespace eagine::oalplus {
 //------------------------------------------------------------------------------

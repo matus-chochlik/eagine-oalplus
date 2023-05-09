@@ -6,12 +6,12 @@
 ///  http://www.boost.org/LICENSE_1_0.txt
 ///
 export module eagine.oalplus.al:objects;
+import std;
 import eagine.core.types;
 import eagine.core.memory;
 import eagine.core.identifier;
 import eagine.core.c_api;
 import :config;
-import std;
 
 namespace eagine::oalplus {
 //------------------------------------------------------------------------------

@@ -17,16 +17,16 @@ auto main() -> int {
     const alc_api alc;
 
     std::cout << "Default playback device: "
-              << extract_or(alc.get_default_device_specifier(), "N/A")
+              << alc.get_default_device_specifier().value_or("N/A")
               << std::endl;
 
     std::cout << "Default capture device: "
-              << extract_or(alc.get_capture_default_device_specifier(), "N/A")
+              << alc.get_capture_default_device_specifier().value_or("N/A")
               << std::endl;
 
     std::cout << "ALC version: "
-              << extract_or(alc.get_integer(alc.major_version), 0) << "."
-              << extract_or(alc.get_integer(alc.minor_version), 0) << std::endl;
+              << alc.get_integer(alc.major_version).value_or(0) << "."
+              << alc.get_integer(alc.minor_version).value_or(0) << std::endl;
 
     return 0;
 }

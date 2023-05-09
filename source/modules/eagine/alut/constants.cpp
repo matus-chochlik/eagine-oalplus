@@ -15,12 +15,12 @@ module;
 #endif
 
 export module eagine.oalplus.alut:constants;
+import std;
 import eagine.core.types;
 import eagine.core.c_api;
 import :config;
 import :enum_types;
 import :c_api;
-import std;
 
 namespace eagine::oalplus {
 //------------------------------------------------------------------------------

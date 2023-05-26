@@ -59,6 +59,7 @@ eagine_add_module(
 		config enum_types c_api
 		eagine.core.types
 		eagine.core.memory
+		eagine.core.identifier
 		eagine.core.c_api
 )
 

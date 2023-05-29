@@ -86,17 +86,6 @@ eagine_add_module(
 
 eagine_add_module(
 	eagine.oalplus.al
-	INTERFACES al
-	PARTITIONS
-		config
-		enum_types
-		result
-		objects
-		c_api
-		api_traits
-		constants
-		from_string
-		api
 	SOURCES
 		constants
 	IMPORTS

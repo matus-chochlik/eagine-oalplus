@@ -19,6 +19,7 @@ import std;
 import eagine.core.types;
 import eagine.core.memory;
 import eagine.core.identifier;
+import eagine.core.valid_if;
 import eagine.core.c_api;
 import :config;
 import :enum_types;
@@ -33,7 +34,7 @@ struct within_limits<oalplus::distance_model, oalplus::al_types::enum_type> {
 //------------------------------------------------------------------------------
 namespace oalplus {
 export auto al_enum_by_name(const string_view name) noexcept
-  -> std::optional<al_types::enum_type>;
+  -> optionally_valid<al_types::enum_type>;
 //------------------------------------------------------------------------------
 /// @brief Class wrapping the constants from the AL API.
 /// @ingroup al_api_wrap

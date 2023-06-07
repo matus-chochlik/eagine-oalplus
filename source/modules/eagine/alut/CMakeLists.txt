@@ -67,15 +67,6 @@ eagine_add_module(
 
 eagine_add_module(
 	eagine.oalplus.alut
-	INTERFACES alut
-	PARTITIONS
-		config
-		enum_types
-		result
-		c_api
-		api_traits
-		constants
-		api
 	SOURCES
 	IMPORTS
 		eagine.core.types

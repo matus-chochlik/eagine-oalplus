@@ -205,7 +205,7 @@ public:
     // get_strings
     auto get_strings(device_handle dev, alc_string_query query, char separator)
       const noexcept {
-        return get_string(dev, query).transform([separator](auto src, bool) {
+        return get_string(dev, query).transform([separator](auto src) {
             return split_into_string_list(src, separator);
         });
     }
@@ -217,8 +217,7 @@ public:
 #else
         return get_string(dev)
 #endif
-          .transform(
-            [](auto src, bool) { return split_into_string_list(src, ' '); });
+          .transform([](auto src) { return split_into_string_list(src, ' '); });
     }
 
     // get_default_device_specifier
@@ -240,7 +239,7 @@ public:
         return get_string(device_handle{})
 #endif
           .transform(
-            [](auto src, bool) { return split_into_string_list(src, '\0'); });
+            [](auto src) { return split_into_string_list(src, '\0'); });
     }
 
     // get_capture_default_device_specifier
@@ -264,7 +263,7 @@ public:
         return get_string(device_handle{})
 #endif
           .transform(
-            [](auto src, bool) { return split_into_string_list(src, '\0'); });
+            [](auto src) { return split_into_string_list(src, '\0'); });
     }
 
     basic_alc_operations(api_traits& traits)
@@ -280,9 +279,11 @@ public:
     basic_alc_api(ApiTraits traits)
       : ApiTraits{std::move(traits)}
       , basic_alc_operations<ApiTraits>{*static_cast<ApiTraits*>(this)}
-      , basic_alc_constants<ApiTraits>{
-          *static_cast<ApiTraits*>(this),
-          *static_cast<basic_alc_operations<ApiTraits>*>(this)} {}
+      , basic_alc_constants<ApiTraits> {
+        *static_cast<ApiTraits*>(this),
+          *static_cast<basic_alc_operations<ApiTraits>*>(this)
+    }
+    {}
 
     basic_alc_api()
       : basic_alc_api{ApiTraits{}} {}

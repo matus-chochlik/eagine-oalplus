@@ -61,7 +61,7 @@ public:
         constexpr auto operator()() const noexcept {
             name_type n{};
             return base::operator()(cover_one(n))
-              .transform([&n](auto, bool valid) {
+              .transform_if([&n](auto, bool valid) {
                   return al_owned_object_name<ObjTag>(valid ? n : 0);
               });
         }
@@ -302,7 +302,7 @@ public:
 
     // get_strings
     auto get_strings(al_string_query query, char separator) const noexcept {
-        return get_string(query).transform([separator](auto src, bool) {
+        return get_string(query).transform([separator](auto src) {
             return split_into_string_list(src, separator);
         });
     }
@@ -315,8 +315,7 @@ public:
         return get_string
           .fail()
 #endif
-          .transform(
-            [](auto src, bool) { return split_into_string_list(src, ' '); });
+          .transform([](auto src) { return split_into_string_list(src, ' '); });
     }
 
     basic_al_operations(api_traits& traits)
@@ -332,9 +331,11 @@ public:
     basic_al_api(ApiTraits traits)
       : ApiTraits{std::move(traits)}
       , basic_al_operations<ApiTraits>{*static_cast<ApiTraits*>(this)}
-      , basic_al_constants<ApiTraits>{
-          *static_cast<ApiTraits*>(this),
-          *static_cast<basic_al_operations<ApiTraits>*>(this)} {}
+      , basic_al_constants<ApiTraits> {
+        *static_cast<ApiTraits*>(this),
+          *static_cast<basic_al_operations<ApiTraits>*>(this)
+    }
+    {}
 
     basic_al_api()
       : basic_al_api{ApiTraits{}} {}

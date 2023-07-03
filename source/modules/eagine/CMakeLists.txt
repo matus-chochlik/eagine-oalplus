@@ -8,9 +8,9 @@ add_subdirectory(alut)
 
 eagine_add_module(
 	eagine.oalplus
-	IMPORTS
-		eagine.oalplus.al
-		eagine.oalplus.alc
-		eagine.oalplus.alut
+	SUBMODULES
+		al
+		alc
+		alut
 )
 

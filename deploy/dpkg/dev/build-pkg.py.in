@@ -59,7 +59,7 @@ Architecture: %s
 Installed-Size: %d
 Depends: libopenal1,libalut0,eagine-core-dev
 Maintainer: Matus Chochlik <chochlik@gmail.com>
-Description: C++ wrapper for EGL.
+Description: C++ wrapper for OpenAL and ALUT.
 """ % (
     "@PKG_VERSION@",
     "@PKG_ARCH@",

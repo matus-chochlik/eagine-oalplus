@@ -106,28 +106,28 @@ public:
     /// @var GetError
     /// @alcfuncwrap{GetError}
     alc_api_function<enum_type(device_type*), OALPLUS_ALC_STATIC_FUNC(GetError)>
-      GetError;
+      GetError{"GetError", *this};
 
     /// @var GetProcAddress
     /// @alcfuncwrap{GetProcAddress}
     alc_api_function<
       void_ptr_type(device_type*, const char_type*),
       OALPLUS_ALC_STATIC_FUNC(GetProcAddress)>
-      GetProcAddress;
+      GetProcAddress{"GetProcAddress", *this};
 
     /// @var GetEnumValue
     /// @alcfuncwrap{GetEnumValue}
     alc_api_function<
       enum_type(device_type*, const char_type*),
       OALPLUS_ALC_STATIC_FUNC(GetEnumValue)>
-      GetEnumValue;
+      GetEnumValue{"GetEnumValue", *this};
 
     /// @var OpenDevice
     /// @alcfuncwrap{OpenDevice}
     alc_api_function<
       device_type*(const char_type*),
       OALPLUS_ALC_STATIC_FUNC(OpenDevice)>
-      OpenDevice;
+      OpenDevice{"OpenDevice", *this};
 
     /// @var CaptureOpenDevice
     /// @alcfuncwrap{CaptureOpenDevice}
@@ -138,131 +138,108 @@ public:
         enum_type format,
         size_type bufsize),
       OALPLUS_ALC_STATIC_FUNC(CaptureOpenDevice)>
-      CaptureOpenDevice;
+      CaptureOpenDevice{"CaptureOpenDevice", *this};
 
     /// @var CloseDevice
     /// @alcfuncwrap{CloseDevice}
     alc_api_function<
       bool_type(device_type*),
       OALPLUS_ALC_STATIC_FUNC(CloseDevice)>
-      CloseDevice;
+      CloseDevice{"CloseDevice", *this};
 
     /// @var CaptureCloseDevice
     /// @alcfuncwrap{CaptureCloseDevice}
     alc_api_function<
       bool_type(device_type*),
       OALPLUS_ALC_STATIC_FUNC(CaptureCloseDevice)>
-      CaptureCloseDevice;
+      CaptureCloseDevice{"CaptureCloseDevice", *this};
 
     /// @var GetString
     /// @alcfuncwrap{GetString}
     alc_api_function<
       const char_type*(device_type*, enum_type),
       OALPLUS_ALC_STATIC_FUNC(GetString)>
-      GetString;
+      GetString{"GetString", *this};
 
     /// @var GetIntegerv
     /// @alcfuncwrap{GetIntegerv}
     alc_api_function<
       void(device_type*, enum_type, size_type, int_type*),
       OALPLUS_ALC_STATIC_FUNC(GetIntegerv)>
-      GetIntegerv;
+      GetIntegerv{"GetIntegerv", *this};
 
     /// @var IsExtensionPresent
     /// @alcfuncwrap{IsExtensionPresent}
     alc_api_function<
       bool_type(device_type*, const char_type*),
       OALPLUS_ALC_STATIC_FUNC(IsExtensionPresent)>
-      IsExtensionPresent;
+      IsExtensionPresent{"IsExtensionPresent", *this};
 
     /// @var CreateContext
     /// @alcfuncwrap{CreateContext}
     alc_api_function<
       context_type*(device_type*, const int_type*),
       OALPLUS_ALC_STATIC_FUNC(CreateContext)>
-      CreateContext;
+      CreateContext{"CreateContext", *this};
 
     /// @var ProcessContext
     /// @alcfuncwrap{ProcessContext}
     alc_api_function<void(context_type*), OALPLUS_ALC_STATIC_FUNC(ProcessContext)>
-      ProcessContext;
+      ProcessContext{"ProcessContext", *this};
 
     /// @var SuspendContext
     /// @alcfuncwrap{SuspendContext}
     alc_api_function<void(context_type*), OALPLUS_ALC_STATIC_FUNC(SuspendContext)>
-      SuspendContext;
+      SuspendContext{"SuspendContext", *this};
 
     /// @var DestroyContext
     /// @alcfuncwrap{DestroyContext}
     alc_api_function<void(context_type*), OALPLUS_ALC_STATIC_FUNC(DestroyContext)>
-      DestroyContext;
+      DestroyContext{"DestroyContext", *this};
 
     /// @var MakeContextCurrent
     /// @alcfuncwrap{MakeContextCurrent}
     alc_api_function<
       bool_type(context_type*),
       OALPLUS_ALC_STATIC_FUNC(MakeContextCurrent)>
-      MakeContextCurrent;
+      MakeContextCurrent{"MakeContextCurrent", *this};
 
     /// @var GetCurrentContext
     /// @alcfuncwrap{GetCurrentContext}
     alc_api_function<context_type*(), OALPLUS_ALC_STATIC_FUNC(GetCurrentContext)>
-      GetCurrentContext;
+      GetCurrentContext{"GetCurrentContext", *this};
 
     /// @var GetContextsDevice
     /// @alcfuncwrap{GetContextsDevice}
     alc_api_function<
       device_type*(context_type*),
       OALPLUS_ALC_STATIC_FUNC(GetContextsDevice)>
-      GetContextsDevice;
+      GetContextsDevice{"GetContextsDevice", *this};
 
     /// @var CaptureStart
     /// @alcfuncwrap{CaptureStart}
     alc_api_function<void(device_type*), OALPLUS_ALC_STATIC_FUNC(CaptureStart)>
-      CaptureStart;
+      CaptureStart{"CaptureStart", *this};
 
     /// @var CaptureStop
     /// @alcfuncwrap{CaptureStop}
     alc_api_function<void(device_type*), OALPLUS_ALC_STATIC_FUNC(CaptureStop)>
-      CaptureStop;
+      CaptureStop{"CaptureStop", *this};
 
     /// @var CaptureSamples
     /// @alcfuncwrap{CaptureSamples}
     alc_api_function<
       void(device_type*, void_ptr_type, size_type),
       OALPLUS_ALC_STATIC_FUNC(CaptureSamples)>
-      CaptureSamples;
+      CaptureSamples{"CaptureSamples", *this};
 
-    basic_alc_c_api(api_traits& traits);
+    basic_alc_c_api(api_traits& traits)
+      : _traits{traits} {}
 
     auto traits() noexcept -> api_traits& {
         return _traits;
     }
 };
-//------------------------------------------------------------------------------
-template <typename ApiTraits>
-basic_alc_c_api<ApiTraits>::basic_alc_c_api(api_traits& traits)
-  : _traits{traits}
-  , GetError{"GetError", *this}
-  , GetProcAddress{"GetProcAddress", *this}
-  , GetEnumValue{"GetEnumValue", *this}
-  , OpenDevice{"OpenDevice", *this}
-  , CaptureOpenDevice{"CaptureOpenDevice", *this}
-  , CloseDevice{"CloseDevice", *this}
-  , CaptureCloseDevice{"CaptureCloseDevice", *this}
-  , GetString{"GetString", *this}
-  , GetIntegerv{"GetIntegerv", *this}
-  , IsExtensionPresent{"IsExtensionPresent", *this}
-  , CreateContext{"CreateContext", *this}
-  , ProcessContext{"ProcessContext", *this}
-  , SuspendContext{"SuspendContext", *this}
-  , DestroyContext{"DestroyContext", *this}
-  , MakeContextCurrent{"MakeContextCurrent", *this}
-  , GetCurrentContext{"GetCurrentContext", *this}
-  , GetContextsDevice{"GetContextsDevice", *this}
-  , CaptureStart{"CaptureStart", *this}
-  , CaptureStop{"CaptureStop", *this}
-  , CaptureSamples{"CaptureSamples", *this} {}
 //------------------------------------------------------------------------------
 } // namespace eagine::oalplus
 

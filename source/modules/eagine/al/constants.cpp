@@ -43,6 +43,9 @@ export auto al_enum_by_name(const string_view name) noexcept
 export template <typename ApiTraits>
 class basic_al_constants {
 public:
+    template <typename ClassList, typename Constant, typename Tag = nothing_t>
+    using opt_constant = c_api::opt_constant<ClassList, Constant, Tag>;
+
     using enum_type = typename al_types::enum_type;
     using enum_type_i = std::type_identity<enum_type>;
     template <enum_type value>
@@ -50,7 +53,7 @@ public:
 
     /// @var no_error
     /// @alconstwrap{NO_ERROR}
-    c_api::opt_constant<
+    opt_constant<
       mp_list<al_error_code>,
 #ifdef AL_NO_ERROR
       enum_type_c<AL_NO_ERROR>>
@@ -61,7 +64,7 @@ public:
 
     /// @var invalid_name
     /// @alconstwrap{INVALID_NAME}
-    c_api::opt_constant<
+    opt_constant<
       mp_list<al_error_code>,
 #ifdef AL_INVALID_NAME
       enum_type_c<AL_INVALID_NAME>>
@@ -72,7 +75,7 @@ public:
 
     /// @var invalid_enum
     /// @alconstwrap{INVALID_ENUM}
-    c_api::opt_constant<
+    opt_constant<
       mp_list<al_error_code>,
 #ifdef AL_INVALID_ENUM
       enum_type_c<AL_INVALID_ENUM>>
@@ -83,7 +86,7 @@ public:
 
     /// @var invalid_operation
     /// @alconstwrap{INVALID_OPERATION}
-    c_api::opt_constant<
+    opt_constant<
       mp_list<al_error_code>,
 #ifdef AL_INVALID_OPERATION
       enum_type_c<AL_INVALID_OPERATION>>
@@ -94,7 +97,7 @@ public:
 
     /// @var out_of_memory
     /// @alconstwrap{OUT_OF_MEMORY}
-    c_api::opt_constant<
+    opt_constant<
       mp_list<al_error_code>,
 #ifdef AL_OUT_OF_MEMORY
       enum_type_c<AL_OUT_OF_MEMORY>>
@@ -105,7 +108,7 @@ public:
 
     /// @var version
     /// @alconstwrap{VERSION}
-    c_api::opt_constant<
+    opt_constant<
       mp_list<al_string_query>,
 #ifdef AL_VERSION
       enum_type_c<AL_VERSION>>
@@ -116,7 +119,7 @@ public:
 
     /// @var renderer
     /// @alconstwrap{RENDERER}
-    c_api::opt_constant<
+    opt_constant<
       mp_list<al_string_query>,
 #ifdef AL_RENDERER
       enum_type_c<AL_RENDERER>>
@@ -127,7 +130,7 @@ public:
 
     /// @var vendor
     /// @alconstwrap{VENDOR}
-    c_api::opt_constant<
+    opt_constant<
       mp_list<al_string_query>,
 #ifdef AL_VENDOR
       enum_type_c<AL_VENDOR>>
@@ -138,7 +141,7 @@ public:
 
     /// @var extensions
     /// @alconstwrap{EXTENSIONS}
-    c_api::opt_constant<
+    opt_constant<
       mp_list<al_string_query>,
 #ifdef AL_EXTENSIONS
       enum_type_c<AL_EXTENSIONS>>
@@ -149,7 +152,7 @@ public:
 
     /// @var doppler_factor
     /// @alconstwrap{DOPPLER_FACTOR}
-    c_api::opt_constant<
+    opt_constant<
       mp_list<al_numeric_query>,
 #ifdef AL_DOPPLER_FACTOR
       enum_type_c<AL_DOPPLER_FACTOR>>
@@ -160,7 +163,7 @@ public:
 
     /// @var speed_of_sound
     /// @alconstwrap{SPEED_OF_SOUND}
-    c_api::opt_constant<
+    opt_constant<
       mp_list<al_numeric_query>,
 #ifdef AL_SPEED_OF_SOUND
       enum_type_c<AL_SPEED_OF_SOUND>>
@@ -171,7 +174,7 @@ public:
 
     /// @var distance_model
     /// @alconstwrap{DISTANCE_MODEL}
-    c_api::opt_constant<
+    opt_constant<
       mp_list<al_integer_query>,
 #ifdef AL_DISTANCE_MODEL
       enum_type_c<AL_DISTANCE_MODEL>,
@@ -183,7 +186,7 @@ public:
 
     /// @var inverse_distance
     /// @alconstwrap{INVERSE_DISTANCE}
-    c_api::opt_constant<
+    opt_constant<
       mp_list<oalplus::distance_model>,
 #ifdef AL_INVERSE_DISTANCE
       enum_type_c<AL_INVERSE_DISTANCE>>
@@ -194,7 +197,7 @@ public:
 
     /// @var inverse_distance_clamped
     /// @alconstwrap{INVERSE_DISTANCE_CLAMPED}
-    c_api::opt_constant<
+    opt_constant<
       mp_list<oalplus::distance_model>,
 #ifdef AL_INVERSE_DISTANCE_CLAMPED
       enum_type_c<AL_INVERSE_DISTANCE_CLAMPED>>
@@ -205,7 +208,7 @@ public:
 
     /// @var linear_distance
     /// @alconstwrap{LINEAR_DISTANCE}
-    c_api::opt_constant<
+    opt_constant<
       mp_list<oalplus::distance_model>,
 #ifdef AL_LINEAR_DISTANCE
       enum_type_c<AL_LINEAR_DISTANCE>>
@@ -216,7 +219,7 @@ public:
 
     /// @var linear_distance_clamped
     /// @alconstwrap{LINEAR_DISTANCE_CLAMPED}
-    c_api::opt_constant<
+    opt_constant<
       mp_list<oalplus::distance_model>,
 #ifdef AL_LINEAR_DISTANCE_CLAMPED
       enum_type_c<AL_LINEAR_DISTANCE_CLAMPED>>
@@ -227,7 +230,7 @@ public:
 
     /// @var exponent_distance
     /// @alconstwrap{EXPONENT_DISTANCE}
-    c_api::opt_constant<
+    opt_constant<
       mp_list<oalplus::distance_model>,
 #ifdef AL_EXPONENT_DISTANCE
       enum_type_c<AL_EXPONENT_DISTANCE>>
@@ -238,7 +241,7 @@ public:
 
     /// @var exponent_distance_clamped
     /// @alconstwrap{EXPONENT_DISTANCE_CLAMPED}
-    c_api::opt_constant<
+    opt_constant<
       mp_list<oalplus::distance_model>,
 #ifdef AL_EXPONENT_DISTANCE_CLAMPED
       enum_type_c<AL_EXPONENT_DISTANCE_CLAMPED>>
@@ -249,7 +252,7 @@ public:
 
     /// @var source_state
     /// @alconstwrap{SOURCE_STATE}
-    c_api::opt_constant<
+    opt_constant<
       mp_list<source_attribute>,
 #ifdef AL_SOURCE_STATE
       enum_type_c<AL_SOURCE_STATE>>
@@ -260,7 +263,7 @@ public:
 
     /// @var source_type
     /// @alconstwrap{SOURCE_TYPE}
-    c_api::opt_constant<
+    opt_constant<
       mp_list<source_attribute>,
 #ifdef AL_SOURCE_TYPE
       enum_type_c<AL_SOURCE_TYPE>>
@@ -271,7 +274,7 @@ public:
 
     /// @var source_relative
     /// @alconstwrap{SOURCE_RELATIVE}
-    c_api::opt_constant<
+    opt_constant<
       mp_list<source_attribute>,
 #ifdef AL_SOURCE_RELATIVE
       enum_type_c<AL_SOURCE_RELATIVE>>
@@ -282,7 +285,7 @@ public:
 
     /// @var looping
     /// @alconstwrap{LOOPING}
-    c_api::opt_constant<
+    opt_constant<
       mp_list<source_attribute>,
 #ifdef AL_LOOPING
       enum_type_c<AL_LOOPING>>
@@ -293,7 +296,7 @@ public:
 
     /// @var position
     /// @alconstwrap{POSITION}
-    c_api::opt_constant<
+    opt_constant<
       mp_list<listener_attribute, source_attribute>,
 #ifdef AL_POSITION
       enum_type_c<AL_POSITION>>
@@ -304,7 +307,7 @@ public:
 
     /// @var velocity
     /// @alconstwrap{VELOCITY}
-    c_api::opt_constant<
+    opt_constant<
       mp_list<listener_attribute, source_attribute>,
 #ifdef AL_VELOCITY
       enum_type_c<AL_VELOCITY>>
@@ -315,7 +318,7 @@ public:
 
     /// @var gain
     /// @alconstwrap{GAIN}
-    c_api::opt_constant<
+    opt_constant<
       mp_list<listener_attribute, source_attribute>,
 #ifdef AL_GAIN
       enum_type_c<AL_GAIN>>
@@ -326,7 +329,7 @@ public:
 
     /// @var min_gain
     /// @alconstwrap{MIN_GAIN}
-    c_api::opt_constant<
+    opt_constant<
       mp_list<source_attribute>,
 #ifdef AL_MIN_GAIN
       enum_type_c<AL_MIN_GAIN>>
@@ -337,7 +340,7 @@ public:
 
     /// @var max_gain
     /// @alconstwrap{MAX_GAIN}
-    c_api::opt_constant<
+    opt_constant<
       mp_list<source_attribute>,
 #ifdef AL_MAX_GAIN
       enum_type_c<AL_MAX_GAIN>>
@@ -348,7 +351,7 @@ public:
 
     /// @var rolloff_factor
     /// @alconstwrap{ROLLOFF_FACTOR}
-    c_api::opt_constant<
+    opt_constant<
       mp_list<source_attribute>,
 #ifdef AL_ROLLOFF_FACTOR
       enum_type_c<AL_ROLLOFF_FACTOR>>
@@ -359,7 +362,7 @@ public:
 
     /// @var reference_distance
     /// @alconstwrap{REFERENCE_DISTANCE}
-    c_api::opt_constant<
+    opt_constant<
       mp_list<source_attribute>,
 #ifdef AL_REFERENCE_DISTANCE
       enum_type_c<AL_REFERENCE_DISTANCE>>
@@ -370,7 +373,7 @@ public:
 
     /// @var min_distance
     /// @alconstwrap{MIN_DISTANCE}
-    c_api::opt_constant<
+    opt_constant<
       mp_list<source_attribute>,
 #ifdef AL_MIN_DISTANCE
       enum_type_c<AL_MIN_DISTANCE>>
@@ -381,7 +384,7 @@ public:
 
     /// @var max_distance
     /// @alconstwrap{MAX_DISTANCE}
-    c_api::opt_constant<
+    opt_constant<
       mp_list<source_attribute>,
 #ifdef AL_MAX_DISTANCE
       enum_type_c<AL_MAX_DISTANCE>>
@@ -392,7 +395,7 @@ public:
 
     /// @var direction
     /// @alconstwrap{DIRECTION}
-    c_api::opt_constant<
+    opt_constant<
       mp_list<source_attribute>,
 #ifdef AL_DIRECTION
       enum_type_c<AL_DIRECTION>>
@@ -403,7 +406,7 @@ public:
 
     /// @var cone_inner_angle
     /// @alconstwrap{CONE_INNER_ANGLE}
-    c_api::opt_constant<
+    opt_constant<
       mp_list<source_attribute>,
 #ifdef AL_CONE_INNER_ANGLE
       enum_type_c<AL_CONE_INNER_ANGLE>>
@@ -414,7 +417,7 @@ public:
 
     /// @var cone_outer_angle
     /// @alconstwrap{cone_outer_angle}
-    c_api::opt_constant<
+    opt_constant<
       mp_list<source_attribute>,
 #ifdef AL_CONE_OUTER_ANGLE
       enum_type_c<AL_CONE_OUTER_ANGLE>>
@@ -425,7 +428,7 @@ public:
 
     /// @var cone_outer_gain
     /// @alconstwrap{CONE_OUTER_GAIN}
-    c_api::opt_constant<
+    opt_constant<
       mp_list<source_attribute>,
 #ifdef AL_CONE_OUTER_GAIN
       enum_type_c<AL_CONE_OUTER_GAIN>>
@@ -436,7 +439,7 @@ public:
 
     /// @var sec_offset
     /// @alconstwrap{SEC_OFFSET}
-    c_api::opt_constant<
+    opt_constant<
       mp_list<source_attribute>,
 #ifdef AL_SEC_OFFSET
       enum_type_c<AL_SEC_OFFSET>>
@@ -447,7 +450,7 @@ public:
 
     /// @var sample_offset
     /// @alconstwrap{SAMPLE_OFFSET}
-    c_api::opt_constant<
+    opt_constant<
       mp_list<source_attribute>,
 #ifdef AL_SAMPLE_OFFSET
       enum_type_c<AL_SAMPLE_OFFSET>>
@@ -458,7 +461,7 @@ public:
 
     /// @var byte_offset
     /// @alconstwrap{BYTE_OFFSET}
-    c_api::opt_constant<
+    opt_constant<
       mp_list<source_attribute>,
 #ifdef AL_BYTE_OFFSET
       enum_type_c<AL_BYTE_OFFSET>>
@@ -469,7 +472,7 @@ public:
 
     /// @var orientation
     /// @alconstwrap{ORIENTATION}
-    c_api::opt_constant<
+    opt_constant<
       mp_list<listener_attribute>,
 #ifdef AL_ORIENTATION
       enum_type_c<AL_ORIENTATION>>
@@ -480,7 +483,7 @@ public:
 
     /// @var current_buffer
     /// @alconstwrap{CURRENT_BUFFER}
-    c_api::opt_constant<
+    opt_constant<
       mp_list<source_attribute>,
 #ifdef AL_BUFFER
       enum_type_c<AL_BUFFER>>
@@ -491,7 +494,7 @@ public:
 
     /// @var buffers_queued
     /// @alconstwrap{BUFFERS_QUEUED}
-    c_api::opt_constant<
+    opt_constant<
       mp_list<source_attribute>,
 #ifdef AL_BUFFERS_QUEUED
       enum_type_c<AL_BUFFERS_QUEUED>>
@@ -502,7 +505,7 @@ public:
 
     /// @var buffers_processed
     /// @alconstwrap{BUFFERS_PROCESSED}
-    c_api::opt_constant<
+    opt_constant<
       mp_list<source_attribute>,
 #ifdef AL_BUFFERS_PROCESSED
       enum_type_c<AL_BUFFERS_PROCESSED>>
@@ -557,7 +560,7 @@ public:
 
     /// @var frequency
     /// @alconstwrap{FREQUENCY}
-    c_api::opt_constant<
+    opt_constant<
       mp_list<buffer_attribute>,
 #ifdef AL_FREQUENCY
       enum_type_c<AL_FREQUENCY>>
@@ -568,7 +571,7 @@ public:
 
     /// @var size
     /// @alconstwrap{SIZE}
-    c_api::opt_constant<
+    opt_constant<
       mp_list<buffer_attribute>,
 #ifdef AL_SIZE
       enum_type_c<AL_SIZE>>
@@ -579,7 +582,7 @@ public:
 
     /// @var bits
     /// @alconstwrap{BITS}
-    c_api::opt_constant<
+    opt_constant<
       mp_list<buffer_attribute>,
 #ifdef AL_BITS
       enum_type_c<AL_BITS>>
@@ -590,7 +593,7 @@ public:
 
     /// @var channels
     /// @alconstwrap{CHANNELS}
-    c_api::opt_constant<
+    opt_constant<
       mp_list<buffer_attribute>,
 #ifdef AL_CHANNELS
       enum_type_c<AL_CHANNELS>>
@@ -601,7 +604,7 @@ public:
 
     /// @var format_mono8
     /// @alconstwrap{FORMAT_MONO8}
-    c_api::opt_constant<
+    opt_constant<
       mp_list<buffer_format>,
 #ifdef AL_FORMAT_MONO8
       enum_type_c<AL_FORMAT_MONO8>>
@@ -612,7 +615,7 @@ public:
 
     /// @var format_mono16
     /// @alconstwrap{FORMAT_MONO16}
-    c_api::opt_constant<
+    opt_constant<
       mp_list<buffer_format>,
 #ifdef AL_FORMAT_MONO16
       enum_type_c<AL_FORMAT_MONO16>>
@@ -623,7 +626,7 @@ public:
 
     /// @var format_stereo8
     /// @alconstwrap{FORMAT_STEREO8}
-    c_api::opt_constant<
+    opt_constant<
       mp_list<buffer_format>,
 #ifdef AL_FORMAT_STEREO8
       enum_type_c<AL_FORMAT_STEREO8>>
@@ -634,7 +637,7 @@ public:
 
     /// @var format_stereo16
     /// @alconstwrap{FORMAT_STEREO16}
-    c_api::opt_constant<
+    opt_constant<
       mp_list<buffer_format>,
 #ifdef AL_FORMAT_STEREO16
       enum_type_c<AL_FORMAT_STEREO16>>
@@ -645,7 +648,7 @@ public:
 
     /// @var undetermined
     /// @alconstwrap{UNDETERMINED}
-    c_api::opt_constant<
+    opt_constant<
       mp_list<oalplus::source_type>,
 #ifdef AL_UNDETERMINED
       enum_type_c<AL_UNDETERMINED>>
@@ -656,7 +659,7 @@ public:
 
     /// @var static_
     /// @alconstwrap{STATIC}
-    c_api::opt_constant<
+    opt_constant<
       mp_list<oalplus::source_type>,
 #ifdef AL_STATIC
       enum_type_c<AL_STATIC>>
@@ -667,7 +670,7 @@ public:
 
     /// @var streaming
     /// @alconstwrap{STREAMING}
-    c_api::opt_constant<
+    opt_constant<
       mp_list<oalplus::source_type>,
 #ifdef AL_STREAMING
       enum_type_c<AL_STREAMING>>
@@ -678,7 +681,7 @@ public:
 
     /// @var initial
     /// @alconstwrap{INITIAL}
-    c_api::opt_constant<
+    opt_constant<
       mp_list<oalplus::source_state>,
 #ifdef AL_INITIAL
       enum_type_c<AL_INITIAL>>
@@ -689,7 +692,7 @@ public:
 
     /// @var playing
     /// @alconstwrap{PLAYING}
-    c_api::opt_constant<
+    opt_constant<
       mp_list<oalplus::source_state>,
 #ifdef AL_PLAYING
       enum_type_c<AL_PLAYING>>
@@ -700,7 +703,7 @@ public:
 
     /// @var paused
     /// @alconstwrap{PAUSED}
-    c_api::opt_constant<
+    opt_constant<
       mp_list<oalplus::source_state>,
 #ifdef AL_PAUSED
       enum_type_c<AL_PAUSED>>
@@ -711,7 +714,7 @@ public:
 
     /// @var stopped
     /// @alconstwrap{STOPPED}
-    c_api::opt_constant<
+    opt_constant<
       mp_list<oalplus::source_state>,
 #ifdef AL_STOPPED
       enum_type_c<AL_STOPPED>>
@@ -722,7 +725,7 @@ public:
 
     /// @var none
     /// @alconstwrap{NONE}
-    c_api::opt_constant<
+    opt_constant<
       mp_list<oalplus::distance_model>,
 #ifdef AL_NONE
       enum_type_c<AL_NONE>>

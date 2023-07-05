@@ -31,6 +31,9 @@ namespace eagine::oalplus {
 export template <typename ApiTraits>
 class basic_alut_constants {
 public:
+    template <typename ClassList, typename Constant, typename Tag = nothing_t>
+    using opt_constant = c_api::opt_constant<ClassList, Constant, Tag>;
+
     using enum_type = typename alut_types::enum_type;
     using enum_type_i = std::type_identity<enum_type>;
     template <enum_type value>
@@ -38,7 +41,7 @@ public:
 
     /// @var no_error
     /// @alutconstwrap{NO_ERROR}
-    c_api::opt_constant<
+    opt_constant<
       mp_list<alut_error_code>,
 #ifdef ALUT_ERROR_NO_ERROR
       enum_type_c<ALUT_ERROR_NO_ERROR>>
@@ -49,7 +52,7 @@ public:
 
     /// @var waveform_sine
     /// @alutconstwrap{WAVEFORM_SINE}
-    c_api::opt_constant<
+    opt_constant<
       mp_list<waveform_function>,
 #ifdef ALUT_WAVEFORM_SINE
       enum_type_c<ALUT_WAVEFORM_SINE>>
@@ -60,7 +63,7 @@ public:
 
     /// @var waveform_square
     /// @alutconstwrap{WAVEFORM_SQUARE}
-    c_api::opt_constant<
+    opt_constant<
       mp_list<waveform_function>,
 #ifdef ALUT_WAVEFORM_SQUARE
       enum_type_c<ALUT_WAVEFORM_SQUARE>>
@@ -71,7 +74,7 @@ public:
 
     /// @var waveform_sawtooth
     /// @alutconstwrap{WAVEFORM_SAWTOOTH}
-    c_api::opt_constant<
+    opt_constant<
       mp_list<waveform_function>,
 #ifdef ALUT_WAVEFORM_SAWTOOTH
       enum_type_c<ALUT_WAVEFORM_SAWTOOTH>>
@@ -82,7 +85,7 @@ public:
 
     /// @var waveform_whitenoise
     /// @alutconstwrap{WAVEFORM_WHITENOISE}
-    c_api::opt_constant<
+    opt_constant<
       mp_list<waveform_function>,
 #ifdef ALUT_WAVEFORM_WHITENOISE
       enum_type_c<ALUT_WAVEFORM_WHITENOISE>>
@@ -93,7 +96,7 @@ public:
 
     /// @var waveform_impulse
     /// @alutconstwrap{WAVEFORM_IMPULSE}
-    c_api::opt_constant<
+    opt_constant<
       mp_list<waveform_function>,
 #ifdef ALUT_WAVEFORM_IMPULSE
       enum_type_c<ALUT_WAVEFORM_IMPULSE>>

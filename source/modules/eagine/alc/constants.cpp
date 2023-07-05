@@ -31,6 +31,9 @@ namespace eagine::oalplus {
 export template <typename ApiTraits>
 class basic_alc_constants {
 public:
+    template <typename ClassList, typename Constant, typename Tag = nothing_t>
+    using opt_constant = c_api::opt_constant<ClassList, Constant, Tag>;
+
     using enum_type = typename alc_types::enum_type;
     using enum_type_i = std::type_identity<enum_type>;
     template <enum_type value>
@@ -38,7 +41,7 @@ public:
 
     /// @var no_error
     /// @alcconstwrap{NO_ERROR}
-    c_api::opt_constant<
+    opt_constant<
       mp_list<alc_error_code>,
 #ifdef ALC_NO_ERROR
       enum_type_c<ALC_NO_ERROR>>
@@ -49,7 +52,7 @@ public:
 
     /// @var invalid_device
     /// @alcconstwrap{INVALID_DEVICE}
-    c_api::opt_constant<
+    opt_constant<
       mp_list<alc_error_code>,
 #ifdef ALC_INVALID_DEVICE
       enum_type_c<ALC_INVALID_DEVICE>>
@@ -60,7 +63,7 @@ public:
 
     /// @var invalid_context
     /// @alcconstwrap{INVALID_CONTEXT}
-    c_api::opt_constant<
+    opt_constant<
       mp_list<alc_error_code>,
 #ifdef ALC_INVALID_CONTEXT
       enum_type_c<ALC_INVALID_CONTEXT>>
@@ -71,7 +74,7 @@ public:
 
     /// @var invalid_enum
     /// @alcconstwrap{INVALID_ENUM}
-    c_api::opt_constant<
+    opt_constant<
       mp_list<alc_error_code>,
 #ifdef ALC_INVALID_ENUM
       enum_type_c<ALC_INVALID_ENUM>>
@@ -82,7 +85,7 @@ public:
 
     /// @var invalid_value
     /// @alcconstwrap{INVALID_VALUE}
-    c_api::opt_constant<
+    opt_constant<
       mp_list<alc_error_code>,
 #ifdef ALC_INVALID_VALUE
       enum_type_c<ALC_INVALID_VALUE>>
@@ -93,7 +96,7 @@ public:
 
     /// @var out_of_memory
     /// @alcconstwrap{OUT_OF_MEMORY}
-    c_api::opt_constant<
+    opt_constant<
       mp_list<alc_error_code>,
 #ifdef ALC_OUT_OF_MEMORY
       enum_type_c<ALC_OUT_OF_MEMORY>>
@@ -104,7 +107,7 @@ public:
 
     /// @var device_specifier
     /// @alcconstwrap{DEVICE_SPECIFIER}
-    c_api::opt_constant<
+    opt_constant<
       mp_list<alc_string_query>,
 #ifdef ALC_DEVICE_SPECIFIER
       enum_type_c<ALC_DEVICE_SPECIFIER>>
@@ -115,7 +118,7 @@ public:
 
     /// @var capture_device_specifier
     /// @alcconstwrap{CAPTURE_DEVICE_SPECIFIER}
-    c_api::opt_constant<
+    opt_constant<
       mp_list<alc_string_query>,
 #ifdef ALC_CAPTURE_DEVICE_SPECIFIER
       enum_type_c<ALC_CAPTURE_DEVICE_SPECIFIER>>
@@ -126,7 +129,7 @@ public:
 
     /// @var default_device_specifier
     /// @alcconstwrap{DEFAULT_DEVICE_SPECIFIER}
-    c_api::opt_constant<
+    opt_constant<
       mp_list<alc_string_query>,
 #ifdef ALC_DEFAULT_DEVICE_SPECIFIER
       enum_type_c<ALC_DEFAULT_DEVICE_SPECIFIER>>
@@ -137,7 +140,7 @@ public:
 
     /// @var capture_default_device_specifier
     /// @alcconstwrap{CAPTURE_DEFAULT_DEVICE_SPECIFIER}
-    c_api::opt_constant<
+    opt_constant<
       mp_list<alc_string_query>,
 #ifdef ALC_CAPTURE_DEFAULT_DEVICE_SPECIFIER
       enum_type_c<ALC_CAPTURE_DEFAULT_DEVICE_SPECIFIER>>
@@ -158,7 +161,7 @@ public:
 
     /// @var extensions
     /// @alcconstwrap{EXTENSIONS}
-    c_api::opt_constant<
+    opt_constant<
       mp_list<alc_string_query>,
 #ifdef ALC_EXTENSIONS
       enum_type_c<ALC_EXTENSIONS>>
@@ -169,7 +172,7 @@ public:
 
     /// @var major_version
     /// @alcconstwrap{MAJOR_VERSION}
-    c_api::opt_constant<
+    opt_constant<
       mp_list<alc_integer_query>,
 #ifdef ALC_MAJOR_VERSION
       enum_type_c<ALC_MAJOR_VERSION>>
@@ -180,7 +183,7 @@ public:
 
     /// @var minor_version
     /// @alcconstwrap{MINOR_VERSION}
-    c_api::opt_constant<
+    opt_constant<
       mp_list<alc_integer_query>,
 #ifdef ALC_MINOR_VERSION
       enum_type_c<ALC_MINOR_VERSION>>
@@ -191,7 +194,7 @@ public:
 
     /// @var capture_samples
     /// @alcconstwrap{CAPTURE_SAMPLES}
-    c_api::opt_constant<
+    opt_constant<
       mp_list<alc_integer_query>,
 #ifdef ALC_CAPTURE_SAMPLES
       enum_type_c<ALC_CAPTURE_SAMPLES>>
@@ -202,7 +205,7 @@ public:
 
     /// @var frequency
     /// @alcconstwrap{FREQUENCY}
-    c_api::opt_constant<
+    opt_constant<
       mp_list<context_attribute>,
 #ifdef ALC_FREQUENCY
       enum_type_c<ALC_FREQUENCY>>
@@ -213,7 +216,7 @@ public:
 
     /// @var refresh
     /// @alcconstwrap{REFRESH}
-    c_api::opt_constant<
+    opt_constant<
       mp_list<context_attribute>,
 #ifdef ALC_REFRESH
       enum_type_c<ALC_REFRESH>>
@@ -224,7 +227,7 @@ public:
 
     /// @var sync
     /// @alcconstwrap{SYNC}
-    c_api::opt_constant<
+    opt_constant<
       mp_list<context_attribute>,
 #ifdef ALC_SYNC
       enum_type_c<ALC_SYNC>>
@@ -235,7 +238,7 @@ public:
 
     /// @var mono_sources
     /// @alcconstwrap{MONO_SOURCES}
-    c_api::opt_constant<
+    opt_constant<
       mp_list<context_attribute>,
 #ifdef ALC_MONO_SOURCES
       enum_type_c<ALC_MONO_SOURCES>>
@@ -246,7 +249,7 @@ public:
 
     /// @var stereo_sources
     /// @alcconstwrap{STEREO_SOURCES}
-    c_api::opt_constant<
+    opt_constant<
       mp_list<context_attribute>,
 #ifdef ALC_STEREO_SOURCES
       enum_type_c<ALC_STEREO_SOURCES>>

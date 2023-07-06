@@ -67,9 +67,11 @@ public:
     basic_alut_api(ApiTraits traits)
       : ApiTraits{std::move(traits)}
       , basic_alut_operations<ApiTraits>{*static_cast<ApiTraits*>(this)}
-      , basic_alut_constants<ApiTraits>{
-          *static_cast<ApiTraits*>(this),
-          *static_cast<basic_alut_operations<ApiTraits>*>(this)} {}
+      , basic_alut_constants<ApiTraits> {
+        *static_cast<ApiTraits*>(this),
+          *static_cast<basic_alut_operations<ApiTraits>*>(this)
+    }
+    {}
 
     basic_alut_api()
       : basic_alut_api{ApiTraits{}} {}
@@ -115,4 +117,12 @@ struct tuple_element<1, eagine::oalplus::basic_alut_api<ApiTraits>> {
 };
 //------------------------------------------------------------------------------
 } // namespace std
+namespace eagine::oalplus {
+//------------------------------------------------------------------------------
+export template <typename ApiTraits>
+using basic_alut_api_reference =
+  c_api::basic_api_reference<basic_alut_api<ApiTraits>>;
+
+export using alut_api_reference = basic_alut_api_reference<alut_api_traits>;
+} // namespace eagine::oalplus
 

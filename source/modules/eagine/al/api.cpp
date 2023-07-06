@@ -380,4 +380,12 @@ struct tuple_element<1, eagine::oalplus::basic_al_api<ApiTraits>> {
 };
 //------------------------------------------------------------------------------
 } // namespace std
+namespace eagine::oalplus {
+//------------------------------------------------------------------------------
+export template <typename ApiTraits>
+using basic_al_api_reference =
+  c_api::basic_api_reference<basic_al_api<ApiTraits>>;
+
+export using al_api_reference = basic_al_api_reference<al_api_traits>;
+} // namespace eagine::oalplus
 

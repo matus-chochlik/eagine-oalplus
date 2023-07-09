@@ -97,76 +97,68 @@ public:
 
     /// @var GetError
     /// @alutfuncwrap{GetError}
-    alut_api_function<enum_type(), OALPLUS_ALUT_STATIC_FUNC(GetError)> GetError;
+    alut_api_function<enum_type(), OALPLUS_ALUT_STATIC_FUNC(GetError)> GetError{
+      "GetError",
+      *this};
 
     /// @var GetErrorString
     /// @alutfuncwrap{GetErrorString}
     alut_api_function<
       const char_type*(enum_type),
       OALPLUS_ALUT_STATIC_FUNC(GetErrorString)>
-      GetErrorString;
+      GetErrorString{"GetErrorString", *this};
 
     /// @var Init
     /// @alutfuncwrap{Init}
     alut_api_function<bool_type(int*, char**), OALPLUS_ALUT_STATIC_FUNC(Init)>
-      Init;
+      Init{"Init", *this};
 
     /// @var InitWithoutContext
     /// @alutfuncwrap{InitWithoutContext}
     alut_api_function<bool_type(int*, char**), OALPLUS_ALUT_STATIC_FUNC(Init)>
-      InitWithoutContext;
+      InitWithoutContext{"InitWithoutContext", *this};
 
     /// @var CreateBufferFromFile
     /// @alutfuncwrap{CreateBufferFromFile}
     alut_api_function<
       name_type(const char*),
       OALPLUS_ALUT_STATIC_FUNC(CreateBufferFromFile)>
-      CreateBufferFromFile;
+      CreateBufferFromFile{"CreateBufferFromFile", *this};
 
     /// @var CreateBufferFromFileImage
     /// @alutfuncwrap{GetErroteBufferFromFileImager}
     alut_api_function<
       name_type(const_void_ptr_type, size_type),
       OALPLUS_ALUT_STATIC_FUNC(CreateBufferFromFileImage)>
-      CreateBufferFromFileImage;
+      CreateBufferFromFileImage{"CreateBufferFromFileImage", *this};
 
     /// @var CreateBufferHelloWorld
     /// @alutfuncwrap{CreateBufferHelloWorld}
     alut_api_function<
       name_type(),
       OALPLUS_ALUT_STATIC_FUNC(CreateBufferHelloWorld)>
-      CreateBufferHelloWorld;
+      CreateBufferHelloWorld{"CreateBufferHelloWorld", *this};
 
     /// @var CreateBufferWaveform
     /// @alutfuncwrap{CreateBufferWaveform}
     alut_api_function<
       name_type(enum_type, float_type, float_type, float_type),
       OALPLUS_ALUT_STATIC_FUNC(CreateBufferWaveform)>
-      CreateBufferWaveform;
+      CreateBufferWaveform{"CreateBufferWaveform", *this};
 
     /// @var Exit
     /// @alutfuncwrap{Exit}
-    alut_api_function<bool_type(), OALPLUS_ALUT_STATIC_FUNC(Exit)> Exit;
+    alut_api_function<bool_type(), OALPLUS_ALUT_STATIC_FUNC(Exit)> Exit{
+      "Exit",
+      *this};
 
-    basic_alut_c_api(api_traits& traits);
+    basic_alut_c_api(api_traits& traits)
+      : _traits{traits} {}
 
     auto traits() noexcept -> api_traits& {
         return _traits;
     }
 };
-//------------------------------------------------------------------------------
-template <typename ApiTraits>
-basic_alut_c_api<ApiTraits>::basic_alut_c_api(api_traits& traits)
-  : _traits{traits}
-  , GetError{"GetError", *this}
-  , GetErrorString{"GetErrorString", *this}
-  , Init{"Init", *this}
-  , InitWithoutContext{"InitWithoutContext", *this}
-  , CreateBufferFromFile{"CreateBufferFromFile", *this}
-  , CreateBufferFromFileImage{"CreateBufferFromFileImage", *this}
-  , CreateBufferHelloWorld{"CreateBufferHelloWorld", *this}
-  , CreateBufferWaveform{"CreateBufferWaveform", *this}
-  , Exit{"Exit", *this} {}
 //------------------------------------------------------------------------------
 } // namespace eagine::oalplus
 

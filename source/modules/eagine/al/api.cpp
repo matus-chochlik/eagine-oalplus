@@ -161,6 +161,12 @@ public:
       bool_type(auxiliary_effect_slot_name)>
       is_auxiliary_effect_slot{*this};
 
+    simple_adapted_function<&al_api::Enable, void(al_capability)> enable{*this};
+    simple_adapted_function<&al_api::Disable, void(al_capability)> disable{
+      *this};
+    simple_adapted_function<&al_api::IsEnabled, bool(al_capability)> is_enabled{
+      *this};
+
     c_api::combined<
       simple_adapted_function<
         &al_api::Listeneri,

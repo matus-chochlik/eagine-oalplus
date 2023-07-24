@@ -57,7 +57,7 @@ Package: eagine-oalplus-dev
 Version: %s
 Architecture: %s
 Installed-Size: %d
-Depends: libopenal1,libalut0,eagine-core-dev
+Depends: libopenal1,libalut0,eagine-core-dev (>= @EAGINE_VERSION@)
 Maintainer: Matus Chochlik <chochlik@gmail.com>
 Description: C++ wrapper for OpenAL and ALUT.
 """ % (

@@ -27,6 +27,7 @@ function(eagine_example_common EXAMPLE_NAME)
 	eagine_add_exe_analysis(oalplus-${EXAMPLE_NAME})
 	eagine_target_modules(
 		oalplus-${EXAMPLE_NAME}
+		std
 		eagine.core
 		eagine.oalplus
 	)

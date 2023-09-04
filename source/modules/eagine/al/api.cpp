@@ -24,6 +24,7 @@ import :config;
 import :enum_types;
 import :result;
 import :c_api;
+import :math;
 import :objects;
 import :constants;
 import :api_traits;
@@ -186,6 +187,7 @@ public:
       simple_adapted_function<
         &al_api::Listener3f,
         void(listener_attribute, float_type, float_type, float_type)>,
+      simple_adapted_function<&al_api::Listener3f, void(listener_attribute, vec3)>,
       simple_adapted_function<
         &al_api::Listenerfv,
         void(listener_attribute, span<const float_type>)>>
@@ -216,6 +218,7 @@ public:
       simple_adapted_function<
         &al_api::Buffer3f,
         void(buffer_attribute, float_type, float_type, float_type)>,
+      simple_adapted_function<&al_api::Buffer3f, void(buffer_attribute, vec3)>,
       simple_adapted_function<
         &al_api::Bufferfv,
         void(buffer_attribute, span<const float_type>)>>
@@ -250,6 +253,9 @@ public:
       simple_adapted_function<
         &al_api::Source3f,
         void(source_name, source_attribute, float_type, float_type, float_type)>,
+      simple_adapted_function<
+        &al_api::Source3f,
+        void(source_name, source_attribute, vec3)>,
       simple_adapted_function<
         &al_api::Sourcefv,
         void(source_name, source_attribute, span<const float_type>)>>

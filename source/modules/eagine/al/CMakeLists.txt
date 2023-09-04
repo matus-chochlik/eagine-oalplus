@@ -10,6 +10,14 @@ eagine_add_module(
 )
 
 eagine_add_module(
+	eagine.oalplus.al PARTITION math
+	IMPORTS
+		std config
+		eagine.core.types
+		eagine.core.math
+)
+
+eagine_add_module(
 	eagine.oalplus.al PARTITION enum_types
 	IMPORTS
 		std config

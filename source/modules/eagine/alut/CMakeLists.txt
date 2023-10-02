@@ -5,6 +5,7 @@
 eagine_add_module(
 	eagine.oalplus.alut PARTITION config
 	IMPORTS
+		std
 		eagine.core.types
 		eagine.oalplus.al
 )
@@ -12,7 +13,7 @@ eagine_add_module(
 eagine_add_module(
 	eagine.oalplus.alut PARTITION enum_types
 	IMPORTS
-		config
+		std config
 		eagine.core.types
 		eagine.core.identifier
 		eagine.core.c_api
@@ -21,7 +22,7 @@ eagine_add_module(
 eagine_add_module(
 	eagine.oalplus.alut PARTITION result
 	IMPORTS
-		config
+		std config
 		eagine.core.types
 		eagine.core.memory
 		eagine.core.c_api
@@ -30,7 +31,7 @@ eagine_add_module(
 eagine_add_module(
 	eagine.oalplus.alut PARTITION c_api
 	IMPORTS
-		config result
+		std config result
 		eagine.core.types
 		eagine.core.memory
 		eagine.core.c_api
@@ -39,7 +40,7 @@ eagine_add_module(
 eagine_add_module(
 	eagine.oalplus.alut PARTITION api_traits
 	IMPORTS
-		config result
+		std config result
 		eagine.core.types
 		eagine.core.memory
 		eagine.core.c_api
@@ -48,7 +49,8 @@ eagine_add_module(
 eagine_add_module(
 	eagine.oalplus.alut PARTITION constants
 	IMPORTS
-		config enum_types c_api
+		std config
+		enum_types c_api
 		eagine.core.types
 		eagine.core.c_api
 )
@@ -56,7 +58,7 @@ eagine_add_module(
 eagine_add_module(
 	eagine.oalplus.alut PARTITION api
 	IMPORTS
-		config enum_types
+		std config enum_types
 		constants
 		api_traits c_api
 		eagine.core.types
@@ -69,6 +71,7 @@ eagine_add_module(
 	eagine.oalplus.alut
 	SOURCES
 	IMPORTS
+		std
 		eagine.core.types
 )
 target_link_libraries(

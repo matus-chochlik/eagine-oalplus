@@ -44,6 +44,7 @@ public:
 
     using enum_type = typename alut_types::enum_type;
     using char_type = typename alut_types::char_type;
+    using float_type = typename alut_types::float_type;
 
     plain_adapted_function<&alut_api::Init> init{*this};
 
@@ -51,6 +52,21 @@ public:
       &alut_api::CreateBufferHelloWorld,
       owned_buffer_name()>
       create_buffer_hello_world{*this};
+
+    simple_adapted_function<
+      &alut_api::CreateBufferFromFile,
+      owned_buffer_name(string_view)>
+      create_buffer_from_file{*this};
+
+    simple_adapted_function<
+      &alut_api::CreateBufferFromFileImage,
+      owned_buffer_name(memory::const_block)>
+      create_buffer_from_file_image{*this};
+
+    simple_adapted_function<
+      &alut_api::CreateBufferWaveform,
+      owned_buffer_name(waveform_function, float_type, float_type, float_type)>
+      create_buffer_waveform{*this};
 
     plain_adapted_function<&alut_api::Exit> exit{*this};
 

@@ -126,7 +126,7 @@ public:
       CreateBufferFromFile{"CreateBufferFromFile", *this};
 
     /// @var CreateBufferFromFileImage
-    /// @alutfuncwrap{GetErroteBufferFromFileImager}
+    /// @alutfuncwrap{GetErroteBufferFromFileImage}
     alut_api_function<
       name_type(const_void_ptr_type, size_type),
       OALPLUS_ALUT_STATIC_FUNC(CreateBufferFromFileImage)>

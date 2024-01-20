@@ -120,17 +120,15 @@ namespace std {
 //------------------------------------------------------------------------------
 template <typename ApiTraits>
 struct tuple_size<eagine::oalplus::basic_alut_api<ApiTraits>>
-  : public std::integral_constant<std::size_t, 2> {};
+  : integral_constant<std::size_t, 2> {};
 
 template <typename ApiTraits>
-struct tuple_element<0, eagine::oalplus::basic_alut_api<ApiTraits>> {
-    using type = eagine::oalplus::basic_alut_operations<ApiTraits>;
-};
+struct tuple_element<0, eagine::oalplus::basic_alut_api<ApiTraits>>
+  : type_identity<eagine::oalplus::basic_alut_operations<ApiTraits>> {};
 
 template <typename ApiTraits>
-struct tuple_element<1, eagine::oalplus::basic_alut_api<ApiTraits>> {
-    using type = eagine::oalplus::basic_alut_constants<ApiTraits>;
-};
+struct tuple_element<1, eagine::oalplus::basic_alut_api<ApiTraits>>
+  : type_identity<eagine::oalplus::basic_alut_constants<ApiTraits>> {};
 //------------------------------------------------------------------------------
 } // namespace std
 namespace eagine::oalplus {

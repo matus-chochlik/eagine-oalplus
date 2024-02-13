@@ -29,16 +29,8 @@ auto main(main_ctx& ctx) -> int {
 
             const auto ext_cio{out.cio_print("Extensions:").to_be_continued()};
 
-            if(const ok extensions{alc.get_extensions(device)}) {
-                for(const auto name : extensions) {
-                    ext_cio.print(name);
-                }
-            } else {
-                ext_cio
-                  .print(
-                    console_entry_kind::error,
-                    "failed to get extension list: ${message}")
-                  .arg("message", (not extensions).message());
+            for(const auto name : alc.get_extensions(device)) {
+                ext_cio.print(name);
             }
         }
     } else {

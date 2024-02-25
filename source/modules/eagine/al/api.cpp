@@ -327,7 +327,8 @@ public:
         return get_string
           .fail()
 #endif
-          .transform([](auto src) { return split_into_string_list(src, ' '); });
+          .transform([](auto src) { return split_into_string_list(src, ' '); })
+          .or_default();
     }
 
     basic_al_operations(api_traits& traits)
@@ -343,11 +344,9 @@ public:
     basic_al_api(ApiTraits traits)
       : ApiTraits{std::move(traits)}
       , basic_al_operations<ApiTraits>{*static_cast<ApiTraits*>(this)}
-      , basic_al_constants<ApiTraits> {
-        *static_cast<ApiTraits*>(this),
-          *static_cast<basic_al_operations<ApiTraits>*>(this)
-    }
-    {}
+      , basic_al_constants<ApiTraits>{
+          *static_cast<ApiTraits*>(this),
+          *static_cast<basic_al_operations<ApiTraits>*>(this)} {}
 
     basic_al_api()
       : basic_al_api{ApiTraits{}} {}

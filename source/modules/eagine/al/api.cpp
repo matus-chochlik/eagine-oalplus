@@ -396,5 +396,78 @@ using basic_al_api_reference =
   c_api::basic_api_reference<basic_al_api<ApiTraits>>;
 
 export using al_api_reference = basic_al_api_reference<al_api_traits>;
+//------------------------------------------------------------------------------
+export struct al_context_handler : interface<al_context_handler> {
+    virtual auto make_current() noexcept -> bool = 0;
+};
+//------------------------------------------------------------------------------
+export template <typename ApiTraits>
+struct basic_al_api_context {
+    basic_al_api_context() noexcept = default;
+    basic_al_api_context(ApiTraits traits) noexcept
+      : al_api{std::move(traits)} {}
+
+    shared_holder<al_context_handler> al_context{};
+    const basic_al_api<ApiTraits> al_api{};
+};
+//------------------------------------------------------------------------------
+export template <typename ApiTraits>
+class basic_shared_al_api_context {
+public:
+    basic_shared_al_api_context() noexcept = default;
+
+    template <std::derived_from<al_context_handler> ContextHandler>
+    basic_shared_al_api_context(shared_holder<ContextHandler> handler) noexcept
+      : _shared{default_selector} {
+        set_context(std::move(handler));
+    }
+
+    explicit operator bool() const noexcept {
+        return bool(_shared);
+    }
+
+    auto set_context(shared_holder<al_context_handler> context) noexcept
+      -> basic_shared_al_api_context& {
+        assert(_shared);
+        _shared->al_context = std::move(context);
+        return *this;
+    }
+
+    auto ensure() -> basic_shared_al_api_context& {
+        _shared.ensure();
+        return *this;
+    }
+
+    auto ensure(ApiTraits traits) -> basic_shared_al_api_context& {
+        _shared.ensure(std::move(traits));
+        return *this;
+    }
+
+    auto make_current() noexcept -> bool {
+        if(_shared and _shared->al_context) {
+            return _shared->al_context->make_current();
+        }
+        return false;
+    }
+
+    auto al_ref() const noexcept -> basic_al_api_reference<ApiTraits> {
+        if(_shared) {
+            return {_shared->al_api};
+        }
+        return {};
+    }
+
+    auto al_api() const noexcept -> const basic_al_api<ApiTraits>& {
+        assert(_shared);
+        return _shared->al_api;
+    }
+
+private:
+    shared_holder<basic_al_api_context<ApiTraits>> _shared;
+};
+
+export using shared_al_api_context = basic_shared_al_api_context<al_api_traits>;
+//------------------------------------------------------------------------------
+
 } // namespace eagine::oalplus
 

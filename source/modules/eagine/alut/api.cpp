@@ -7,6 +7,7 @@
 ///
 module;
 
+#include <cassert>
 #if __has_include(<AL/alut.h>)
 #include <AL/alut.h>
 #define EAGINE_HAS_ALUT 1
@@ -133,7 +134,7 @@ namespace eagine::oalplus {
 //------------------------------------------------------------------------------
 export template <typename ApiTraits>
 using basic_alut_api_reference =
-  c_api::basic_api_reference<basic_alut_api<ApiTraits>>;
+  c_api::basic_api_reference<const basic_alut_api<ApiTraits>>;
 
 export using alut_api_reference = basic_alut_api_reference<alut_api_traits>;
 //------------------------------------------------------------------------------

@@ -7,6 +7,7 @@
 ///
 module;
 
+#include <cassert>
 #if __has_include(<AL/al.h>)
 #include <AL/al.h>
 #define EAGINE_HAS_AL 1
@@ -393,7 +394,7 @@ namespace eagine::oalplus {
 //------------------------------------------------------------------------------
 export template <typename ApiTraits>
 using basic_al_api_reference =
-  c_api::basic_api_reference<basic_al_api<ApiTraits>>;
+  c_api::basic_api_reference<const basic_al_api<ApiTraits>>;
 
 export using al_api_reference = basic_al_api_reference<al_api_traits>;
 //------------------------------------------------------------------------------

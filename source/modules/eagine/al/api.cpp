@@ -21,6 +21,7 @@ import eagine.core.types;
 import eagine.core.memory;
 import eagine.core.string;
 import eagine.core.c_api;
+import eagine.core.main_ctx;
 import :config;
 import :enum_types;
 import :result;
@@ -338,19 +339,21 @@ public:
 //------------------------------------------------------------------------------
 export template <typename ApiTraits>
 class basic_al_api
-  : protected ApiTraits
+  : public main_ctx_object
+  , protected ApiTraits
   , public basic_al_operations<ApiTraits>
   , public basic_al_constants<ApiTraits> {
 public:
-    basic_al_api(ApiTraits traits)
-      : ApiTraits{std::move(traits)}
+    basic_al_api(main_ctx_parent parent, ApiTraits traits)
+      : main_ctx_object{"ALAPI", parent}
+      , ApiTraits{std::move(traits)}
       , basic_al_operations<ApiTraits>{*static_cast<ApiTraits*>(this)}
       , basic_al_constants<ApiTraits>{
           *static_cast<ApiTraits*>(this),
           *static_cast<basic_al_operations<ApiTraits>*>(this)} {}
 
-    basic_al_api()
-      : basic_al_api{ApiTraits{}} {}
+    basic_al_api(main_ctx_parent parent)
+      : basic_al_api{parent, ApiTraits{}} {}
 
     /// @brief Returns a reference to the wrapped operations.
     auto operations() const noexcept -> const basic_al_operations<ApiTraits>& {
@@ -404,12 +407,14 @@ export struct al_context_handler : interface<al_context_handler> {
 //------------------------------------------------------------------------------
 export template <typename ApiTraits>
 struct basic_al_api_context {
-    basic_al_api_context() noexcept = default;
-    basic_al_api_context(ApiTraits traits) noexcept
-      : al_api{std::move(traits)} {}
+    basic_al_api_context(main_ctx_parent parent) noexcept
+      : al_api{parent} {}
+
+    basic_al_api_context(main_ctx_parent parent, ApiTraits traits) noexcept
+      : al_api{parent, std::move(traits)} {}
 
     shared_holder<al_context_handler> al_context{};
-    const basic_al_api<ApiTraits> al_api{};
+    const basic_al_api<ApiTraits> al_api;
 };
 //------------------------------------------------------------------------------
 export template <typename ApiTraits>
@@ -434,13 +439,14 @@ public:
         return *this;
     }
 
-    auto ensure() -> basic_shared_al_api_context& {
-        _shared.ensure();
+    auto ensure(main_ctx_parent parent) -> basic_shared_al_api_context& {
+        _shared.ensure(parent);
         return *this;
     }
 
-    auto ensure(ApiTraits traits) -> basic_shared_al_api_context& {
-        _shared.ensure(std::move(traits));
+    auto ensure(main_ctx_parent parent, ApiTraits traits)
+      -> basic_shared_al_api_context& {
+        _shared.ensure(parent, std::move(traits));
         return *this;
     }
 

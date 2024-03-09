@@ -22,6 +22,7 @@ import eagine.core.memory;
 import eagine.core.string;
 import eagine.core.utility;
 import eagine.core.c_api;
+import eagine.core.main_ctx;
 import :config;
 import :enum_types;
 import :attributes;
@@ -274,19 +275,21 @@ public:
 //------------------------------------------------------------------------------
 export template <typename ApiTraits>
 class basic_alc_api
-  : protected ApiTraits
+  : public main_ctx_object
+  , protected ApiTraits
   , public basic_alc_operations<ApiTraits>
   , public basic_alc_constants<ApiTraits> {
 public:
-    basic_alc_api(ApiTraits traits)
-      : ApiTraits{std::move(traits)}
+    basic_alc_api(main_ctx_parent parent, ApiTraits traits)
+      : main_ctx_object{"ALCAPI", parent}
+      , ApiTraits{std::move(traits)}
       , basic_alc_operations<ApiTraits>{*static_cast<ApiTraits*>(this)}
       , basic_alc_constants<ApiTraits>{
           *static_cast<ApiTraits*>(this),
           *static_cast<basic_alc_operations<ApiTraits>*>(this)} {}
 
-    basic_alc_api()
-      : basic_alc_api{ApiTraits{}} {}
+    basic_alc_api(main_ctx_parent parent)
+      : basic_alc_api{parent, ApiTraits{}} {}
 
     /// @brief Returns a reference to the wrapped operations.
     auto operations() const noexcept -> const basic_alc_operations<ApiTraits>& {

@@ -10,17 +10,18 @@ import eagine.core;
 import eagine.oalplus;
 import std;
 
-auto main() -> int {
-    using namespace eagine;
+namespace eagine {
+
+auto main(main_ctx& ctx) -> int {
     using namespace eagine::oalplus;
 
-    const alc_api alc;
+    const alc_api alc{ctx};
 
     if(const auto device{alc.open_device.object()}) {
         if(const auto context{alc.create_context.object(device, {})}) {
             alc.make_context_current(device, context);
 
-            const al_api al;
+            const al_api al{ctx};
 
             if(const ok info{al.get_string(al.vendor)}) {
                 std::cout << "Vendor: " << info << std::endl;
@@ -37,4 +38,10 @@ auto main() -> int {
     }
 
     return 0;
+}
+
+} // namespace eagine
+
+auto main(int argc, const char** argv) -> int {
+    return eagine::default_main(argc, argv, eagine::main);
 }

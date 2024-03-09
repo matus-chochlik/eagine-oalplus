@@ -20,6 +20,7 @@ import std;
 import eagine.core.types;
 import eagine.core.memory;
 import eagine.core.c_api;
+import eagine.core.main_ctx;
 import eagine.oalplus.al;
 import :config;
 import :enum_types;
@@ -77,19 +78,21 @@ public:
 //------------------------------------------------------------------------------
 export template <typename ApiTraits>
 class basic_alut_api
-  : protected ApiTraits
+  : main_ctx_object
+  , protected ApiTraits
   , public basic_alut_operations<ApiTraits>
   , public basic_alut_constants<ApiTraits> {
 public:
-    basic_alut_api(ApiTraits traits)
-      : ApiTraits{std::move(traits)}
+    basic_alut_api(main_ctx_parent parent, ApiTraits traits)
+      : main_ctx_object{"ALUTAPI", parent}
+      , ApiTraits{std::move(traits)}
       , basic_alut_operations<ApiTraits>{*static_cast<ApiTraits*>(this)}
       , basic_alut_constants<ApiTraits>{
           *static_cast<ApiTraits*>(this),
           *static_cast<basic_alut_operations<ApiTraits>*>(this)} {}
 
-    basic_alut_api()
-      : basic_alut_api{ApiTraits{}} {}
+    basic_alut_api(main_ctx_parent parent)
+      : basic_alut_api{parent, ApiTraits{}} {}
 
     /// @brief Returns a reference to the wrapped operations.
     auto operations() const noexcept
@@ -100,6 +103,12 @@ public:
     /// @brief Returns a reference to the wrapped constants.
     auto constants() const noexcept -> const basic_alut_constants<ApiTraits>& {
         return *this;
+    }
+
+    auto init_api() const noexcept {
+        int argc{1};
+        char* argp{nullptr};
+        return this->init(&argc, &argp);
     }
 };
 
@@ -140,12 +149,14 @@ export using alut_api_reference = basic_alut_api_reference<alut_api_traits>;
 //------------------------------------------------------------------------------
 export template <typename ApiTraits>
 struct basic_alut_api_context {
-    basic_alut_api_context() noexcept = default;
-    basic_alut_api_context(ApiTraits traits) noexcept
-      : alut_api{std::move(traits)} {}
+    basic_alut_api_context(main_ctx_parent parent) noexcept
+      : alut_api{parent} {}
+
+    basic_alut_api_context(main_ctx_parent parent, ApiTraits traits) noexcept
+      : alut_api{parent, std::move(traits)} {}
 
     shared_holder<al_context_handler> al_context{};
-    const basic_alut_api<ApiTraits> alut_api{};
+    const basic_alut_api<ApiTraits> alut_api;
 };
 //------------------------------------------------------------------------------
 export template <typename ApiTraits>
@@ -170,13 +181,14 @@ public:
         return *this;
     }
 
-    auto ensure() -> basic_shared_alut_api_context& {
-        _shared.ensure();
+    auto ensure(main_ctx_parent parent) -> basic_shared_alut_api_context& {
+        _shared.ensure(parent);
         return *this;
     }
 
-    auto ensure(ApiTraits traits) -> basic_shared_alut_api_context& {
-        _shared.ensure(std::move(traits));
+    auto ensure(main_ctx_parent parent, ApiTraits traits)
+      -> basic_shared_alut_api_context& {
+        _shared.ensure(parent, std::move(traits));
         return *this;
     }
 

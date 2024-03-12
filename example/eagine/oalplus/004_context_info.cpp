@@ -17,8 +17,8 @@ auto main(main_ctx& ctx) -> int {
 
     const alc_api alc{ctx};
 
-    if(const auto device{alc.open_device.object()}) {
-        if(const auto context{alc.create_context.object(device, {})}) {
+    if(const auto device{alc.open_device_object()}) {
+        if(const auto context{alc.create_context_object(device, {})}) {
             alc.make_context_current(device, context);
 
             const al_api al{ctx};

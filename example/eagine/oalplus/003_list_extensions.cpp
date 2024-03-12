@@ -25,7 +25,7 @@ auto main(main_ctx& ctx) -> int {
     }
 
     if(alc.open_device and alc.close_device) {
-        if(const auto device{alc.open_device.object()}) {
+        if(const auto device{alc.open_device_object()}) {
 
             const auto ext_cio{out.cio_print("Extensions:").to_be_continued()};
 

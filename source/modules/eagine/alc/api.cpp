@@ -21,6 +21,7 @@ import eagine.core.types;
 import eagine.core.memory;
 import eagine.core.string;
 import eagine.core.utility;
+import eagine.core.identifier;
 import eagine.core.c_api;
 import eagine.core.main_ctx;
 import :config;
@@ -68,16 +69,11 @@ public:
         constexpr auto operator()() const noexcept {
             return base::operator()(device_handle{}, {});
         }
-
-        constexpr auto object() const noexcept -> c_api::
-          basic_object_from_handle_t<basic_alc_operations, device_handle> {
-            owned_device_handle hndl;
-            (*this)() >> hndl;
-            return {
-              static_cast<const basic_alc_operations&>(base::api()),
-              std::move(hndl)};
-        }
     } open_device{*this};
+
+    auto make_function(device_tag) const noexcept -> const auto& {
+        return open_device;
+    }
 
     simple_adapted_function<
       &alc_api::CloseDevice,
@@ -88,27 +84,14 @@ public:
         return close_device(std::move(obj));
     }
 
-    using _create_context_t = simple_adapted_function<
+    simple_adapted_function<
       &alc_api::CreateContext,
-      owned_context_handle(device_handle, context_attributes)>;
+      owned_context_handle(device_handle, context_attributes)>
+      create_context{*this};
 
-    struct : _create_context_t {
-        using base = _create_context_t;
-        using base::base;
-
-        constexpr auto object(device_handle dev, const context_attributes& attr)
-          const noexcept -> c_api::basic_object_from_handle_t<
-            basic_alc_operations,
-            context_handle,
-            device_handle> {
-            owned_context_handle hndl;
-            (*this)(dev, attr) >> hndl;
-            return {
-              static_cast<const basic_alc_operations&>(base::api()),
-              std::move(hndl),
-              dev};
-        }
-    } create_context{*this};
+    auto make_function(context_tag) const noexcept -> const auto& {
+        return create_context;
+    }
 
     simple_adapted_function<
       &alc_api::DestroyContext,
@@ -300,12 +283,111 @@ public:
     auto constants() const noexcept -> const basic_alc_constants<ApiTraits>& {
         return *this;
     }
+
+    template <identifier_value Id, typename Handle, Handle invalid, typename... P>
+    auto to_object(
+      c_api::basic_owned_handle<alc_lib_tag<Id>, Handle, invalid> name,
+      P...) const noexcept
+      -> basic_alc_object<
+        basic_alc_api<ApiTraits>,
+        alc_lib_tag<Id>,
+        Handle,
+        invalid,
+        P...>;
+
+    template <
+      identifier_value Id,
+      typename Handle,
+      Handle invalid,
+      typename Info,
+      c_api::result_validity validity,
+      typename... P>
+    auto to_object(
+      c_api::result<
+        c_api::basic_owned_handle<alc_lib_tag<Id>, Handle, invalid>,
+        Info,
+        validity>&& res,
+      P...) const noexcept
+      -> basic_alc_object<
+        basic_alc_api<ApiTraits>,
+        alc_lib_tag<Id>,
+        Handle,
+        invalid,
+        P...>;
+
+    auto create_object(device_tag tg) const noexcept {
+        return to_object(this->make_function(tg)());
+    }
+
+    auto create_object(
+      context_tag tg,
+      device_handle dev,
+      const context_attributes& attr) const noexcept {
+        return to_object(this->make_function(tg)(dev, attr), dev);
+    }
+
+    auto open_device_object() const noexcept {
+        return create_object(device_tag{});
+    }
+
+    auto create_context_object(
+      device_handle dev,
+      const context_attributes& attr) const noexcept {
+        return create_object(context_tag{}, dev, attr);
+    }
 };
 
 export template <std::size_t I, typename ApiTraits>
 auto get(const basic_alc_api<ApiTraits>& x) noexcept -> const
   typename std::tuple_element<I, basic_alc_api<ApiTraits>>::type& {
     return x;
+}
+//------------------------------------------------------------------------------
+template <typename ApiTraits>
+template <identifier_value Id, typename Handle, Handle invalid, typename... P>
+auto basic_alc_api<ApiTraits>::to_object(
+  c_api::basic_owned_handle<alc_lib_tag<Id>, Handle, invalid> name,
+  P... params) const noexcept
+  -> basic_alc_object<
+    basic_alc_api<ApiTraits>,
+    alc_lib_tag<Id>,
+    Handle,
+    invalid,
+    P...> {
+    return {*this, std::move(name), params...};
+}
+//------------------------------------------------------------------------------
+template <typename ApiTraits>
+template <
+  identifier_value Id,
+  typename Handle,
+  Handle invalid,
+  typename Info,
+  c_api::result_validity validity,
+  typename... P>
+auto basic_alc_api<ApiTraits>::to_object(
+  c_api::result<
+    c_api::basic_owned_handle<alc_lib_tag<Id>, Handle, invalid>,
+    Info,
+    validity>&& res,
+  P... params) const noexcept
+  -> basic_alc_object<
+    basic_alc_api<ApiTraits>,
+    alc_lib_tag<Id>,
+    Handle,
+    invalid,
+    P...> {
+    return std::move(res)
+      .transform(
+        [&, this](auto&& name) -> basic_alc_object<
+                                 basic_alc_api<ApiTraits>,
+                                 alc_lib_tag<Id>,
+                                 Handle,
+                                 invalid,
+                                 P...> {
+            return {*this, std::move(name), params...};
+        })
+      .or_default();
 }
 //------------------------------------------------------------------------------
 /// @brief Alias for the default instantation of basic_alc_api.

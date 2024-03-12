@@ -94,6 +94,7 @@ eagine_add_module(
 		eagine.core.types
 		eagine.core.memory
 		eagine.core.string
+		eagine.core.identifier
 		eagine.core.c_api
 		eagine.core.main_ctx
 )

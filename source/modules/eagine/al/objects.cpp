@@ -46,8 +46,12 @@ using al_object_name_span = c_api::basic_handle_span<al_object_name<Tag>>;
 /// @see al_object_name
 /// @see al_owned_object_name
 export template <typename Api, typename Tag, typename... P>
-using al_object =
-  c_api::basic_object_from_handle_t<Api, al_object_name<Tag>, P...>;
+struct basic_al_object
+  : c_api::basic_object_from_handle_t<Api, al_object_name<Tag>, P...> {
+    using base =
+      c_api::basic_object_from_handle_t<Api, al_object_name<Tag>, P...>;
+    using base::base;
+};
 
 /// @brief Alias for template wrapping a const span of AL object handles.
 /// @ingroup al_api_wrap

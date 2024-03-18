@@ -15,7 +15,7 @@ namespace eagine {
 auto main(main_ctx& ctx) -> int {
     using namespace eagine::oalplus;
 
-    const alc_api alc;
+    const alc_api alc{ctx};
     const main_ctx_object out{"OALplus", ctx};
 
     if(alc.get_string) {
@@ -25,7 +25,7 @@ auto main(main_ctx& ctx) -> int {
     }
 
     if(alc.open_device and alc.close_device) {
-        if(const auto device{alc.open_device.object()}) {
+        if(const auto device{alc.open_device_object()}) {
 
             const auto ext_cio{out.cio_print("Extensions:").to_be_continued()};
 

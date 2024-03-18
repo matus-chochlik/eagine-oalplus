@@ -10,11 +10,12 @@ import eagine.core;
 import eagine.oalplus;
 import std;
 
-auto main(int argc, char** argv) -> int {
-    using namespace eagine;
+namespace eagine {
+
+auto main(main_ctx& ctx) -> int {
     using namespace eagine::oalplus;
 
-    alc_api alc;
+    alc_api alc{ctx};
 
     if(ok device{alc.open_device()}) {
         const auto cleanup_dev{alc.close_device.raii(device)};
@@ -30,10 +31,10 @@ auto main(int argc, char** argv) -> int {
             alc.make_context_current(context);
             const auto reset_ctx = alc.make_context_current.raii();
 
-            const al_api al;
-            const alut_api alut;
+            const al_api al{ctx};
+            const alut_api alut{ctx};
 
-            if(alut.init(&argc, argv)) {
+            if(alut.init_api()) {
                 const auto do_exit{alut.exit.raii()};
                 if(ok opt_src{al.gen_sources()}) {
                     const auto del_src{al.delete_sources.raii(opt_src)};
@@ -62,3 +63,9 @@ auto main(int argc, char** argv) -> int {
 
     return 0;
 }
+} // namespace eagine
+
+auto main(int argc, const char** argv) -> int {
+    return eagine::default_main(argc, argv, eagine::main);
+}
+

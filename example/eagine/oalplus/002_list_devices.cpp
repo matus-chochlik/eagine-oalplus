@@ -15,7 +15,7 @@ namespace eagine {
 auto main(main_ctx& ctx) -> int {
     using namespace eagine::oalplus;
 
-    const alc_api alc;
+    const alc_api alc{ctx};
     const main_ctx_object out{"OALplus", ctx};
 
     if(alc.get_string) {

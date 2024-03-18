@@ -20,7 +20,9 @@ import std;
 import eagine.core.types;
 import eagine.core.memory;
 import eagine.core.string;
+import eagine.core.identifier;
 import eagine.core.c_api;
+import eagine.core.main_ctx;
 import :config;
 import :enum_types;
 import :result;
@@ -67,27 +69,38 @@ public:
                   return al_owned_object_name<ObjTag>(valid ? n : 0);
               });
         }
-
-        constexpr auto object() const noexcept
-          -> al_object<basic_al_operations, ObjTag> {
-            al_owned_object_name<ObjTag> name;
-            (*this)() >> name;
-            return {
-              static_cast<const basic_al_operations&>(base::api()),
-              std::move(name)};
-        }
     };
 
     gen_object_func<&al_api::GenSources, source_tag> gen_sources{*this};
 
+    auto gen_function(source_tag) const noexcept -> const auto& {
+        return gen_sources;
+    }
+
     gen_object_func<&al_api::GenBuffers, buffer_tag> gen_buffers{*this};
+
+    auto gen_function(buffer_tag) const noexcept -> const auto& {
+        return gen_buffers;
+    }
 
     gen_object_func<&al_api::GenEffects, effect_tag> gen_effects{*this};
 
+    auto gen_function(effect_tag) const noexcept -> const auto& {
+        return gen_effects;
+    }
+
     gen_object_func<&al_api::GenFilters, filter_tag> gen_filters{*this};
+
+    auto gen_function(filter_tag) const noexcept -> const auto& {
+        return gen_filters;
+    }
 
     gen_object_func<&al_api::GenAuxiliaryEffectSlots, auxiliary_effect_slot_tag>
       gen_auxiliary_effect_slots{*this};
+
+    auto gen_function(auxiliary_effect_slot_tag) const noexcept -> const auto& {
+        return gen_auxiliary_effect_slots;
+    }
 
     template <auto Wrapper, typename ObjTag>
     using del_object_func = c_api::combined<
@@ -338,19 +351,21 @@ public:
 //------------------------------------------------------------------------------
 export template <typename ApiTraits>
 class basic_al_api
-  : protected ApiTraits
+  : public main_ctx_object
+  , protected ApiTraits
   , public basic_al_operations<ApiTraits>
   , public basic_al_constants<ApiTraits> {
 public:
-    basic_al_api(ApiTraits traits)
-      : ApiTraits{std::move(traits)}
+    basic_al_api(main_ctx_parent parent, ApiTraits traits)
+      : main_ctx_object{"ALAPI", parent}
+      , ApiTraits{std::move(traits)}
       , basic_al_operations<ApiTraits>{*static_cast<ApiTraits*>(this)}
       , basic_al_constants<ApiTraits>{
           *static_cast<ApiTraits*>(this),
           *static_cast<basic_al_operations<ApiTraits>*>(this)} {}
 
-    basic_al_api()
-      : basic_al_api{ApiTraits{}} {}
+    basic_al_api(main_ctx_parent parent)
+      : basic_al_api{parent, ApiTraits{}} {}
 
     /// @brief Returns a reference to the wrapped operations.
     auto operations() const noexcept -> const basic_al_operations<ApiTraits>& {
@@ -361,12 +376,69 @@ public:
     auto constants() const noexcept -> const basic_al_constants<ApiTraits>& {
         return *this;
     }
+
+    template <identifier_value Id>
+    auto to_object(al_owned_object_name<al_lib_tag<Id>> name) const noexcept
+      -> basic_al_object<basic_al_api<ApiTraits>, al_lib_tag<Id>>;
+
+    template <identifier_value Id, typename Info, c_api::result_validity validity>
+    auto to_object(
+      c_api::result<al_owned_object_name<al_lib_tag<Id>>, Info, validity>&& res)
+      const noexcept
+      -> basic_al_object<basic_al_api<ApiTraits>, al_lib_tag<Id>>;
+
+    template <identifier_value Id>
+    auto create_object(al_lib_tag<Id> tg) const noexcept {
+        return to_object(this->gen_function(tg)());
+    }
+
+    auto create_source_object() const noexcept {
+        return create_object(source_tag{});
+    }
+
+    auto create_buffer_object() const noexcept {
+        return create_object(buffer_tag{});
+    }
+
+    auto create_effect_object() const noexcept {
+        return create_object(effect_tag{});
+    }
+
+    auto create_filter_object() const noexcept {
+        return create_object(filter_tag{});
+    }
+
+    auto create_auxiliary_effect_slot_object() const noexcept {
+        return create_object(auxiliary_effect_slot_name{});
+    }
 };
 
 export template <std::size_t I, typename ApiTraits>
 auto get(const basic_al_api<ApiTraits>& x) noexcept -> const
   typename std::tuple_element<I, basic_al_api<ApiTraits>>::type& {
     return x;
+}
+//------------------------------------------------------------------------------
+template <typename ApiTraits>
+template <identifier_value Id>
+auto basic_al_api<ApiTraits>::to_object(
+  al_owned_object_name<al_lib_tag<Id>> name) const noexcept
+  -> basic_al_object<basic_al_api<ApiTraits>, al_lib_tag<Id>> {
+    return {*this, std::move(name)};
+}
+//------------------------------------------------------------------------------
+template <typename ApiTraits>
+template <identifier_value Id, typename Info, c_api::result_validity validity>
+auto basic_al_api<ApiTraits>::to_object(
+  c_api::result<al_owned_object_name<al_lib_tag<Id>>, Info, validity>&& res)
+  const noexcept -> basic_al_object<basic_al_api<ApiTraits>, al_lib_tag<Id>> {
+    return std::move(res)
+      .transform(
+        [this](auto&& name)
+          -> basic_al_object<basic_al_api<ApiTraits>, al_lib_tag<Id>> {
+            return {*this, std::move(name)};
+        })
+      .or_default();
 }
 //------------------------------------------------------------------------------
 /// @brief Alias for the default instantation of basic_al_api.
@@ -404,12 +476,14 @@ export struct al_context_handler : interface<al_context_handler> {
 //------------------------------------------------------------------------------
 export template <typename ApiTraits>
 struct basic_al_api_context {
-    basic_al_api_context() noexcept = default;
-    basic_al_api_context(ApiTraits traits) noexcept
-      : al_api{std::move(traits)} {}
+    basic_al_api_context(main_ctx_parent parent) noexcept
+      : al_api{parent} {}
+
+    basic_al_api_context(main_ctx_parent parent, ApiTraits traits) noexcept
+      : al_api{parent, std::move(traits)} {}
 
     shared_holder<al_context_handler> al_context{};
-    const basic_al_api<ApiTraits> al_api{};
+    const basic_al_api<ApiTraits> al_api;
 };
 //------------------------------------------------------------------------------
 export template <typename ApiTraits>
@@ -434,13 +508,14 @@ public:
         return *this;
     }
 
-    auto ensure() -> basic_shared_al_api_context& {
-        _shared.ensure();
+    auto ensure(main_ctx_parent parent) -> basic_shared_al_api_context& {
+        _shared.ensure(parent);
         return *this;
     }
 
-    auto ensure(ApiTraits traits) -> basic_shared_al_api_context& {
-        _shared.ensure(std::move(traits));
+    auto ensure(main_ctx_parent parent, ApiTraits traits)
+      -> basic_shared_al_api_context& {
+        _shared.ensure(parent, std::move(traits));
         return *this;
     }
 

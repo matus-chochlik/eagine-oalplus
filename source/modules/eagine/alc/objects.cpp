@@ -59,6 +59,27 @@ export using owned_context_handle = c_api::basic_owned_handle<
   alc_types::context_type*,
   static_cast<alc_types::context_type*>(nullptr)>;
 //------------------------------------------------------------------------------
+/// @brief Alias for ALC object template.
+/// @ingroup al_api_wrap
+/// @see al_object_name
+/// @see al_owned_object_name
+export template <
+  typename Api,
+  typename Tag,
+  typename Handle,
+  Handle invalid,
+  typename... P>
+struct basic_alc_object
+  : c_api::basic_object_from_handle_t<
+      Api,
+      c_api::basic_handle<Tag, Handle, invalid>,
+      P...> {
+    using base = c_api::basic_object_from_handle_t<
+      Api,
+      c_api::basic_handle<Tag, Handle, invalid>,
+      P...>;
+    using base::base;
+};
 } // namespace eagine::oalplus
 
 namespace eagine::c_api {

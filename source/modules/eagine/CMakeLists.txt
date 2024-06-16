@@ -8,6 +8,7 @@ add_subdirectory(alut)
 
 eagine_add_module(
 	eagine.oalplus
+	COMPONENT oalplus-dev
 	SUBMODULES
 		al
 		alc

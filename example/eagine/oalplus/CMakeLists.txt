@@ -13,8 +13,8 @@ set_target_properties(
 function(eagine_install_example TARGET_NAME)
 	install(
 		TARGETS ${TARGET_NAME}
-		DESTINATION share/eagine/example/oalplus
-	)
+		COMPONENT oalplus-examples
+		DESTINATION share/eagine/example/oalplus)
 endfunction()
 
 function(eagine_example_common EXAMPLE_NAME)

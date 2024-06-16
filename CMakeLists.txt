@@ -27,4 +27,3 @@ find_package(EAGineAL)
 
 add_subdirectory(source)
 add_subdirectory(example)
-add_subdirectory(deploy)

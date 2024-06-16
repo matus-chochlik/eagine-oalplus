@@ -3,7 +3,9 @@
 # See accompanying file LICENSE_1_0.txt or copy at
 # https://www.boost.org/LICENSE_1_0.txt
 eagine_add_module(
-	eagine.oalplus.alut PARTITION config
+	eagine.oalplus.alut
+	COMPONENT oalplus-dev
+	PARTITION config
 	IMPORTS
 		std
 		eagine.core.types
@@ -11,7 +13,9 @@ eagine_add_module(
 )
 
 eagine_add_module(
-	eagine.oalplus.alut PARTITION enum_types
+	eagine.oalplus.alut
+	COMPONENT oalplus-dev
+	PARTITION enum_types
 	IMPORTS
 		std config
 		eagine.core.types
@@ -20,7 +24,9 @@ eagine_add_module(
 )
 
 eagine_add_module(
-	eagine.oalplus.alut PARTITION result
+	eagine.oalplus.alut
+	COMPONENT oalplus-dev
+	PARTITION result
 	IMPORTS
 		std config
 		eagine.core.types
@@ -29,7 +35,9 @@ eagine_add_module(
 )
 
 eagine_add_module(
-	eagine.oalplus.alut PARTITION c_api
+	eagine.oalplus.alut
+	COMPONENT oalplus-dev
+	PARTITION c_api
 	IMPORTS
 		std config result
 		eagine.core.types
@@ -38,7 +46,9 @@ eagine_add_module(
 )
 
 eagine_add_module(
-	eagine.oalplus.alut PARTITION api_traits
+	eagine.oalplus.alut
+	COMPONENT oalplus-dev
+	PARTITION api_traits
 	IMPORTS
 		std config result
 		eagine.core.types
@@ -47,7 +57,9 @@ eagine_add_module(
 )
 
 eagine_add_module(
-	eagine.oalplus.alut PARTITION constants
+	eagine.oalplus.alut
+	COMPONENT oalplus-dev
+	PARTITION constants
 	IMPORTS
 		std config
 		enum_types c_api
@@ -56,7 +68,9 @@ eagine_add_module(
 )
 
 eagine_add_module(
-	eagine.oalplus.alut PARTITION api
+	eagine.oalplus.alut
+	COMPONENT oalplus-dev
+	PARTITION api
 	IMPORTS
 		std config enum_types
 		constants
@@ -70,6 +84,7 @@ eagine_add_module(
 
 eagine_add_module(
 	eagine.oalplus.alut
+	COMPONENT oalplus-dev
 	SOURCES
 	IMPORTS
 		std

@@ -11,6 +11,8 @@ eagine_add_module(
 	SUBMODULES
 		al
 		alc
-		alut
-)
+		alut)
+
+eagine_add_license(oalplus-dev)
+eagine_add_debian_changelog(oalplus-dev)
 

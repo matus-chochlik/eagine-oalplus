@@ -3,14 +3,18 @@
 # See accompanying file LICENSE_1_0.txt or copy at
 # https://www.boost.org/LICENSE_1_0.txt
 eagine_add_module(
-	eagine.oalplus.al PARTITION config
+	eagine.oalplus.al
+	COMPONENT oalplus-dev
+	PARTITION config
 	IMPORTS
 		std
 		eagine.core.types
 )
 
 eagine_add_module(
-	eagine.oalplus.al PARTITION math
+	eagine.oalplus.al
+	COMPONENT oalplus-dev
+	PARTITION math
 	IMPORTS
 		std config
 		eagine.core.types
@@ -18,7 +22,9 @@ eagine_add_module(
 )
 
 eagine_add_module(
-	eagine.oalplus.al PARTITION enum_types
+	eagine.oalplus.al
+	COMPONENT oalplus-dev
+	PARTITION enum_types
 	IMPORTS
 		std config
 		eagine.core.types
@@ -27,7 +33,9 @@ eagine_add_module(
 )
 
 eagine_add_module(
-	eagine.oalplus.al PARTITION result
+	eagine.oalplus.al
+	COMPONENT oalplus-dev
+	PARTITION result
 	IMPORTS
 		std config
 		eagine.core.types
@@ -36,7 +44,9 @@ eagine_add_module(
 )
 
 eagine_add_module(
-	eagine.oalplus.al PARTITION objects
+	eagine.oalplus.al
+	COMPONENT oalplus-dev
+	PARTITION objects
 	IMPORTS
 		std config
 		eagine.core.types
@@ -46,7 +56,9 @@ eagine_add_module(
 )
 
 eagine_add_module(
-	eagine.oalplus.al PARTITION c_api
+	eagine.oalplus.al
+	COMPONENT oalplus-dev
+	PARTITION c_api
 	IMPORTS
 		std config result
 		eagine.core.types
@@ -55,7 +67,9 @@ eagine_add_module(
 )
 
 eagine_add_module(
-	eagine.oalplus.al PARTITION api_traits
+	eagine.oalplus.al
+	COMPONENT oalplus-dev
+	PARTITION api_traits
 	IMPORTS
 		std config result
 		eagine.core.types
@@ -64,7 +78,9 @@ eagine_add_module(
 )
 
 eagine_add_module(
-	eagine.oalplus.al PARTITION constants
+	eagine.oalplus.al
+	COMPONENT oalplus-dev
+	PARTITION constants
 	IMPORTS
 		std config
 		enum_types c_api
@@ -76,7 +92,9 @@ eagine_add_module(
 )
 
 eagine_add_module(
-	eagine.oalplus.al PARTITION from_string
+	eagine.oalplus.al
+	COMPONENT oalplus-dev
+	PARTITION from_string
 	IMPORTS
 		std enum_types constants
 		eagine.core.types
@@ -86,7 +104,9 @@ eagine_add_module(
 )
 
 eagine_add_module(
-	eagine.oalplus.al PARTITION api
+	eagine.oalplus.al
+	COMPONENT oalplus-dev
+	PARTITION api
 	IMPORTS
 		std config enum_types
 		constants objects
@@ -101,6 +121,7 @@ eagine_add_module(
 
 eagine_add_module(
 	eagine.oalplus.al
+	COMPONENT oalplus-dev
 	SOURCES
 		constants
 	IMPORTS

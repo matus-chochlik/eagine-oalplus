@@ -46,3 +46,15 @@ eagine_example_common(003_list_extensions)
 eagine_example_common(004_context_info)
 eagine_example_common(005_hello_world)
 
+eagine_add_package_property(
+	oalplus-examples
+	GENERATOR DEBIAN
+	VARIABLE PACKAGE_DEPENDS
+	VALUE "\${CXX_RUNTIME_PKGS},\${EAGINE_CORE_RUNTIME_PKGS}")
+
+eagine_add_package_property(
+	oalplus-examples
+	GENERATOR DEBIAN
+	VARIABLE DESCRIPTION
+	VALUE "EAGine OALplus examples.")
+

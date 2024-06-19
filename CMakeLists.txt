@@ -21,7 +21,6 @@ list(APPEND CMAKE_MODULE_PATH ${EAGINE_CORE_ROOT}/config)
 file(STRINGS "${EAGINE_CORE_ROOT}/VERSION" EAGINE_VERSION)
 
 add_subdirectory(submodules)
-
 include(EAGineCoreCommon)
 find_package(EAGineAL)
 

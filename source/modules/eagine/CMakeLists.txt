@@ -21,7 +21,7 @@ eagine_add_package_property(
 	oalplus-dev
 	GENERATOR DEBIAN
 	VARIABLE PACKAGE_DEPENDS
-	VALUE "eagine-core-dev (>= @EAGINE_VERSION@)")
+	VALUE "eagine-core-dev (>= ${EAGINE_VERSION})")
 
 eagine_add_package_property(
 	oalplus-dev

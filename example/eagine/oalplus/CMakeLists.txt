@@ -13,8 +13,8 @@ set_target_properties(
 function(eagine_install_example TARGET_NAME)
 	install(
 		TARGETS ${TARGET_NAME}
-		DESTINATION share/eagine/example/oalplus
-	)
+		COMPONENT oalplus-examples
+		DESTINATION share/eagine/example/oalplus)
 endfunction()
 
 function(eagine_example_common EXAMPLE_NAME)
@@ -45,4 +45,19 @@ eagine_example_common(002_list_devices)
 eagine_example_common(003_list_extensions)
 eagine_example_common(004_context_info)
 eagine_example_common(005_hello_world)
+
+eagine_add_license(oalplus-examples)
+eagine_add_debian_changelog(oalplus-examples)
+
+eagine_add_package_property(
+	oalplus-examples
+	GENERATOR DEBIAN
+	VARIABLE PACKAGE_DEPENDS
+	VALUE "\${CXX_RUNTIME_PKGS},\${EAGINE_CORE_RUNTIME_PKGS}")
+
+eagine_add_package_property(
+	oalplus-examples
+	GENERATOR DEBIAN
+	VARIABLE DESCRIPTION
+	VALUE "EAGine OALplus examples.")
 

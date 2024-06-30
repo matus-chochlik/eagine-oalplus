@@ -8,9 +8,24 @@ add_subdirectory(alut)
 
 eagine_add_module(
 	eagine.oalplus
+	COMPONENT oalplus-dev
 	SUBMODULES
 		al
 		alc
-		alut
-)
+		alut)
+
+eagine_add_license(oalplus-dev)
+eagine_add_debian_changelog(oalplus-dev)
+
+eagine_add_package_property(
+	oalplus-dev
+	GENERATOR DEBIAN
+	VARIABLE PACKAGE_DEPENDS
+	VALUE "eagine-core-dev (>= ${EAGINE_VERSION})")
+
+eagine_add_package_property(
+	oalplus-dev
+	GENERATOR DEBIAN
+	VARIABLE DESCRIPTION
+	VALUE "C++ wrapper for OpenAL and ALUT.")
 

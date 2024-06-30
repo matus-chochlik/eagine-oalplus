@@ -3,13 +3,13 @@
 # See accompanying file LICENSE_1_0.txt or copy at
 # https://www.boost.org/LICENSE_1_0.txt
 #
-cmake_minimum_required(VERSION 3.16)
+cmake_minimum_required(VERSION 3.27)
 
 project(
 	EAGineOALplus
 	LANGUAGES CXX
-	HOMEPAGE_URL https://github.com/matus-chochlik/eagine-oalplus
-)
+	HOMEPAGE_URL https://github.com/matus-chochlik/eagine-oalplus)
+
 if(NOT EAGINE_CORE_ROOT)
 	set(EAGINE_CORE_ROOT ${PROJECT_SOURCE_DIR}/submodules/eagine-core)
 endif()
@@ -21,10 +21,9 @@ list(APPEND CMAKE_MODULE_PATH ${EAGINE_CORE_ROOT}/config)
 file(STRINGS "${EAGINE_CORE_ROOT}/VERSION" EAGINE_VERSION)
 
 add_subdirectory(submodules)
-
 include(EAGineCoreCommon)
+include(EAGinePackageOALplus)
 find_package(EAGineAL)
 
 add_subdirectory(source)
 add_subdirectory(example)
-add_subdirectory(deploy)

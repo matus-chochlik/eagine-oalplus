@@ -23,15 +23,15 @@ export using math::vector;
 
 /// @brief Alias for a floating-point 2D vector type.
 /// @ingroup al_utils
-export using vec2 = vector<al_types::float_type, 2>;
+export using vec2 = vector<al_types::float_type, 2, true>;
 
 /// @brief Alias for a floating-point 3D vector type.
 /// @ingroup al_utils
-export using vec3 = vector<al_types::float_type, 3>;
+export using vec3 = vector<al_types::float_type, 3, true>;
 
 /// @brief Alias for a floating-point 4D vector type.
 /// @ingroup al_utils
-export using vec4 = vector<al_types::float_type, 4>;
+export using vec4 = vector<al_types::float_type, 4, true>;
 //------------------------------------------------------------------------------
 } // namespace eagine::oalplus
 

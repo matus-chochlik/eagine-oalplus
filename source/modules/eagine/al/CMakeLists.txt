@@ -8,8 +8,7 @@ eagine_add_module(
 	PARTITION config
 	IMPORTS
 		std
-		eagine.core.types
-)
+		eagine.core.types)
 
 eagine_add_module(
 	eagine.oalplus.al
@@ -18,8 +17,7 @@ eagine_add_module(
 	IMPORTS
 		std config
 		eagine.core.types
-		eagine.core.math
-)
+		eagine.core.math)
 
 eagine_add_module(
 	eagine.oalplus.al
@@ -29,8 +27,7 @@ eagine_add_module(
 		std config
 		eagine.core.types
 		eagine.core.identifier
-		eagine.core.c_api
-)
+		eagine.core.c_api)
 
 eagine_add_module(
 	eagine.oalplus.al
@@ -40,8 +37,7 @@ eagine_add_module(
 		std config
 		eagine.core.types
 		eagine.core.memory
-		eagine.core.c_api
-)
+		eagine.core.c_api)
 
 eagine_add_module(
 	eagine.oalplus.al
@@ -52,8 +48,7 @@ eagine_add_module(
 		eagine.core.types
 		eagine.core.memory
 		eagine.core.identifier
-		eagine.core.c_api
-)
+		eagine.core.c_api)
 
 eagine_add_module(
 	eagine.oalplus.al
@@ -63,8 +58,7 @@ eagine_add_module(
 		std config result
 		eagine.core.types
 		eagine.core.memory
-		eagine.core.c_api
-)
+		eagine.core.c_api)
 
 eagine_add_module(
 	eagine.oalplus.al
@@ -74,8 +68,7 @@ eagine_add_module(
 		std config result
 		eagine.core.types
 		eagine.core.memory
-		eagine.core.c_api
-)
+		eagine.core.c_api)
 
 eagine_add_module(
 	eagine.oalplus.al
@@ -88,8 +81,7 @@ eagine_add_module(
 		eagine.core.memory
 		eagine.core.identifier
 		eagine.core.valid_if
-		eagine.core.c_api
-)
+		eagine.core.c_api)
 
 eagine_add_module(
 	eagine.oalplus.al
@@ -100,8 +92,7 @@ eagine_add_module(
 		eagine.core.types
 		eagine.core.memory
 		eagine.core.string
-		eagine.core.valid_if
-)
+		eagine.core.valid_if)
 
 eagine_add_module(
 	eagine.oalplus.al
@@ -116,8 +107,7 @@ eagine_add_module(
 		eagine.core.string
 		eagine.core.identifier
 		eagine.core.c_api
-		eagine.core.main_ctx
-)
+		eagine.core.main_ctx)
 
 eagine_add_module(
 	eagine.oalplus.al
@@ -129,18 +119,16 @@ eagine_add_module(
 		eagine.core.types
 		eagine.core.memory
 		eagine.core.container
-		eagine.core.valid_if
-)
+		eagine.core.valid_if)
+
 target_link_libraries(
 	eagine.oalplus.al
 	PUBLIC
-	OpenAL::OpenAL
-)
+	OpenAL::OpenAL)
 
 eagine_add_module_tests(
 	eagine.oalplus.al
 	UNITS
 		constants
 	IMPORTS
-		eagine.core
-)
+		eagine.core)

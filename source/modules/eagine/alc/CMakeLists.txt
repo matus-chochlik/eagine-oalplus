@@ -8,8 +8,7 @@ eagine_add_module(
 	PARTITION config
 	IMPORTS
 		std
-		eagine.core.types
-)
+		eagine.core.types)
 
 eagine_add_module(
 	eagine.oalplus.alc
@@ -19,8 +18,7 @@ eagine_add_module(
 		std config
 		eagine.core.types
 		eagine.core.identifier
-		eagine.core.c_api
-)
+		eagine.core.c_api)
 
 eagine_add_module(
 	eagine.oalplus.alc
@@ -29,8 +27,7 @@ eagine_add_module(
 	IMPORTS
 		std config enum_types
 		eagine.core.types
-		eagine.core.c_api
-)
+		eagine.core.c_api)
 
 eagine_add_module(
 	eagine.oalplus.alc
@@ -40,8 +37,7 @@ eagine_add_module(
 		std config
 		eagine.core.types
 		eagine.core.memory
-		eagine.core.c_api
-)
+		eagine.core.c_api)
 
 eagine_add_module(
 	eagine.oalplus.alc
@@ -52,8 +48,7 @@ eagine_add_module(
 		eagine.core.types
 		eagine.core.memory
 		eagine.core.identifier
-		eagine.core.c_api
-)
+		eagine.core.c_api)
 
 eagine_add_module(
 	eagine.oalplus.alc
@@ -64,8 +59,7 @@ eagine_add_module(
 		objects result
 		eagine.core.types
 		eagine.core.memory
-		eagine.core.c_api
-)
+		eagine.core.c_api)
 
 eagine_add_module(
 	eagine.oalplus.alc
@@ -75,8 +69,7 @@ eagine_add_module(
 		std config result
 		eagine.core.types
 		eagine.core.memory
-		eagine.core.c_api
-)
+		eagine.core.c_api)
 
 eagine_add_module(
 	eagine.oalplus.alc
@@ -86,8 +79,7 @@ eagine_add_module(
 		std config
 		enum_types c_api
 		eagine.core.types
-		eagine.core.c_api
-)
+		eagine.core.c_api)
 
 eagine_add_module(
 	eagine.oalplus.alc
@@ -103,8 +95,7 @@ eagine_add_module(
 		eagine.core.utility
 		eagine.core.identifier
 		eagine.core.c_api
-		eagine.core.main_ctx
-)
+		eagine.core.main_ctx)
 
 eagine_add_module(
 	eagine.oalplus.alc
@@ -112,10 +103,9 @@ eagine_add_module(
 	SOURCES
 	IMPORTS
 		std
-		eagine.core.types
-)
+		eagine.core.types)
+
 target_link_libraries(
 	eagine.oalplus.alc
 	PUBLIC
-	OpenAL::OpenAL
-)
+	OpenAL::OpenAL)

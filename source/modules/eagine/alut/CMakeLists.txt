@@ -9,8 +9,7 @@ eagine_add_module(
 	IMPORTS
 		std
 		eagine.core.types
-		eagine.oalplus.al
-)
+		eagine.oalplus.al)
 
 eagine_add_module(
 	eagine.oalplus.alut
@@ -20,8 +19,7 @@ eagine_add_module(
 		std config
 		eagine.core.types
 		eagine.core.identifier
-		eagine.core.c_api
-)
+		eagine.core.c_api)
 
 eagine_add_module(
 	eagine.oalplus.alut
@@ -31,8 +29,7 @@ eagine_add_module(
 		std config
 		eagine.core.types
 		eagine.core.memory
-		eagine.core.c_api
-)
+		eagine.core.c_api)
 
 eagine_add_module(
 	eagine.oalplus.alut
@@ -42,8 +39,7 @@ eagine_add_module(
 		std config result
 		eagine.core.types
 		eagine.core.memory
-		eagine.core.c_api
-)
+		eagine.core.c_api)
 
 eagine_add_module(
 	eagine.oalplus.alut
@@ -53,8 +49,7 @@ eagine_add_module(
 		std config result
 		eagine.core.types
 		eagine.core.memory
-		eagine.core.c_api
-)
+		eagine.core.c_api)
 
 eagine_add_module(
 	eagine.oalplus.alut
@@ -64,8 +59,7 @@ eagine_add_module(
 		std config
 		enum_types c_api
 		eagine.core.types
-		eagine.core.c_api
-)
+		eagine.core.c_api)
 
 eagine_add_module(
 	eagine.oalplus.alut
@@ -79,8 +73,7 @@ eagine_add_module(
 		eagine.core.memory
 		eagine.core.c_api
 		eagine.core.main_ctx
-		eagine.oalplus.al
-)
+		eagine.oalplus.al)
 
 eagine_add_module(
 	eagine.oalplus.alut
@@ -88,10 +81,9 @@ eagine_add_module(
 	SOURCES
 	IMPORTS
 		std
-		eagine.core.types
-)
+		eagine.core.types)
+
 target_link_libraries(
 	eagine.oalplus.alut
 	PUBLIC
-	OpenAL::OpenAL
-)
+	OpenAL::OpenAL)

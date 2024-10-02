@@ -20,6 +20,7 @@ import std;
 import eagine.core.types;
 import eagine.core.memory;
 import eagine.core.c_api;
+import eagine.core.utility;
 import eagine.core.main_ctx;
 import eagine.oalplus.al;
 import :config;
@@ -44,11 +45,18 @@ public:
     using api_traits = ApiTraits;
     using alut_api = basic_alut_c_api<ApiTraits>;
 
+    using int_type = typename alut_types::int_type;
     using enum_type = typename alut_types::enum_type;
     using char_type = typename alut_types::char_type;
     using float_type = typename alut_types::float_type;
 
     plain_adapted_function<&alut_api::Init> init{*this};
+
+    simple_adapted_function<&alut_api::GetMajorVersion, int_type()>
+      get_major_version{*this};
+
+    simple_adapted_function<&alut_api::GetMinorVersion, int_type()>
+      get_minor_version{*this};
 
     simple_adapted_function<
       &alut_api::CreateBufferHelloWorld,
@@ -69,6 +77,24 @@ public:
       &alut_api::CreateBufferWaveform,
       owned_buffer_name(waveform_function, float_type, float_type, float_type)>
       create_buffer_waveform{*this};
+
+    simple_adapted_function<&alut_api::GetMIMETypes, string_view(loader_kind)>
+      get_mime_types{*this};
+
+    auto list_mime_types(loader_kind loader) const noexcept
+      -> generator<std::string> {
+        const string_view sep{","};
+        string_view todo{get_mime_types(loader).or_default()};
+        string_view mime;
+
+        while(true) {
+            std::tie(mime, todo) = split_by_first(todo, sep);
+            if(mime.empty()) {
+                break;
+            }
+            co_yield to_string(mime);
+        }
+    }
 
     plain_adapted_function<&alut_api::Exit> exit{*this};
 

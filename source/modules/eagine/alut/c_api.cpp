@@ -118,6 +118,13 @@ public:
     alut_api_function<bool_type(int*, char**), OALPLUS_ALUT_STATIC_FUNC(Init)>
       InitWithoutContext{"InitWithoutContext", *this};
 
+    /// @var GetMIMETypes
+    /// @alutfuncwrap{GetMIMETypes}
+    alut_api_function<
+      const char_type*(enum_type),
+      OALPLUS_ALUT_STATIC_FUNC(GetMIMETypes)>
+      GetMIMETypes{"GetMIMETypes", *this};
+
     /// @var CreateBufferFromFile
     /// @alutfuncwrap{CreateBufferFromFile}
     alut_api_function<
@@ -145,6 +152,16 @@ public:
       name_type(enum_type, float_type, float_type, float_type),
       OALPLUS_ALUT_STATIC_FUNC(CreateBufferWaveform)>
       CreateBufferWaveform{"CreateBufferWaveform", *this};
+
+    /// @var GetMajorVersion
+    /// @alutfuncwrap{GetMajorVersion}
+    alut_api_function<int_type(), OALPLUS_ALUT_STATIC_FUNC(GetMajorVersion)>
+      GetMajorVersion{"GetMajorVersion", *this};
+
+    /// @var GetMinorVersion
+    /// @alutfuncwrap{GetMinorVersion}
+    alut_api_function<int_type(), OALPLUS_ALUT_STATIC_FUNC(GetMinorVersion)>
+      GetMinorVersion{"GetMinorVersion", *this};
 
     /// @var Exit
     /// @alutfuncwrap{Exit}

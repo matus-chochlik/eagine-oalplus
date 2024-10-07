@@ -72,6 +72,7 @@ eagine_add_module(
 		eagine.core.types
 		eagine.core.memory
 		eagine.core.c_api
+		eagine.core.utility
 		eagine.core.main_ctx
 		eagine.oalplus.al)
 

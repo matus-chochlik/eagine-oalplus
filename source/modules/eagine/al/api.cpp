@@ -248,6 +248,11 @@ public:
       void(buffer_name, buffer_attribute, span<float_type>)>
       get_buffer_f{*this};
 
+    simple_adapted_function<
+      &al_api::BufferData,
+      void(buffer_name, buffer_format, memory::const_block, size_type)>
+      buffer_data{*this};
+
     c_api::combined<
       simple_adapted_function<
         &al_api::Sourcei,

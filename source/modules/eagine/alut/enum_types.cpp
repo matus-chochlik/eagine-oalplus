@@ -53,6 +53,12 @@ export struct waveform_function
   : alut_enum_class<waveform_function, "WvefrmFunc"> {
     using enum_class::enum_class;
 };
+
+/// @brief Typed enumeration for ALUT loader kind constants.
+/// @ingroup al_api_wrap
+export struct loader_kind : alut_enum_class<loader_kind, "LoaderKind"> {
+    using enum_class::enum_class;
+};
 //------------------------------------------------------------------------------
 } // namespace eagine::oalplus
 

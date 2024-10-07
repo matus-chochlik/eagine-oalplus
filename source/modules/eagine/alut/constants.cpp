@@ -105,6 +105,28 @@ public:
 #endif
       waveform_impulse;
 
+    /// @var loader_buffer
+    /// @alutconstwrap{LOADER_BUFFER}
+    opt_constant<
+      mp_list<loader_kind>,
+#ifdef ALUT_LOADER_BUFFER
+      enum_type_c<ALUT_LOADER_BUFFER>>
+#else
+      enum_type_c<0x300>>
+#endif
+      loader_buffer;
+
+    /// @var loader_memory
+    /// @alutconstwrap{LOADER_MEMORY}
+    opt_constant<
+      mp_list<loader_kind>,
+#ifdef ALUT_LOADER_MEMORY
+      enum_type_c<ALUT_LOADER_MEMORY>>
+#else
+      enum_type_c<0x301>>
+#endif
+      loader_memory;
+
     basic_alut_constants(ApiTraits& traits, basic_alut_c_api<ApiTraits>& api);
 };
 //------------------------------------------------------------------------------
@@ -117,7 +139,9 @@ basic_alut_constants<ApiTraits>::basic_alut_constants(
   , waveform_square("WAVEFORM_SQUARE", traits, api)
   , waveform_sawtooth("WAVEFORM_SAWTOOTH", traits, api)
   , waveform_whitenoise("WAVEFORM_WHITENOISE", traits, api)
-  , waveform_impulse("WAVEFORM_IMPULSE", traits, api) {}
+  , waveform_impulse("WAVEFORM_IMPULSE", traits, api)
+  , loader_buffer("LOADER_BUFFER", traits, api)
+  , loader_memory("LOADER_MEMORY", traits, api) {}
 //------------------------------------------------------------------------------
 } // namespace eagine::oalplus
 
